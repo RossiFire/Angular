@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "taskSI"
+    }
+  },
+  "defaultProject": "taskSI",
+  "cli": {
+    "analytics": "7c4f9338-b5b3-48fb-9123-6015934943b9"
+  }
 }
