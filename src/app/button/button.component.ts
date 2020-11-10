@@ -9,7 +9,6 @@ export class ButtonComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
   @Input() buttonConfig : ButtonConfig;
 
 }
