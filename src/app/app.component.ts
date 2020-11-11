@@ -20,6 +20,6 @@ export class AppComponent {
   {header : this.tbHeader, order : this.tbOrder,
    search : this.tbSearch, pagination : this.tbPagination }
   btnConfig : ButtonConfig = 
-  {text : 'Bottone', icon : '<i class="fas fa-rocket"></i>', customCss : "pericolo"}
+  {text : 'Bottone', icon : "<i class='fas fa-rocket'></i>", customCss : "pericolo"}
 
 }
