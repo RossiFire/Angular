@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TbData } from '../TableInfo';
+import {MatIconModule} from '@angular/material/icon';
 @Component({
   selector: 'primo-button',
   templateUrl: './button.component.html',
