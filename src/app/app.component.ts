@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TableConfig, TableHeader, TableOrder } from '../app/table/table.component';
+import { TableConfig, TableHeader, TableOrder, TableSearch, TablePagination } from '../app/table/table.component';
 import { ButtonConfig } from '../app/button/button.component';
 @Component({
   selector: 'app-root',
@@ -8,11 +8,18 @@ import { ButtonConfig } from '../app/button/button.component';
 })
 export class AppComponent {
   
-  tbHeader : TableHeader =  {key : 'Id', label : 'Nome'}
-  tbConfig : TableConfig = {header : this.tbHeader}
 
+  tbHeader : TableHeader =  {key : 'Id', label : 'Nome'}
+  tbOrder : TableOrder = {column : "colonna" , orderType : "ASC"}
+  tbSearch : TableSearch = { columns : ["parola1","parola2","parola3"]}
+  tbPagination : TablePagination = {itemPerPage : 10, itemPerPageOption : [1,2,3,4]}
   
-  btnConfig : ButtonConfig = {text : 'Bottone'}
-  
+
+
+  tbConfig : TableConfig = 
+  {header : this.tbHeader, order : this.tbOrder,
+   search : this.tbSearch, pagination : this.tbPagination }
+  btnConfig : ButtonConfig = 
+  {text : 'Bottone', icon : '<i class="fas fa-rocket"></i>', customCss : "pericolo"}
 
 }

@@ -15,7 +15,7 @@ export class ButtonComponent implements OnInit {
 }
 
 export class ButtonConfig{
-/*   customCss : string
-  icon : string; */
+  customCss : string
+  icon : string;
   text : string;
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TbData } from '../TableInfo';
+import { tbDATA } from '../TableInfo';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -10,9 +10,7 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  id : number
-  name : string
-  //@Input() tbInfo : TbData;
+  DATA = tbDATA;
   @Input() tableConfig : TableConfig;
   @Input() data : any[];
 
@@ -20,9 +18,9 @@ export class TableComponent implements OnInit {
 
 export class TableConfig{
   header : TableHeader;
-/*   order : TableOrder;
+  order : TableOrder;
   search : TableSearch;
-  pagination : TablePagination;  */
+  pagination : TablePagination; 
 }
 
 export class TableHeader{
