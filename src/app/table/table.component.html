@@ -1,1 +1,17 @@
-<p>table works!</p>
+<table>
+    <tr>
+    <th>{{this.tableConfig.header.key}}</th>
+    <th>{{this.tableConfig.header.label}}</th>
+    </tr>
+    <tr>
+        <span *ngIf="id">
+            <td>{{id}}</td>
+        </span>
+        <span *ngIf="name">
+            <td>{{name}}</td>
+        </span>
+        </tr>
+</table>
+
+<input type="text" [(ngModel)]="id" placeholder="id" />
+<input type="text" [(ngModel)]="name" placeholder="Nome" />

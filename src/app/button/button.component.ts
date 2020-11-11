@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { TbData } from '../TableInfo';
 @Component({
   selector: 'primo-button',
   templateUrl: './button.component.html',
@@ -9,12 +10,12 @@ export class ButtonComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  @Input() buttonConfig : ButtonConfig;
-  
+
+  @Input() buttonConfig : ButtonConfig;  
 }
 
 export class ButtonConfig{
-  customCss : string
+/*   customCss : string
+  icon : string; */
   text : string;
-  icon : string;
 }
