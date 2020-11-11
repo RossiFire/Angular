@@ -15,11 +15,28 @@ export class TableComponent implements OnInit {
 
 }
 
+export class TableConfig{
+  header : TableHeader[];
+  order : TableOrder;
+  search : TableSearch;
+  pagination : TablePagination;
+}
+
 export class TableHeader{
   key : string;
   label : string;
 }
 
-export class TableConfig{
-  header : TableHeader[];
+export class TableOrder{
+  column : string;
+  orderType : string;
+}
+
+export class TableSearch{
+  columns : string[];
+}
+
+export class TablePagination{
+  itemPerPage : number;
+  itemPerPageOption : number[];
 }

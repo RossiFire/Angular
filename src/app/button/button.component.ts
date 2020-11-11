@@ -10,7 +10,7 @@ export class ButtonComponent implements OnInit {
   }
 
   @Input() buttonConfig : ButtonConfig;
-
+  
 }
 
 export class ButtonConfig{
