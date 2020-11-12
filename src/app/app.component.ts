@@ -20,7 +20,7 @@ export class AppComponent {
   {header : this.tbHeader, order : this.tbOrder,
    search : this.tbSearch, pagination : this.tbPagination }
   btnConfig : ButtonConfig = 
-  {text : 'Bottone', icon : '<mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>', 
+  {text : 'Bottone', icon : 'fas fa-rocket', 
   customCss : "pericolo"}
 
 }
