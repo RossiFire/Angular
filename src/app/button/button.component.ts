@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
-import { BtnStyle } from '../ButtonStyle';
 @Component({
   selector: 'primo-button',
   templateUrl: './button.component.html',
@@ -15,16 +14,21 @@ export class ButtonComponent implements OnInit {
 
 
   myStyle(): object {
-    return { 'background-color' : this.buttonConfig.customCss[0].value,
-      'color' : this.buttonConfig.customCss[1].value ,
-      'border-color' : this.buttonConfig.customCss[2].value
+    return { 'background-color' : this.buttonConfig.customCss['background-color'],
+      'color' : this.buttonConfig.customCss['color']
     };
   } 
 
 }
 
 export class ButtonConfig{
-  customCss : BtnStyle[]
+  customCss : CustomCss
   icon : string;
   text : string;
+}
+
+export class CustomCss{
+
+  'color' : string;
+  'background-color' : string;
 }
