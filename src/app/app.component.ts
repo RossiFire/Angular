@@ -19,8 +19,11 @@ export class AppComponent {
   tbConfig : TableConfig = 
   {header : this.tbHeader, order : this.tbOrder,
    search : this.tbSearch, pagination : this.tbPagination }
-  btnConfig : ButtonConfig = 
+  
+   btnConfig : ButtonConfig = 
   {text : 'Bottone', icon : 'fas fa-rocket', 
-  customCss : "pericolo"}
+
+    customCss : {style : 'backgound-color', value : "blue"}
+  }
 
 }

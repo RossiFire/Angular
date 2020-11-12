@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
+import { BtnStyle } from '../ButtonStyle';
 @Component({
   selector: 'primo-button',
   templateUrl: './button.component.html',
@@ -10,12 +11,16 @@ export class ButtonComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
   @Input() buttonConfig : ButtonConfig;  
+
+  myStyle(): object {
+    return { [this.buttonConfig.customCss.style] : this.buttonConfig.customCss.value};
+  } 
+
 }
 
 export class ButtonConfig{
-  customCss : string
+  customCss : BtnStyle
   icon : string;
   text : string;
 }
