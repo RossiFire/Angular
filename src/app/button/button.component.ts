@@ -13,14 +13,18 @@ export class ButtonComponent implements OnInit {
 
   @Input() buttonConfig : ButtonConfig;  
 
+
   myStyle(): object {
-    return { [this.buttonConfig.customCss.style] : this.buttonConfig.customCss.value};
+    return { 'background-color' : this.buttonConfig.customCss[0].value,
+      'color' : this.buttonConfig.customCss[1].value ,
+      'border-color' : this.buttonConfig.customCss[2].value
+    };
   } 
 
 }
 
 export class ButtonConfig{
-  customCss : BtnStyle
+  customCss : BtnStyle[]
   icon : string;
   text : string;
 }

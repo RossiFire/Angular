@@ -23,7 +23,10 @@ export class AppComponent {
    btnConfig : ButtonConfig = 
   {text : 'Bottone', icon : 'fas fa-rocket', 
 
-    customCss : {style : 'backgound-color', value : "blue"}
+    customCss : [{style : "backgound-color" , value : "blue"},
+    {style : "color" , value : "yellow"},
+    {style : "border-color" , value : "orange"}
+    ]
   }
 
 }
