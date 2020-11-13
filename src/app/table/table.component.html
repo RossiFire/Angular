@@ -3,7 +3,7 @@
 (page)="OnPageChange($event)"></mat-paginator>
 <table>
         <tr>
-        <th> <span (click) = "OrderById()">{{this.orderIcon}}</span> {{this.tableConfig.header.key}}</th>
+        <th> <span (click) = "OrderById()"><span [innerHTML] = "this.orderIcon"></span></span> {{this.tableConfig.header.key}}</th>
         <th>{{this.tableConfig.header.label}}</th>
         </tr>
         <tr *ngFor = "let data of sliceData">
