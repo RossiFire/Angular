@@ -11,7 +11,7 @@ export class AppComponent {
 
   tbHeader : TableHeader =  {key : 'Id', label : 'Nome'}
   tbOrder : TableOrder = {column : "id" , orderType : "ASC"}
-  tbSearch : TableSearch = { columns : ["Nome"]}
+  tbSearch : TableSearch = { column : "" , value : ""}
   tbPagination : TablePagination = {itemPerPage : 3, itemPerPageOption : [3,6,10]}
 
 

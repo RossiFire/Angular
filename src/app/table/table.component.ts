@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { tbDATA, TbData } from '../TableInfo';
 import { PageEvent } from '@angular/material/paginator';
 import { findSafariExecutable } from 'selenium-webdriver/safari';
+import { filter } from 'minimatch';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -14,7 +15,6 @@ import { findSafariExecutable } from 'selenium-webdriver/safari';
 export class TableComponent implements OnInit {
   constructor() { }
   ngOnInit(): void {
-    console.log(this.newValue)
   }
 
   newId : number;
@@ -22,17 +22,18 @@ export class TableComponent implements OnInit {
   newDato : TbData;
   orderIcon : string = '<i class="fas fa-sort-up"></i>';
   DATA = tbDATA;
+  filterData :TbData[] = [];
+  sliceData = this.DATA.slice(0, 3);
   @Input() tableConfig: TableConfig;
 
 
   AddElement() : void{
     this.newDato = {key : this.newId, label : this.newValue}
-    this.DATA[this.DATA.length] = this.newDato; 
+    this.DATA.push(this.newDato); 
     this.tableConfig.pagination.itemPerPageOption = [3,6,9, this.DATA.length];
   }
 
 
-  sliceData = this.DATA.slice(0, 3);
   OnPageChange(event: PageEvent) {
     const startIndex = event.pageIndex * event.pageSize;
     let endIndex = event.pageIndex + event.pageSize;
@@ -79,14 +80,28 @@ export class TableComponent implements OnInit {
     }
   }
 
-  tbExist : boolean = true;
-  FilterByColumn(colonna : string) : void{
-    for(let i=0; i<this.tableConfig.search.columns.length; i++){
-      if(this.tableConfig.search.columns[i] === colonna){
-        this.tbExist = false;
+
+  FilterByColumn(): void {
+    this.sliceData = this.DATA;
+    if (this.tableConfig.search.column.toUpperCase() === this.tableConfig.header.key.toUpperCase()) {
+      for (let i = 0; i < this.DATA.length; i++) {
+        if (this.DATA[i].key === this.tableConfig.search.value) {
+          this.filterData.push(this.DATA[i]);
+        }
       }
-    }
-    this.tbExist = true;
+      this.sliceData = this.filterData;
+    } else
+    if (this.tableConfig.search.column.toUpperCase() === this.tableConfig.header.label.toUpperCase()) {
+        for (let i = 0; i < this.DATA.length; i++) {
+          if (this.DATA[i].label === this.tableConfig.search.value) {
+            this.filterData.push(this.DATA[i]);
+          }
+        }
+        this.sliceData = this.filterData;
+      }else{
+        this.sliceData = this.DATA.slice(0, 3);
+      } 
+        
   }
 
 
@@ -118,7 +133,8 @@ export class TableOrder {
 }
 
 export class TableSearch {
-  columns: string[];
+  column: string;
+  value : any;
 }
 
 export class TablePagination {

@@ -7,19 +7,26 @@
         <th>{{this.tableConfig.header.label}}</th>
         </tr>
         <tr *ngFor = "let data of sliceData">
-                <span *ngIf = "this.tbExist">
                         <td>{{data.key}}</td>
-                </span>
                 <td>{{data.label}}</td>
         </tr>
 </table>
 
 
-    <span (click) = "FilterByColumn(this.tableConfig.header.key)">Solo Nome</span>
 
     <div [style.marginTop.px]= "24">
-            <input type="number" [(ngModel)] = "this.newId" required /> <br>
-            <input type="text" [(ngModel)] = "this.newValue" required /> <br>
-
+            <h3>Aggiungi</h3>
+            <input type="number" [(ngModel)] = "this.newId" required placeholder="id"/> <br>
+            <input type="text" [(ngModel)] = "this.newValue" required placeholder="Nome"/> <br>
             <button (click)= "AddElement()">Inserisci</button>
+    </div>
+
+
+    <div>      
+            <h3 [style.marginTop.px]= "24">Filtra</h3>
+        <input type="text" [(ngModel)] = "this.tableConfig.search.column" placeholder="colonna"> <br>
+        <input [(ngModel)] = "this.tableConfig.search.value" placeholder="valore"><br>
+        <button (click) = "FilterByColumn()">Filtra</button> 
+        <button (click) = "this.sliceData = this.DATA.slice(0,3)">Resetta</button>
+
     </div>
