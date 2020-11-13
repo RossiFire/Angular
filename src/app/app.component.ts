@@ -10,18 +10,18 @@ export class AppComponent {
   
 
   tbHeader : TableHeader =  {key : 'Id', label : 'Nome'}
-  tbOrder : TableOrder = {column : "colonna" , orderType : "ASC"}
-  tbSearch : TableSearch = { columns : ["parola1","parola2","parola3"]}
-  tbPagination : TablePagination = {itemPerPage : 10, itemPerPageOption : [1,2,3,4]}
-  
+  tbOrder : TableOrder = {column : "id" , orderType : "ASC"}
+  tbSearch : TableSearch = { columns : ["Nome"]}
+  tbPagination : TablePagination = {itemPerPage : 3, itemPerPageOption : [3,6,10]}
 
 
-  tbConfig : TableConfig = 
-  {header : this.tbHeader, order : this.tbOrder,
-   search : this.tbSearch, pagination : this.tbPagination }
+  tbConfig : TableConfig = {
+   header : this.tbHeader, order : this.tbOrder,
+   search : this.tbSearch, pagination : this.tbPagination
+  }
   
-   btnConfig : ButtonConfig = 
-  {text : 'Bottone', icon : 'fas fa-rocket', 
+   btnConfig : ButtonConfig = {
+    text : 'Bottone', icon : 'fas fa-sort-up', 
     customCss : {'background-color' : "red", 'color' : "yellow"}
   }
 

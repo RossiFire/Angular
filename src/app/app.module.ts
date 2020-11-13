@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { ButtonComponent } from './button/button.component';
 import { TableComponent } from './table/table.component';
 import {MatIconModule} from '@angular/material/icon';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +21,9 @@ import {MatIconModule} from '@angular/material/icon';
     AppRoutingModule,
     FormsModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatPaginatorModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

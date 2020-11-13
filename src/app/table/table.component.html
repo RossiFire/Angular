@@ -1,10 +1,25 @@
+<mat-paginator [length] = "this.DATA.length" [pageSize] = "this.tableConfig.pagination.itemPerPage"
+[pageSizeOptions] = "this.tableConfig.pagination.itemPerPageOption" 
+(page)="OnPageChange($event)"></mat-paginator>
 <table>
         <tr>
-        <th>{{this.tableConfig.header.key}}</th>
+        <th> <span (click) = "OrderById()">{{this.orderIcon}}</span> {{this.tableConfig.header.key}}</th>
         <th>{{this.tableConfig.header.label}}</th>
         </tr>
-        <tr *ngFor = "let data of DATA">
-                <td>{{data.key}}</td>
+        <tr *ngFor = "let data of sliceData">
+                <span *ngIf = "this.tbExist">
+                        <td>{{data.key}}</td>
+                </span>
                 <td>{{data.label}}</td>
-            </tr>
-    </table>
+        </tr>
+</table>
+
+
+    <span (click) = "FilterByColumn(this.tableConfig.header.key)">Solo Nome</span>
+
+    <div [style.marginTop.px]= "24">
+            <input type="number" [(ngModel)] = "this.newId" required /> <br>
+            <input type="text" [(ngModel)] = "this.newValue" required /> <br>
+
+            <button (click)= "AddElement()">Inserisci</button>
+    </div>
