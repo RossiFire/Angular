@@ -85,7 +85,7 @@ export class TableComponent implements OnInit {
     this.sliceData = this.DATA;
     if (this.tableConfig.search.column.toUpperCase() === this.tableConfig.header.key.toUpperCase()) {
       for (let i = 0; i < this.DATA.length; i++) {
-        if (this.DATA[i].key === this.tableConfig.search.value) {
+        if (this.DATA[i].key === parseInt(this.tableConfig.search.value, 10)) {
           this.filterData.push(this.DATA[i]);
         }
       }
@@ -101,7 +101,7 @@ export class TableComponent implements OnInit {
       }else{
         this.sliceData = this.DATA.slice(0, 3);
       } 
-        
+      this.filterData = [];
   }
 
 
