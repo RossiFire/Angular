@@ -21,7 +21,7 @@ export class AppComponent {
   }
   
    btnConfig : ButtonConfig = {
-    text : 'Bottone', icon : 'fas fa-sort-up', 
+    text : 'Bottone', icon : '<i class="fas fa-rocket"></i>', 
     customCss : {'background-color' : "red", 'color' : "yellow"}
   }
 
