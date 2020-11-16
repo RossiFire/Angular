@@ -1,10 +1,7 @@
 import { Component, OnInit, Input, AfterViewInit, ViewChild, NgModule } from '@angular/core';
 import { tbDATA, TbData } from '../TableInfo';
 import { PageEvent } from '@angular/material/paginator';
-import { findSafariExecutable } from 'selenium-webdriver/safari';
-import { filter } from 'minimatch';
-import { MatSortModule } from '@angular/material/sort' ;
-import { sortBy } from 'lodash';
+import  DatiUtenti from '../files/DatiUtenti.json';
 import * as _ from "lodash";
 
 @Component({
@@ -14,8 +11,13 @@ import * as _ from "lodash";
 })
 
 export class TableComponent implements OnInit {
+  
+  //get data from json file
+  // DataList : {key : string, value : any}[] = DatiUtenti;
 
-  constructor() { }
+  constructor() {
+   }
+
   ngOnInit(): void {
   }
 
@@ -32,7 +34,6 @@ export class TableComponent implements OnInit {
 
   
   orderIcon : string = '<i class="fas fa-sort-up"></i>';
-  filterData :TbData[] = [];
   sliceData = this.valoriDati.slice(0, 3);
 
   @Input() tableConfig: TableConfig;
@@ -48,11 +49,11 @@ export class TableComponent implements OnInit {
 
   newId : number;
   newValue : string;
-  newDato : TbData;
+  newDato : Temp[];
   AddElement() : void{
-    this.newDato = {key : this.newId, label : this.newValue}
-    this.DATA.push(this.newDato); 
-    this.tableConfig.pagination.itemPerPageOption = [3,6,9, this.DATA.length];
+/*     this.newDato = {key : this.newId, label : this.newValue}
+    this.valoriDati.push(this.newDato); 
+    this.tableConfig.pagination.itemPerPageOption = [3,6,9, this.DATA.length]; */
   }
 
 

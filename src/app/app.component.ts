@@ -8,7 +8,7 @@ import { Data } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  
+
 
   tbOrder : TableOrder = {column : "id" , orderType : "ASC"}
   tbSearch : TableSearch = { column : "" , value : ""}
@@ -53,7 +53,6 @@ export class AppComponent {
         "cognome" : "Hackerman",
         "nascita" : "10/09/1980"
       },
-
     ]
   
 
