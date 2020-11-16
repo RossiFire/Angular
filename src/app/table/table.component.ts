@@ -11,70 +11,50 @@ import * as _ from "lodash";
 })
 
 export class TableComponent implements OnInit {
-  
-  //get data from json file
-  // DataList : {key : string, value : any}[] = DatiUtenti;
+  DataList : {id : number, nome : string, cognome : string, nascita : string}[] = DatiUtenti;
 
-  constructor() {
-   }
-
-  ngOnInit(): void {
-  }
-
-  valoriDati : Temp[] = [
-    {valori :[ 1, "Daniele", "Rossino", "10/09/2001"]},
-    {valori :[ 2, "Giacomo", "Leopardi", "12/09/2001"]},
-    {valori :[ 3, "Alice", "Sender", "13/05/2001"]},
-    {valori :[ 4, "Bob", "Mani", "02/12/2002"]},
-    {valori :[ 5, "Mallory", "Hackerman", "12/03/1992"]},
-]
-
-
-
+  constructor() {}
+  ngOnInit(): void {}
 
   
   orderIcon : string = '<i class="fas fa-sort-up"></i>';
-  sliceData = this.valoriDati.slice(0, 3);
+  sliceData = this.DataList.slice(0, 3);
 
   @Input() tableConfig: TableConfig;
 
-  @Input() DATA;
+ // @Input() DATA;
 
-  pp() : void{
-    console.log("i dati sono " + this.DATA);
-  }
 
 
 
 
   newId : number;
-  newValue : string;
-  newDato : Temp[];
+  newNome : string;
+  newCognome : string;
+  newNascita : string;
   AddElement() : void{
-/*     this.newDato = {key : this.newId, label : this.newValue}
-    this.valoriDati.push(this.newDato); 
-    this.tableConfig.pagination.itemPerPageOption = [3,6,9, this.DATA.length]; */
+    this.DataList.push({id : this.newId, nome : this.newNome, cognome : this.newCognome, nascita : this.newNascita});
   }
 
 
   OnPageChange(event: PageEvent) {
     const startIndex = event.pageIndex * event.pageSize;
     let endIndex = event.pageIndex + event.pageSize;
-    if (endIndex > this.valoriDati.length) {
-      endIndex = this.valoriDati.length;
+    if (endIndex > this.DataList.length) {
+      endIndex = this.DataList.length;
     }
-    this.sliceData = this.valoriDati.slice(startIndex, endIndex);
+    this.sliceData = this.DataList.slice(startIndex, endIndex);
     switch (event.pageIndex) {
       case 0:
-        this.sliceData = this.valoriDati.slice(0, event.pageSize);
+        this.sliceData = this.DataList.slice(0, event.pageSize);
       case 1:
-        this.sliceData = this.valoriDati.slice(event.pageSize, event.pageSize + event.pageSize);
+        this.sliceData = this.DataList.slice(event.pageSize, event.pageSize + event.pageSize);
       case 2:
-        this.sliceData = this.valoriDati.slice(event.pageSize * event.pageIndex, event.pageSize * event.pageIndex + event.pageSize);
+        this.sliceData = this.DataList.slice(event.pageSize * event.pageIndex, event.pageSize * event.pageIndex + event.pageSize);
     }
   }
 
-  FilterByColumn(column : string): void {
+/*   FilterByColumn(column : string): void {
     let exist : boolean = false;
     let i;
     for(i = 0; i< this.tableConfig.header.length; i++){
@@ -88,11 +68,18 @@ export class TableComponent implements OnInit {
       }
     }
   } 
+ */
 
-
-
-  SortBy(value) : void{
-    let temp = _.sortBy(this.DATA, ['key']);
+  ASC : boolean = true;
+  SortBy(column, event : PageEvent) : void{
+    let temp;
+    if(this.ASC){
+      this.sliceData = _.sortBy(this.DataList, [column]).reverse().slice(0,this.DataList.length);
+      this.ASC = false;
+    }else{
+      this.sliceData = _.sortBy(this.DataList, [column]).slice(0,this.DataList.length);
+      this.ASC = true
+    }
     console.log(temp);
   }
 
@@ -106,16 +93,6 @@ export class TableComponent implements OnInit {
 
 
 
-
-export class Temp{
-  valori : any[];
-}
-
-
-export class TableDataFormat{
-  column : string;
-  value : any;
-}
 
 
 export class TableConfig {

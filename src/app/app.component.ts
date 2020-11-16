@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TableConfig, TableHeader, TableOrder, TableSearch, TablePagination} from '../app/table/table.component';
 import { ButtonConfig } from '../app/button/button.component';
 import { Data } from '@angular/router';
+import { TbData } from './TableInfo';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,7 +23,7 @@ export class AppComponent {
       { key : "nascita", label : "Anno di Nascita"}
     ]
 
-    tbData : [
+/*     tbData = [
       {
         "id" : "1",
         "nome" : "Daniele",
@@ -53,7 +54,7 @@ export class AppComponent {
         "cognome" : "Hackerman",
         "nascita" : "10/09/1980"
       },
-    ]
+    ] */
   
 
 

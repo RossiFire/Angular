@@ -1,4 +1,4 @@
-<mat-paginator [length] = "this.valoriDati.length" [pageSize] = "this.tableConfig.pagination.itemPerPage"
+<mat-paginator [length] = "this.DataList        .length" [pageSize] = "this.tableConfig.pagination.itemPerPage"
 [pageSizeOptions] = "this.tableConfig.pagination.itemPerPageOption" 
 (page)="OnPageChange($event)"></mat-paginator>
 <table>
@@ -8,8 +8,11 @@
                        <span (click) = "SortBy(head.key)"><span [innerHTML]="this.orderIcon"></span></span>
                 </th>
         </tr>
-        <tr *ngFor="let data of this.sliceData ; let j = index">
-                <td *ngFor="let dato of this.valoriDati; let i = index">{{this.sliceData[j].valori[i]}}</td>
+        <tr *ngFor="let elemento of this.sliceData ; let j = index">
+                <td>{{elemento.id}}</td>
+                <td>{{elemento.nome}}</td>
+                <td>{{elemento.cognome}}</td>
+                <td>{{elemento.nascita}}</td>
         </tr>
 </table>
 
@@ -18,7 +21,9 @@
     <div [style.marginTop.px]= "24">
             <h3>Aggiungi</h3>
             <input type="number" [(ngModel)] = "this.newId" required placeholder="id"/> <br>
-            <input type="text" [(ngModel)] = "this.newValue" required placeholder="Nome"/> <br>
+            <input type="text" [(ngModel)] = "this.newNome" required placeholder="Nome"/> <br>
+            <input type="text" [(ngModel)] = "this.newCognome" required placeholder="cognome"/> <br>
+            <input type="text" [(ngModel)] = "this.newNascita" required placeholder="nascita"/> <br>
             <button (click)= "AddElement()">Inserisci</button>
     </div>
 
@@ -27,11 +32,9 @@
             <h3 [style.marginTop.px]= "24">Filtra</h3>
         <input type="text" [(ngModel)] = "this.tableConfig.search.column" placeholder="colonna"> <br>
         <input [(ngModel)] = "this.tableConfig.search.value" placeholder="valore"><br>
-        <button (click) = "FilterByColumn()">Filtra</button> 
-        <button (click) = "this.sliceData = this.valoriDati.slice(0,3)">Resetta</button>
+        <!-- <button (click) = "FilterByColumn()">Filtra</button> --> 
+        <button (click) = "this.sliceData = this.DataList.slice(0,3)">Resetta</button>
     </div>
-
-    <button (click) = "pp()">CLICCAME</button>
 
 
 

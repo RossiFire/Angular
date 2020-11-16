@@ -1,9 +1,8 @@
 import { TableHeader } from './table/table.component';
 
-
 export interface TbData{
     key : any;
-    label : string
+    label : string;
 } 
 
 export const tbDATA : TbData[] =[]
