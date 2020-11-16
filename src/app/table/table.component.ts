@@ -3,15 +3,15 @@ import { tbDATA, TbData } from '../TableInfo';
 import { PageEvent } from '@angular/material/paginator';
 import { findSafariExecutable } from 'selenium-webdriver/safari';
 import { filter } from 'minimatch';
-import { MatSortModule } from '@angular/material' ;
+import { MatSortModule } from '@angular/material/sort' ;
+import { sortBy } from 'lodash';
+import * as _ from "lodash";
+
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-
-
-
 
 export class TableComponent implements OnInit {
 
@@ -26,6 +26,8 @@ export class TableComponent implements OnInit {
     {valori :[ 4, "Bob", "Mani", "02/12/2002"]},
     {valori :[ 5, "Mallory", "Hackerman", "12/03/1992"]},
 ]
+
+
 
 
   
@@ -78,15 +80,28 @@ export class TableComponent implements OnInit {
       for(let j = 0; j< this.valoriDati.length; j++){
       }
     }
-
   } 
 
 
+  
+  FCKNDATA : TbData[] =[
+  {key: 5, label: "ciao"},
+  {key: 1, label: "ccc"},
+  {key: 4, label: "apsf"},
+  {key: 6, label: "sdago"},
+  {key: 8, label: "sdasafgo"},
+  {key: 16, label: "sgo"},
+  {key: 64, label: "aed"}
+]
+
+  SortBy(value) : void{
+    let temp = _.sortBy(this.FCKNDATA, ['key']);
+    console.log(temp);
+  }
+
+
+
 }
-
-
-
-
 
 
 

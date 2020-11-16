@@ -5,7 +5,7 @@
         <tr>
                 <th *ngFor = "let head of this.tableConfig.header">
                         {{head.label}}
-                        <span [innerHTML]="this.orderIcon"></span>
+                       <span (click) = "SortBy(head.key)"><span [innerHTML]="this.orderIcon"></span></span>
                 </th>
         </tr>
         <tr *ngFor="let data of this.sliceData ; let j = index">
