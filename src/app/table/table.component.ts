@@ -32,10 +32,16 @@ export class TableComponent implements OnInit {
 
   
   orderIcon : string = '<i class="fas fa-sort-up"></i>';
-  DATA = tbDATA;
   filterData :TbData[] = [];
   sliceData = this.valoriDati.slice(0, 3);
+
   @Input() tableConfig: TableConfig;
+
+  @Input() DATA;
+
+  pp() : void{
+    console.log("i dati sono " + this.DATA);
+  }
 
 
 
@@ -83,19 +89,9 @@ export class TableComponent implements OnInit {
   } 
 
 
-  
-  FCKNDATA : TbData[] =[
-  {key: 5, label: "ciao"},
-  {key: 1, label: "ccc"},
-  {key: 4, label: "apsf"},
-  {key: 6, label: "sdago"},
-  {key: 8, label: "sdasafgo"},
-  {key: 16, label: "sgo"},
-  {key: 64, label: "aed"}
-]
 
   SortBy(value) : void{
-    let temp = _.sortBy(this.FCKNDATA, ['key']);
+    let temp = _.sortBy(this.DATA, ['key']);
     console.log(temp);
   }
 
@@ -129,7 +125,7 @@ export class TableConfig {
 }
 
 export class TableHeader {
-   key: string;
+  key: string;
   label: string;
 }
 

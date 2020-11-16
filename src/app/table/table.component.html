@@ -28,8 +28,9 @@
         <input type="text" [(ngModel)] = "this.tableConfig.search.column" placeholder="colonna"> <br>
         <input [(ngModel)] = "this.tableConfig.search.value" placeholder="valore"><br>
         <button (click) = "FilterByColumn()">Filtra</button> 
-        <button (click) = "this.sliceData = this.DATA.slice(0,3)">Resetta</button>
-
+        <button (click) = "this.sliceData = this.valoriDati.slice(0,3)">Resetta</button>
     </div>
+
+    <button (click) = "pp()">CLICCAME</button>
 
 
