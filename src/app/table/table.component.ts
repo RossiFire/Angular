@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ViewChild, NgModule } from '@angular/core';
 import { tbDATA, TbData } from '../TableInfo';
 import { PageEvent } from '@angular/material/paginator';
 import { findSafariExecutable } from 'selenium-webdriver/safari';
 import { filter } from 'minimatch';
+import { MatSortModule } from '@angular/material' ;
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -13,20 +14,33 @@ import { filter } from 'minimatch';
 
 
 export class TableComponent implements OnInit {
+
   constructor() { }
   ngOnInit(): void {
   }
 
-  newId : number;
-  newValue : string;
-  newDato : TbData;
+  valoriDati : Temp[] = [
+    {valori :[ 1, "Daniele", "Rossino", "10/09/2001"]},
+    {valori :[ 2, "Giacomo", "Leopardi", "12/09/2001"]},
+    {valori :[ 3, "Alice", "Sender", "13/05/2001"]},
+    {valori :[ 4, "Bob", "Mani", "02/12/2002"]},
+    {valori :[ 5, "Mallory", "Hackerman", "12/03/1992"]},
+]
+
+
+  
   orderIcon : string = '<i class="fas fa-sort-up"></i>';
   DATA = tbDATA;
   filterData :TbData[] = [];
-  sliceData = this.DATA.slice(0, 3);
+  sliceData = this.valoriDati.slice(0, 3);
   @Input() tableConfig: TableConfig;
 
 
+
+
+  newId : number;
+  newValue : string;
+  newDato : TbData;
   AddElement() : void{
     this.newDato = {key : this.newId, label : this.newValue}
     this.DATA.push(this.newDato); 
@@ -37,73 +51,35 @@ export class TableComponent implements OnInit {
   OnPageChange(event: PageEvent) {
     const startIndex = event.pageIndex * event.pageSize;
     let endIndex = event.pageIndex + event.pageSize;
-    if (endIndex > this.DATA.length) {
-      endIndex = this.DATA.length;
+    if (endIndex > this.valoriDati.length) {
+      endIndex = this.valoriDati.length;
     }
-    this.sliceData = this.DATA.slice(startIndex, endIndex);
+    this.sliceData = this.valoriDati.slice(startIndex, endIndex);
     switch (event.pageIndex) {
       case 0:
-        this.sliceData = this.DATA.slice(0, event.pageSize);
+        this.sliceData = this.valoriDati.slice(0, event.pageSize);
       case 1:
-        this.sliceData = this.DATA.slice(event.pageSize, event.pageSize + event.pageSize);
+        this.sliceData = this.valoriDati.slice(event.pageSize, event.pageSize + event.pageSize);
       case 2:
-        this.sliceData = this.DATA.slice(event.pageSize * event.pageIndex, event.pageSize * event.pageIndex + event.pageSize);
+        this.sliceData = this.valoriDati.slice(event.pageSize * event.pageIndex, event.pageSize * event.pageIndex + event.pageSize);
     }
   }
 
-
-  OrderById() {
-    if (this.tableConfig.order.orderType === "ASC") {
-      this.tableConfig.order.orderType = "DESC";
-      this.orderIcon = '<i class="fas fa-sort-down"></i>'
-      for(let j = 1; j<this.sliceData.length; j++){
-        for (let i = 0; i < this.sliceData.length - 1; i++) {
-          if (this.sliceData[i].key < this.sliceData[j].key) {
-            let temp = this.sliceData[i];
-            this.sliceData[i] = this.sliceData[j];
-            this.sliceData[j] = temp;
-          }
-        }
-      }
-    } else {
-      this.tableConfig.order.orderType = "ASC";
-      this.orderIcon = '<i class="fas fa-sort-up"></i>'
-      for(let j = 1; j< this.sliceData.length; j++){
-        for (let i = 0; i < this.sliceData.length - 1; i++) {
-          if (this.sliceData[i].key > this.sliceData[j].key) {
-            let temp = this.sliceData[j];
-            this.sliceData[j] = this.sliceData[i];
-            this.sliceData[i] = temp;
-          }
-        }
+  FilterByColumn(column : string): void {
+    let exist : boolean = false;
+    let i;
+    for(i = 0; i< this.tableConfig.header.length; i++){
+      if(column.toUpperCase() === this.tableConfig.header[i].label){
+        exist = true;
+        break;
       }
     }
-  }
-
-
-  FilterByColumn(): void {
-    this.sliceData = this.DATA;
-    if (this.tableConfig.search.column.toUpperCase() === this.tableConfig.header.key.toUpperCase()) {
-      for (let i = 0; i < this.DATA.length; i++) {
-        if (this.DATA[i].key === parseInt(this.tableConfig.search.value, 10)) {
-          this.filterData.push(this.DATA[i]);
-        }
+    if(exist){
+      for(let j = 0; j< this.valoriDati.length; j++){
       }
-      this.sliceData = this.filterData;
-    } else
-    if (this.tableConfig.search.column.toUpperCase() === this.tableConfig.header.label.toUpperCase()) {
-        for (let i = 0; i < this.DATA.length; i++) {
-          if (this.DATA[i].label === this.tableConfig.search.value) {
-            this.filterData.push(this.DATA[i]);
-          }
-        }
-        this.sliceData = this.filterData;
-      }else{
-        this.sliceData = this.DATA.slice(0, 3);
-      } 
-      this.filterData = [];
-  }
+    }
 
+  } 
 
 
 }
@@ -115,15 +91,30 @@ export class TableComponent implements OnInit {
 
 
 
+
+
+
+
+export class Temp{
+  valori : any[];
+}
+
+
+export class TableDataFormat{
+  column : string;
+  value : any;
+}
+
+
 export class TableConfig {
-  header: TableHeader;
+  header: TableHeader[];
   order: TableOrder;
   search: TableSearch;
   pagination: TablePagination;
 }
 
 export class TableHeader {
-  key: string;
+   key: string;
   label: string;
 }
 

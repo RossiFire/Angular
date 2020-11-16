@@ -1,14 +1,15 @@
-<mat-paginator [length] = "this.DATA.length" [pageSize] = "this.tableConfig.pagination.itemPerPage"
+<mat-paginator [length] = "this.valoriDati.length" [pageSize] = "this.tableConfig.pagination.itemPerPage"
 [pageSizeOptions] = "this.tableConfig.pagination.itemPerPageOption" 
 (page)="OnPageChange($event)"></mat-paginator>
 <table>
         <tr>
-        <th> <span (click) = "OrderById()"><span [innerHTML] = "this.orderIcon"></span></span> {{this.tableConfig.header.key}}</th>
-        <th>{{this.tableConfig.header.label}}</th>
+                <th *ngFor = "let head of this.tableConfig.header">
+                        {{head.label}}
+                        <span [innerHTML]="this.orderIcon"></span>
+                </th>
         </tr>
-        <tr *ngFor = "let data of sliceData">
-                        <td>{{data.key}}</td>
-                <td>{{data.label}}</td>
+        <tr *ngFor="let data of this.sliceData ; let j = index">
+                <td *ngFor="let dato of this.valoriDati; let i = index">{{this.sliceData[j].valori[i]}}</td>
         </tr>
 </table>
 
@@ -30,3 +31,5 @@
         <button (click) = "this.sliceData = this.DATA.slice(0,3)">Resetta</button>
 
     </div>
+
+

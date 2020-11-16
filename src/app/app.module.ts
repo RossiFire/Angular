@@ -14,7 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [
     AppComponent,
     ButtonComponent,
-    TableComponent
+    TableComponent,
   ],
   imports: [
     BrowserModule,

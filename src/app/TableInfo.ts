@@ -1,3 +1,5 @@
+import { TableHeader } from './table/table.component';
+
 export interface TbData{
     key : number
     label : string
