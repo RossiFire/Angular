@@ -32,7 +32,7 @@ export class TableComponent implements OnInit {
   newCognome : string;
   newNascita : string;
   AddElement() : void{
-    this.DataList.push({id : this.newId, nome : this.newNome, cognome : this.newCognome, nascita : this.newNascita});
+  this.DataList.push({id : this.newId, nome : this.newNome, cognome : this.newCognome, nascita : this.newNascita});
   }
 
 

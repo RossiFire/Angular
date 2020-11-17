@@ -9,10 +9,9 @@
                 </th>
         </tr>
         <tr *ngFor="let elemento of this.sliceData ; let j = index">
-                <td>{{elemento.id}}</td>
-                <td>{{elemento.nome}}</td>
-                <td>{{elemento.cognome}}</td>
-                <td>{{elemento.nascita}}</td>
+                <td *ngFor="let headKey of this.tableConfig.header ; let h =index">
+                        {{elemento[headKey.key]}}
+                </td>
         </tr>
 </table>
 
