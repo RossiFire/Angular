@@ -11,23 +11,22 @@ import * as _ from "lodash";
 })
 
 export class TableComponent implements OnInit {
-  DataList : {id : number, nome : string, cognome : string, nascita : string}[] = DatiUtenti;
-
+  
   constructor() {}
   ngOnInit(): void {}
-
+  
   
   orderIcon : string = '<i class="fas fa-sort-up"></i>';
+  
+  @Input() tableConfig: TableConfig;
+  
+  // lista utenti e lista paginata
+  DataList : {id : number, nome : string, cognome : string, nascita : string}[] = DatiUtenti;
   sliceData = this.DataList.slice(0, 3);
 
-  @Input() tableConfig: TableConfig;
-
- // @Input() DATA;
 
 
-
-
-
+  //dati nuovo utente
   newId : number;
   newNome : string;
   newCognome : string;
@@ -77,8 +76,6 @@ export class TableComponent implements OnInit {
 
 
 }
-
-
 
 
 
