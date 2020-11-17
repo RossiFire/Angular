@@ -26,7 +26,7 @@ export class TableComponent implements OnInit {
 
 
 
-  //nuovi dati
+  //nuovi data
   inseriti : any[];
   AddElement() : void{
     let newDato : any[] = [];
@@ -41,7 +41,7 @@ export class TableComponent implements OnInit {
     this.DATA.push(result);
   }
 
-
+  //pagination
   OnPageChange(event: PageEvent) {
     const startIndex = event.pageIndex * event.pageSize;
     let endIndex = event.pageIndex + event.pageSize;
@@ -59,6 +59,7 @@ export class TableComponent implements OnInit {
     }
   }
 
+  // filtering
   col;
   FilterByColumn() : void{
     let colonna : TableHeader[] = _.filter(this.tableConfig.header, {'label' : this.col});
@@ -66,6 +67,8 @@ export class TableComponent implements OnInit {
     console.log(this.sliceData);
   }
 
+
+  // sorting
   ASC : boolean = true;
   SortBy(column, event : PageEvent) : void{
     let temp;
