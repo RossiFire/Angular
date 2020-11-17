@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, AfterViewInit, ViewChild, NgModule } from '@angular/core';
-import { tbDATA, TbData } from '../TableInfo';
+import { Component, OnInit, Input, AfterViewInit, ViewChild, NgModule, OnChanges } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import  DatiUtenti from '../files/DatiUtenti.json';
 import * as _ from "lodash";
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-table',
@@ -13,26 +12,33 @@ import * as _ from "lodash";
 export class TableComponent implements OnInit {
   
   constructor() {}
-  ngOnInit(): void {}
-  
-  // DataList : {id : number, nome : string, cognome : string, nascita : string}[] = DatiUtenti;
+  ngOnInit(): void {
+    this.sliceData = this.DATA.slice(0, 3);
+    this.inseriti = new Array(this.tableConfig.header.length);
+  }
   
   orderIcon : string = '<i class="fas fa-sort-up"></i>';
   
   @Input() tableConfig: TableConfig;
   
   @Input() DATA : any[];
-  sliceData = this.DATA.slice(0, 3);
+  sliceData;
 
 
 
-  //dati nuovo utente
-  newId : number;
-  newNome : string;
-  newCognome : string;
-  newNascita : string;
+  //nuovi dati
+  inseriti : any[];
   AddElement() : void{
-  this.DATA.push({id : this.newId, nome : this.newNome, cognome : this.newCognome, nascita : this.newNascita});
+    let newDato : any[] = [];
+      for(let i = 0; i<this.tableConfig.header.length ; i++){
+        newDato.push({[this.tableConfig.header[i].key] : this.inseriti[i]});
+      }
+
+    var result = {};
+      for (var i = 0; i < newDato.length; i++) {
+        result[this.tableConfig.header[i].key] = newDato[i][this.tableConfig.header[i].key];
+      }
+    this.DATA.push(result);
   }
 
 
@@ -70,7 +76,6 @@ export class TableComponent implements OnInit {
       this.sliceData = _.sortBy(this.DATA, [column]).slice(0,this.DATA.length);
       this.ASC = true
     }
-    console.log(temp);
   }
 
 

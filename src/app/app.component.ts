@@ -55,7 +55,6 @@ export class AppComponent {
         "nascita" : "10/09/1980"
       },
     ]
-  
 
   
   
@@ -64,7 +63,7 @@ export class AppComponent {
     search : this.tbSearch, pagination : this.tbPagination
   }
   
-  
+
   btnConfig : ButtonConfig = {
     text : 'Bottone', icon : '<i class="fas fa-rocket"></i>', 
     customCss : {'background-color' : "red", 'color' : "yellow"}
