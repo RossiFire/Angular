@@ -11,11 +11,23 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { NavbarComponent } from './navbar/navbar.component';
+import { VistaUtentiComponent } from './vista-utenti/vista-utenti.component';
+import { FooterComponent } from './footer/footer.component';
+import { ErroreComponent } from './errore/errore.component';
+import { InfoUtenteComponent } from './info-utente/info-utente.component';
+import { ParcoAutoComponent } from './parco-auto/parco-auto.component';
 @NgModule({
   declarations: [
     AppComponent,
     ButtonComponent,
     TableComponent,
+    NavbarComponent,
+    VistaUtentiComponent,
+    FooterComponent,
+    ErroreComponent,
+    InfoUtenteComponent,
+    ParcoAutoComponent,
   ],
   imports: [
     BrowserModule,
