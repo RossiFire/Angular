@@ -54,21 +54,12 @@ export class TableComponent implements OnInit {
     }
   }
 
-/*   FilterByColumn(column : string): void {
-    let exist : boolean = false;
-    let i;
-    for(i = 0; i< this.tableConfig.header.length; i++){
-      if(column.toUpperCase() === this.tableConfig.header[i].label){
-        exist = true;
-        break;
-      }
-    }
-    if(exist){
-      for(let j = 0; j< this.valoriDati.length; j++){
-      }
-    }
-  } 
- */
+  col;
+  FilterByColumn() : void{
+    let colonna : TableHeader[] = _.filter(this.tableConfig.header, {'label' : this.col});
+    this.sliceData = _.filter(this.sliceData, [ colonna[0].key , this.tableConfig.search.value]);
+    console.log(this.sliceData);
+  }
 
   ASC : boolean = true;
   SortBy(column, event : PageEvent) : void{

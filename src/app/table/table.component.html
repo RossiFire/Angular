@@ -30,9 +30,9 @@
 
     <div>      
             <h3 [style.marginTop.px]= "24">Filtra</h3>
-        <input type="text" [(ngModel)] = "this.tableConfig.search.column" placeholder="colonna"> <br>
+        <input [(ngModel)] = "this.col" placeholder="colonna"> <br>
         <input [(ngModel)] = "this.tableConfig.search.value" placeholder="valore"><br>
-        <!-- <button (click) = "FilterByColumn()">Filtra</button> --> 
+        <button (click) = "FilterByColumn()">Filtra</button> 
         <button (click) = "this.sliceData = this.DataList.slice(0,3)">Resetta</button>
     </div>
 
