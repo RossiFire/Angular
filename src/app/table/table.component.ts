@@ -15,14 +15,14 @@ export class TableComponent implements OnInit {
   constructor() {}
   ngOnInit(): void {}
   
+  // DataList : {id : number, nome : string, cognome : string, nascita : string}[] = DatiUtenti;
   
   orderIcon : string = '<i class="fas fa-sort-up"></i>';
   
   @Input() tableConfig: TableConfig;
   
-  // lista utenti e lista paginata
-  DataList : {id : number, nome : string, cognome : string, nascita : string}[] = DatiUtenti;
-  sliceData = this.DataList.slice(0, 3);
+  @Input() DATA : any[];
+  sliceData = this.DATA.slice(0, 3);
 
 
 
@@ -32,24 +32,24 @@ export class TableComponent implements OnInit {
   newCognome : string;
   newNascita : string;
   AddElement() : void{
-  this.DataList.push({id : this.newId, nome : this.newNome, cognome : this.newCognome, nascita : this.newNascita});
+  this.DATA.push({id : this.newId, nome : this.newNome, cognome : this.newCognome, nascita : this.newNascita});
   }
 
 
   OnPageChange(event: PageEvent) {
     const startIndex = event.pageIndex * event.pageSize;
     let endIndex = event.pageIndex + event.pageSize;
-    if (endIndex > this.DataList.length) {
-      endIndex = this.DataList.length;
+    if (endIndex > this.DATA.length) {
+      endIndex = this.DATA.length;
     }
-    this.sliceData = this.DataList.slice(startIndex, endIndex);
+    this.sliceData = this.DATA.slice(startIndex, endIndex);
     switch (event.pageIndex) {
       case 0:
-        this.sliceData = this.DataList.slice(0, event.pageSize);
+        this.sliceData = this.DATA.slice(0, event.pageSize);
       case 1:
-        this.sliceData = this.DataList.slice(event.pageSize, event.pageSize + event.pageSize);
+        this.sliceData = this.DATA.slice(event.pageSize, event.pageSize + event.pageSize);
       case 2:
-        this.sliceData = this.DataList.slice(event.pageSize * event.pageIndex, event.pageSize * event.pageIndex + event.pageSize);
+        this.sliceData = this.DATA.slice(event.pageSize * event.pageIndex, event.pageSize * event.pageIndex + event.pageSize);
     }
   }
 
@@ -64,10 +64,10 @@ export class TableComponent implements OnInit {
   SortBy(column, event : PageEvent) : void{
     let temp;
     if(this.ASC){
-      this.sliceData = _.sortBy(this.DataList, [column]).reverse().slice(0,this.DataList.length);
+      this.sliceData = _.sortBy(this.DATA, [column]).reverse().slice(0,this.DATA.length);
       this.ASC = false;
     }else{
-      this.sliceData = _.sortBy(this.DataList, [column]).slice(0,this.DataList.length);
+      this.sliceData = _.sortBy(this.DATA, [column]).slice(0,this.DATA.length);
       this.ASC = true
     }
     console.log(temp);

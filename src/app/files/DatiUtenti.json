@@ -5,7 +5,7 @@
     "cognome" : "Rossino",
     "nascita" : "10/09/2001"
   },
-  {
+  { 
     "id" : "2",
     "nome" : "Alice",
     "cognome" : "Senders",

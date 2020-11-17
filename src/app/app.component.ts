@@ -23,7 +23,7 @@ export class AppComponent {
       { key : "nascita", label : "Anno di Nascita"}
     ]
 
-/*     tbData = [
+    tbData = [
       {
         "id" : "1",
         "nome" : "Daniele",
@@ -54,17 +54,18 @@ export class AppComponent {
         "cognome" : "Hackerman",
         "nascita" : "10/09/1980"
       },
-    ] */
+    ]
   
 
-
+  
   
   tbConfig : TableConfig = {
-   header : this.tbHeader, order : this.tbOrder,
-   search : this.tbSearch, pagination : this.tbPagination
+    header : this.tbHeader, order : this.tbOrder,
+    search : this.tbSearch, pagination : this.tbPagination
   }
   
-   btnConfig : ButtonConfig = {
+  
+  btnConfig : ButtonConfig = {
     text : 'Bottone', icon : '<i class="fas fa-rocket"></i>', 
     customCss : {'background-color' : "red", 'color' : "yellow"}
   }
