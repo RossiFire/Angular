@@ -9,7 +9,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
   styleUrls: ['./table.component.css']
 })
 
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnChanges {
   
   constructor() {}
   ngOnInit(): void {
@@ -17,7 +17,9 @@ export class TableComponent implements OnInit {
     this.inseriti = new Array(this.tableConfig.header.length);
     this.privilegi = sessionStorage.getItem("privilegi");
   }
-  
+  ngOnChanges():void {
+    this.sliceData = null;
+  }
 
   privilegi;
   orderIcon : string = '<i class="fas fa-sort-up"></i>';

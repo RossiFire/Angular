@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   constructor(private router : Router) { }
   ngOnInit(): void {
   }
@@ -28,5 +28,11 @@ export class LoginComponent implements OnInit {
   }
 
 
+
+
+  ngOnDestroy(): void{
+    this.username = ''
+    this.password = ''
+  }
 
 }
