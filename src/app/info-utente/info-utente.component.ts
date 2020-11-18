@@ -9,10 +9,11 @@ import { ActivatedRoute } from '@angular/router';
 export class InfoUtenteComponent implements OnInit {
 
   constructor(private router : ActivatedRoute) { }
-
-  userAttuale = '';
   ngOnInit(): void {
-    this.userAttuale = this.router.snapshot.params['userAttuale'];
+    //  this.userAttuale = this.router.snapshot.params['userAttuale'];
   }
 
+  userAttuale = { 'id' : '1', 'nome' : 'Daniele', 'cognome' : 'Rosh', 'password' : 'ciap'};
+
+  
 }

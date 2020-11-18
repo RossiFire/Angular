@@ -27,6 +27,7 @@
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.20",
     "rxjs": "~6.6.0",
+    "simple-line-icons": "^2.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },

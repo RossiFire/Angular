@@ -5,12 +5,17 @@ import { ButtonComponent } from './button/button.component';
 import { VistaUtentiComponent } from './vista-utenti/vista-utenti.component';
 import { ErroreComponent } from './errore/errore.component';
 import { ParcoAutoComponent } from './parco-auto/parco-auto.component';
+import { PrenotazioniComponent } from './prenotazioni/prenotazioni.component';
+import { InfoUtenteComponent } from './info-utente/info-utente.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-  {path : "" , component : VistaUtentiComponent},
+  {path : "" , component : LoginComponent},
   {path : 'utenti' , component : VistaUtentiComponent},
   {path : 'prova' , component : ButtonComponent},
   {path : 'parcoauto' , component : ParcoAutoComponent},
+  {path : 'prenotazioni' , component : PrenotazioniComponent},
+  {path : 'profilo' , component : InfoUtenteComponent},
   {path : '**' , component : ErroreComponent}
 ];
 

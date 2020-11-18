@@ -17,6 +17,8 @@ import { FooterComponent } from './footer/footer.component';
 import { ErroreComponent } from './errore/errore.component';
 import { InfoUtenteComponent } from './info-utente/info-utente.component';
 import { ParcoAutoComponent } from './parco-auto/parco-auto.component';
+import { PrenotazioniComponent } from './prenotazioni/prenotazioni.component';
+import { LoginComponent } from './login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +30,8 @@ import { ParcoAutoComponent } from './parco-auto/parco-auto.component';
     ErroreComponent,
     InfoUtenteComponent,
     ParcoAutoComponent,
+    PrenotazioniComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
