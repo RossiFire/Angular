@@ -17,15 +17,16 @@
 </table>
 
 
-
-    <div [style.marginTop.px]= "24">
-            <h3>Aggiungi</h3>
-
-            <ng-container *ngFor = "let key of tableConfig.header ; let j = index">
-            <input [(ngModel)]= "this.inseriti[j]" required placeholder="{{key.label}}"/> <br>
-            </ng-container>
-                <button (click)= "AddElement()">Inserisci</button>
-    </div>
+<ng-container *ngIf = "this.privilegi === 'true'">
+        <div [style.marginTop.px]= "24">
+                <h3>Aggiungi</h3>
+    
+                <ng-container *ngFor = "let key of tableConfig.header ; let j = index">
+                <input [(ngModel)]= "this.inseriti[j]" required placeholder="{{key.label}}"/> <br>
+                </ng-container>
+                    <button (click)= "AddElement()">Inserisci</button>
+        </div>
+</ng-container>
 
 
     <div>      

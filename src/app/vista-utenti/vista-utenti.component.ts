@@ -1,21 +1,18 @@
 import { Component, OnInit, AfterViewInit} from '@angular/core';
 import { TableConfig, TableHeader, TableOrder, TableSearch, TablePagination} from '../table/table.component';
 import { ButtonConfig } from '../button/button.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-vista-utenti',
   templateUrl: './vista-utenti.component.html',
   styleUrls: ['./vista-utenti.component.css']
 })
-export class VistaUtentiComponent implements OnInit, AfterViewInit {
+export class VistaUtentiComponent implements OnInit{
   constructor(private route : Router) { }
   ngOnInit(): void {
+
   }
-  ngAfterViewInit(): void{
-/*     if (window.confirm("Clicca ok per vincere un'iphone XIX ")) {
-      window.location.href='http://www.si2001.it/';
-    }; */
-  }
+
 
   tbOrder : TableOrder = {column : "id" , orderType : "ASC"}
   tbSearch : TableSearch = { column : "" , value : ""}

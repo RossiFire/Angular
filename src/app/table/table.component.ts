@@ -15,8 +15,11 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
     this.sliceData = this.DATA.slice(0, 3);
     this.inseriti = new Array(this.tableConfig.header.length);
+    this.privilegi = sessionStorage.getItem("privilegi");
   }
   
+
+  privilegi;
   orderIcon : string = '<i class="fas fa-sort-up"></i>';
   
   @Input() tableConfig: TableConfig;

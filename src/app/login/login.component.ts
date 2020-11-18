@@ -15,10 +15,12 @@ export class LoginComponent implements OnInit {
   password = ''
   autenticato = true;
   errore = "Spiacente, nome o password sbagliata";
-
+  privilegi = true;
 
   Check() : void{
     if(this.username.toLowerCase === 'Daniele'.toLowerCase && this.password === 'admin'){
+      sessionStorage.setItem("utente", this.username);
+      sessionStorage.setItem("privilegi", this.privilegi.toString());
       this.router.navigate(['utenti']);
     }else{
       this.autenticato = false;
