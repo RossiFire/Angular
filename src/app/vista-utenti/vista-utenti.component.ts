@@ -75,30 +75,42 @@ export class VistaUtentiComponent implements OnInit{
   }
 
   temp : any[];
+  // array per precompilare form
   datoModifica : any[] = new Array();
   buttonAggiungi : boolean = true;
   cercaValori : any[];
+
   CrudOperation(values){
     switch(values['op']){
       case 'ELIMINA':
           this.tbData = _.reject(this.tbData, [values['col'], values['id']]);
+          break;
       case 'AGGIUNGI':
           this.Aggiungi(values);
+          break;
       case 'PRECOMPILA':
           this.buttonAggiungi = false;
           this.datoModifica = new Array();
           this.temp = _.find(this.tbData, [values['col'], values['id']]);
           for(let i = 0; i<this.tbHeader.length; i++){
-            console.log(this.temp[this.tbHeader[i].key])
             this.datoModifica.push(this.temp[this.tbHeader[i].key]);
           }
+          break;
       case 'MODIFICA':
-          console.log(values['id'])
-          this.tbData = _.reject(this.tbData, [values['col'], values['id']]);
-          /* this.Aggiungi(values); */
-          
+          this.temp = _.find(this.tbData, [values['col'], values['id']]);
+          for(let i = 0; i<this.tbData.length; i++){
+              if(values['id'] === this.tbData[i][this.tbHeader[0].key]){
+                //modifica utente
+                for(let h=0; h<this.tbHeader.length; h++){
+                  this.tbData[i][this.tbHeader[h].key] = this.datoModifica[h];
+                }
+              }
+          }
+          break;
+      default :
+          console.log("errore DEFAULT");
     }
-
+    console.log("ciao")
   };
   
 
@@ -112,7 +124,7 @@ export class VistaUtentiComponent implements OnInit{
       result[this.tbHeader[i].key] = newDato[i][this.tbHeader[i].key];
     }
     this.tbData.push(result);
-  }
+  } 
 
 
 
