@@ -1,5 +1,8 @@
 <app-navbar></app-navbar>
 <div style="text-align: center;">
-  <app-table [tableConfig]= "tbConfig" [DATA] = "tbData"></app-table>
+  <app-table [tableConfig] = "tbConfig" [DATA] = "tbData" (notify) = "CrudOperation($event)"></app-table>
+  <div *ngIf="this.privilegi === 'true'">
+      <app-form [header]= "tbHeader" [valoriInseriti] = "DatoModifica" [formBottone] ="ButtonAggiungi" (notify)= "CrudOperation($event)"></app-form>
+    </div>
 </div>
 <app-footer></app-footer>
