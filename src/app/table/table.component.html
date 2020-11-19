@@ -8,25 +8,27 @@
                         {{head.label}}
                        <span (click) = "SortBy(head.key)"><span [innerHTML]="this.orderIcon"></span></span>
                 </th>
+                <th>
+                        Azioni
+                </th>
         </tr>
         <tr *ngFor="let elemento of this.sliceData ; let j = index">
                 <td *ngFor="let headKey of this.tableConfig.header ; let h =index">
                         {{elemento[headKey.key]}}
                 </td>
+                       <!--  <ng-container *ngIf=" l < 1"> -->
+                                <ng-container *ngFor="let headKey of this.tableConfig.header ; let h =index">
+                                        <ng-container *ngIf="h < 1">
+                                                <td>
+                                        <button class="btn-warning" (click) = "EmitAdd(elemento[headKey.key], headKey.key, 'PRECOMPILA')">Modifica</button>|<button class="btn-dark" (click) = "EmitAdd(elemento[headKey.key], headKey.key, 'ELIMINA')">Elimina</button>
+                                                </td>
+                                        </ng-container>
+                                </ng-container>  
+                       <!--  </ng-container> -->
         </tr>
 </table>
 
 
-<ng-container *ngIf = "this.privilegi === 'true'">
-        <div [style.marginTop.px]= "24">
-                <h3>Aggiungi</h3>
-    
-                <ng-container *ngFor = "let key of tableConfig.header ; let j = index">
-                <input [(ngModel)]= "this.inseriti[j]" required placeholder="{{key.label}}"/> <br>
-                </ng-container>
-                    <button (click)= "AddElement()">Inserisci</button>
-        </div>
-</ng-container>
 
 
     <div>      

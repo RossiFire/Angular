@@ -8,6 +8,7 @@ import { ParcoAutoComponent } from './parco-auto/parco-auto.component';
 import { PrenotazioniComponent } from './prenotazioni/prenotazioni.component';
 import { InfoUtenteComponent } from './info-utente/info-utente.component';
 import { LoginComponent } from './login/login.component';
+import { FormComponent } from './form/form.component';
 
 const routes: Routes = [
   {path : "" , component : LoginComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path : 'parcoauto' , component : ParcoAutoComponent},
   {path : 'prenotazioni' , component : PrenotazioniComponent},
   {path : 'profilo' , component : InfoUtenteComponent},
+  {path : 'form' , component : FormComponent},
   {path : '**' , component : ErroreComponent}
 ];
 

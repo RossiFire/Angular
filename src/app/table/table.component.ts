@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, AfterViewInit, ViewChild, NgModule, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ViewChild, NgModule, OnChanges, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import * as _ from "lodash";
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-
+import { EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -11,23 +12,23 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 export class TableComponent implements OnInit, OnChanges {
   
-  constructor() {}
+  constructor(private router : Router) {}
   ngOnInit(): void {
     this.sliceData = this.DATA.slice(0, 3);
     this.inseriti = new Array(this.tableConfig.header.length);
     this.privilegi = sessionStorage.getItem("privilegi");
   }
   ngOnChanges():void {
-    this.sliceData = null;
+    this.sliceData = this.DATA.slice(0,3);
   }
 
   privilegi;
   orderIcon : string = '<i class="fas fa-sort-up"></i>';
-  
   @Input() tableConfig: TableConfig;
-  
   @Input() DATA : any[];
   sliceData;
+
+  @Output() notify : EventEmitter <Object> = new EventEmitter();
 
 
 
@@ -75,7 +76,7 @@ export class TableComponent implements OnInit, OnChanges {
 
   // sorting
   ASC : boolean = true;
-  SortBy(column, event : PageEvent) : void{
+  SortBy(column) : void{
     let temp;
     if(this.ASC){
       this.sliceData = _.sortBy(this.DATA, [column]).reverse().slice(0,this.DATA.length);
@@ -86,8 +87,18 @@ export class TableComponent implements OnInit, OnChanges {
     }
   }
 
+    // OutPut function/ CRUD operation
+    EmitAdd(id, col : string, op : string): void{
+      this.notify.emit({'id' : id , 'col' : col, 'op' : op});
+    }
 
 
+
+
+
+
+
+  
 }
 
 
