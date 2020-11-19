@@ -15,7 +15,6 @@ export class TableComponent implements OnInit, OnChanges {
   constructor(private router : Router) {}
   ngOnInit(): void {
     this.sliceData = this.DATA.slice(0, 3);
-    this.inseriti = new Array(this.tableConfig.header.length);
     this.privilegi = sessionStorage.getItem("privilegi");
   }
   ngOnChanges():void {
@@ -30,22 +29,6 @@ export class TableComponent implements OnInit, OnChanges {
 
   @Output() notify : EventEmitter <Object> = new EventEmitter();
 
-
-
-  //nuovi data
-  inseriti : any[];
-  AddElement() : void{
-    let newDato : any[] = [];
-      for(let i = 0; i<this.tableConfig.header.length ; i++){
-        newDato.push({[this.tableConfig.header[i].key] : this.inseriti[i]});
-      }
-
-    var result = {};
-      for (var i = 0; i < newDato.length; i++) {
-        result[this.tableConfig.header[i].key] = newDato[i][this.tableConfig.header[i].key];
-      }
-    this.DATA.push(result);
-  }
 
   //pagination
   OnPageChange(event: PageEvent) {

@@ -16,15 +16,16 @@
                 <td *ngFor="let headKey of this.tableConfig.header ; let h =index">
                         {{elemento[headKey.key]}}
                 </td>
-                       <!--  <ng-container *ngIf=" l < 1"> -->
-                                <ng-container *ngFor="let headKey of this.tableConfig.header ; let h =index">
-                                        <ng-container *ngIf="h < 1">
-                                                <td>
-                                        <button class="btn-warning" (click) = "EmitAdd(elemento[headKey.key], headKey.key, 'PRECOMPILA')">Modifica</button>|<button class="btn-dark" (click) = "EmitAdd(elemento[headKey.key], headKey.key, 'ELIMINA')">Elimina</button>
-                                                </td>
+                <ng-container *ngFor="let headKey of this.tableConfig.header ; let h =index">
+                        <ng-container *ngIf="h < 1">
+                                <td>
+                                        <ng-container *ngIf="this.privilegi === 'true'">
+                                                <button class="btn-warning" (click)="EmitAdd(elemento[headKey.key], headKey.key, 'PRECOMPILA')">Modifica</button>|
+                                                <button class="btn-dark" (click)="EmitAdd(elemento[headKey.key], headKey.key, 'ELIMINA')">Elimina</button>
                                         </ng-container>
-                                </ng-container>  
-                       <!--  </ng-container> -->
+                                </td>
+                        </ng-container>
+                </ng-container>
         </tr>
 </table>
 

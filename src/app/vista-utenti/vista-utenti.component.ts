@@ -13,8 +13,10 @@ export class VistaUtentiComponent implements OnInit{
   constructor(private route : Router) { }
   ngOnInit(): void {
     this.buttonAggiungi = true;
+    this.privilegi = sessionStorage.getItem("privilegi");
   }
 
+  privilegi;
 
   tbOrder : TableOrder = {column : "id" , orderType : "ASC"}
   tbSearch : TableSearch = { column : "" , value : ""}
@@ -75,11 +77,10 @@ export class VistaUtentiComponent implements OnInit{
   }
 
   temp : any[];
-  // array per precompilare form
   datoModifica : any[] = new Array();
   buttonAggiungi : boolean = true;
   cercaValori : any[];
-
+  idInMemoria;
   CrudOperation(values){
     switch(values['op']){
       case 'ELIMINA':
@@ -95,22 +96,28 @@ export class VistaUtentiComponent implements OnInit{
           for(let i = 0; i<this.tbHeader.length; i++){
             this.datoModifica.push(this.temp[this.tbHeader[i].key]);
           }
+          for(let i = 0; i<this.tbData.length; i++){
+            if(this.temp[this.tbHeader[0].key] === this.tbData[i][this.tbHeader[0].key]){
+              this.idInMemoria =  this.temp[this.tbHeader[0].key]
+              }
+          }
           break;
       case 'MODIFICA':
           this.temp = _.find(this.tbData, [values['col'], values['id']]);
           for(let i = 0; i<this.tbData.length; i++){
-              if(values['id'] === this.tbData[i][this.tbHeader[0].key]){
-                //modifica utente
+            if(this.idInMemoria === this.tbData[i][this.tbHeader[0].key]){
                 for(let h=0; h<this.tbHeader.length; h++){
                   this.tbData[i][this.tbHeader[h].key] = this.datoModifica[h];
                 }
               }
           }
+          this.buttonAggiungi = true;
+          this.datoModifica = new Array();
           break;
       default :
-          console.log("errore DEFAULT");
+      console.log("errore DEFAULT");
+      break;
     }
-    console.log("ciao")
   };
   
 

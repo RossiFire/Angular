@@ -13,7 +13,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   username = ''
   password = ''
-  autenticato = true;
   errore = "Spiacente, nome o password sbagliata";
   privilegi = true;
 
@@ -23,7 +22,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       sessionStorage.setItem("privilegi", this.privilegi.toString());
       this.router.navigate(['utenti']);
     }else{
-      this.autenticato = false;
+      sessionStorage.setItem("utente", this.username);
+      this.privilegi = false;
+      sessionStorage.setItem("privilegi", this.privilegi.toString());
+      this.router.navigate(['utenti']);
     }
   }
 

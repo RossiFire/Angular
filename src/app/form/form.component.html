@@ -3,14 +3,14 @@
 <div style="margin-top: 25px;">
         <h3>Aggiungi</h3>
         <ng-container *ngFor = "let key of header ; let j = index">
-            <input [(ngModel)]= "this.valoriInseriti[j]" required placeholder="{{key.label}}" value="this.valoriInseriti[i]"/> <br>
             <ng-container *ngIf="j<1">
                 <div *ngIf="formBottone; else modbtn">
                     <button (click)= "sendValue(this.valoriInseriti, key.key, 'AGGIUNGI')">Aggiungi</button>
                 </div>
                 <ng-template #modbtn>
-                    <button (click)= "sendValue(this.valoriInseriti, key.key, 'MODIFICA')">Apporta Modifica</button>
+                   <div><button (click)= "sendValue(this.valoriInseriti, key.key, 'MODIFICA')">Apporta Modifica</button></div>
                 </ng-template>
             </ng-container>
+            <input [(ngModel)]= "this.valoriInseriti[j]" required placeholder="{{key.label}}" value="this.valoriInseriti[i]"/> <br>
         </ng-container>
 </div>
