@@ -10,10 +10,11 @@ export class InfoUtenteComponent implements OnInit {
 
   constructor(private router : ActivatedRoute) { }
   ngOnInit(): void {
-    //  this.userAttuale = this.router.snapshot.params['userAttuale'];
+    this.Username = sessionStorage.getItem("UsernameAttuale");
+    this.UserAttuale = { 'id' : '1', 'nome' : this.Username, 'cognome' : 'Rosh', 'password' : 'ciap'};
   }
-
-  userAttuale = { 'id' : '1', 'nome' : 'Daniele', 'cognome' : 'Rosh', 'password' : 'ciap'};
+  Username ;
+  UserAttuale; 
 
   
 }

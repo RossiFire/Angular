@@ -79,7 +79,6 @@ export class PrenotazioniComponent implements OnInit {
 
 
 
-    
 
   Temp : any[];
   DatoModifica : any[] = new Array();

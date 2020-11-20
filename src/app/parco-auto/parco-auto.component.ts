@@ -88,8 +88,6 @@ export class ParcoAutoComponent implements OnInit {
 
 
 
-
-
   Temp : any[];
   DatoModifica : any[] = new Array();
   ButtonAggiungi : boolean = true;
@@ -148,13 +146,6 @@ export class ParcoAutoComponent implements OnInit {
     }
     this.tbData.push(result);
   } 
-
-
-
-
-
-
-
-
+  
 
 }
