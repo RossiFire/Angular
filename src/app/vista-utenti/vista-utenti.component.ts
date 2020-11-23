@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import * as _ from "lodash";
 import { UtentiDataService } from '../services/data/utenti-data.service';
 import { NativeDateModule } from '@angular/material/core';
+import { async } from 'q';
 @Component({
   selector: 'app-vista-utenti',
   templateUrl: './vista-utenti.component.html',
@@ -18,22 +19,27 @@ export class VistaUtentiComponent implements OnInit{
     this.UtentiDataService.getUtenti().subscribe(
       response =>{
         this.tbData = response; 
-      }
-    );
+      });
   }
 
   ngOnInit(): void {
+
     let mom;
     for(let i = 0; i<this.tbData.length; i++){
       for(let j=0; j<this.tbHeader.length;j++){
         if(this.tbHeader[j].key === 'tipoutente'){
-          mom = this.tbData[i][this.tbHeader[j].key]['tipo'];
+          mom = _.get(this.tbData[i], this.tbHeader[j].key);
           console.log(mom);
           this.tbData[i][this.tbHeader[j].key] = mom;
         }
       }
     }
   }
+
+
+
+
+
 
 
   privilegi;
@@ -43,7 +49,7 @@ export class VistaUtentiComponent implements OnInit{
   tbPagination : TablePagination = {itemPerPage : 3, itemPerPageOption : [3,6,10]}
   
   
-    tbHeader : TableHeader[] =  [
+    tbHeader : any[] =  [
       { key : "id", label : "ID"},
       { key : "nome", label : "Nome"},
       { key : "cognome", label : "Cognome"},
@@ -133,7 +139,6 @@ export class VistaUtentiComponent implements OnInit{
       error => this.handlerError(error)
     );
   }
-
 
   handlerResponse(response){
     this.messaggio = response;
