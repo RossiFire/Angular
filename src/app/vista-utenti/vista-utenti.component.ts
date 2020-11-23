@@ -1,23 +1,44 @@
-import { Component, OnInit, AfterViewInit, ɵConsole, OnChanges} from '@angular/core';
+import { Component, OnInit, AfterViewInit, ɵConsole, DoCheck, OnChanges} from '@angular/core';
 import { TableConfig, TableHeader, TableOrder, TableSearch, TablePagination} from '../table/table.component';
 import { ButtonConfig } from '../button/button.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as _ from "lodash";
-import { ArrayType } from '@angular/compiler';
+import { UtentiDataService } from '../services/data/utenti-data.service';
+import { NativeDateModule } from '@angular/material/core';
 @Component({
   selector: 'app-vista-utenti',
   templateUrl: './vista-utenti.component.html',
   styleUrls: ['./vista-utenti.component.css']
 })
 export class VistaUtentiComponent implements OnInit{
-  constructor(private route : Router) { }
-  ngOnInit(): void {
+  constructor(private route : Router, private UtentiDataService : UtentiDataService) {
     this.buttonAggiungi = true;
     this.privilegi = sessionStorage.getItem("privilegi");
+    this.UserAttuale = sessionStorage.getItem("UsernameAttuale");
+    this.UtentiDataService.getUtenti().subscribe(
+      response =>{
+        this.tbData = response; 
+      }
+    );
   }
 
-  privilegi;
+  ngOnInit(): void {
+    let nattimo;
+    for(let i = 0; i<this.tbData.length; i++){
+      for(let j=0; j<this.tbHeader.length;j++){
+        if(this.tbHeader[j].key === 'tipoutente'){
+          console.log(nattimo);
+          nattimo = this.tbData[i][this.tbHeader[j].key]['tipo'];
+          this.tbData[i][this.tbHeader[j].key] = nattimo;
+        }
+      }
+    }
+  }
 
+
+
+  privilegi;
+  UserAttuale;
   tbOrder : TableOrder = {column : "id" , orderType : "ASC"}
   tbSearch : TableSearch = { column : "" , value : ""}
   tbPagination : TablePagination = {itemPerPage : 3, itemPerPageOption : [3,6,10]}
@@ -27,41 +48,12 @@ export class VistaUtentiComponent implements OnInit{
       { key : "id", label : "ID"},
       { key : "nome", label : "Nome"},
       { key : "cognome", label : "Cognome"},
-      { key : "nascita", label : "Anno di Nascita"}
+      { key : "nascita", label : "Anno di Nascita"},
+      { key : "tipoutente", label : "Tipo Utente"},
+      { key : "password", label : "Password"}
     ]
 
-    tbData : any[] = [
-      {
-        "id" : "1",
-        "nome" : "Daniele",
-        "cognome" : "Rossino",
-        "nascita" : "10/09/2001"
-      },
-      {
-        "id" : "2",
-        "nome" : "Alice",
-        "cognome" : "Senders",
-        "nascita" : "12/02/2000"
-      },
-      {
-        "id" : "3",
-        "nome" : "Bob",
-        "cognome" : "Mani",
-        "nascita" : "20/11/1999"
-      },
-      {
-        "id" : "4",
-        "nome" : "Josh",
-        "cognome" : "Bosh",
-        "nascita" : "12/01/1979"
-      },
-      {
-        "id" : "5",
-        "nome" : "Mallory",
-        "cognome" : "Hackerman",
-        "nascita" : "10/09/1980"
-      },
-    ]
+    tbData : any[] = [];
 
   
   
@@ -134,6 +126,25 @@ export class VistaUtentiComponent implements OnInit{
   } 
 
 
+
+
+  getSaluti(){
+    this.UtentiDataService.getUtenti().subscribe(
+      response => this.handlerResponse(response),
+      error => this.handlerError(error)
+    );
+  }
+
+
+  handlerResponse(response){
+    this.messaggio = response;
+  }
+
+  handlerError(error){
+    this.messaggio = error.error.message;
+  }
+
+  messaggio;
 
 
 }

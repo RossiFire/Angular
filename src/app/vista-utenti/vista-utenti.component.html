@@ -1,5 +1,7 @@
 <app-navbar></app-navbar>
+{{messaggio}}
 <div style="text-align: center;">
+  <primo-button [buttonConfig] = "btnConfig" (click) = "getSaluti()"></primo-button>
   <app-table [tableConfig]= "tbConfig" [DATA] = "tbData" (notify) = "CrudOperation($event)"></app-table>
   <div *ngIf="this.privilegi === 'true'">
     <app-form [header]= "tbHeader" [valoriInseriti] = "datoModifica" [formBottone] ="buttonAggiungi" (notify)= "CrudOperation($event)"></app-form>
