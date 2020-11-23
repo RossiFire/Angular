@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ɵConsole, DoCheck, OnChanges} from '@angular/core';
+import { Component, OnInit, AfterViewInit, ɵConsole, AfterContentChecked} from '@angular/core';
 import { TableConfig, TableHeader, TableOrder, TableSearch, TablePagination} from '../table/table.component';
 import { ButtonConfig } from '../button/button.component';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -23,18 +23,17 @@ export class VistaUtentiComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    let nattimo;
+    let mom;
     for(let i = 0; i<this.tbData.length; i++){
       for(let j=0; j<this.tbHeader.length;j++){
         if(this.tbHeader[j].key === 'tipoutente'){
-          console.log(nattimo);
-          nattimo = this.tbData[i][this.tbHeader[j].key]['tipo'];
-          this.tbData[i][this.tbHeader[j].key] = nattimo;
+          mom = this.tbData[i][this.tbHeader[j].key]['tipo'];
+          console.log(mom);
+          this.tbData[i][this.tbHeader[j].key] = mom;
         }
       }
     }
   }
-
 
 
   privilegi;
