@@ -43,7 +43,7 @@ export class VistaUtentiComponent implements OnInit{
   buttonAggiungi : boolean = true;
   cercaValori : any[];
   idInMemoria;
-  UtenteModel : UtenteModel = {id: 0, nome: "", cognome: "", tipoutente: {id : 1, tipo : ""}, nascita : new Date(), password: "" };
+  UtenteModel : UtenteModel = {id: 0, nome: "", cognome: "", tipoutente: {id : 1, tipo : ""}, nascita : "", password: "" };
 
 
   obs : Observable<any[]>;
@@ -134,10 +134,10 @@ export class VistaUtentiComponent implements OnInit{
 
     this.UtentiDataService.AddUtente(this.UtenteModel).subscribe(
       response => {
-        console.log("Tutto va" + response);
+        console.log("Tutto va,  " + response);
       },
       error =>{
-        console.log("Non va" + error.error.message);
+        console.log("Non va, " + error.error.message);
       }
     )
 

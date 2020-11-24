@@ -4,7 +4,7 @@ export interface UtenteModel{
     'nome': string;
     'cognome': string;
     'tipoutente' : TipoUtente;
-    'nascita' : Date;
+    'nascita' : string;
     'password' : string;
 }
 
