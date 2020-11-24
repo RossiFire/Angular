@@ -15,15 +15,10 @@ export class UtentiDataService {
   getUtenti(){
     return this.http.get<any[]>(`${this.baseUrl}/customer`);
   }
+  /* const data = JSON.stringify(this.U); */
 
   AddUtente(Utente : UtenteModel) : Observable<void>{
-    /* const data = JSON.stringify(this.U); */
-    return this.http.post<void>
-    (`${this.baseUrl}/aggiungi`, this.U,
-      {headers:
-       {'Content-Type':'application/json; charset=utf-8'}
-      }
-    );
+    return this.http.post<void>(`${this.baseUrl}/aggiungi`, this.U);
   }
 
 }
