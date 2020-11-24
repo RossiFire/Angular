@@ -131,12 +131,13 @@ export class VistaUtentiComponent implements OnInit{
       this.UtenteModel[this.tbHeader[i].key] = newDato[i][this.tbHeader[i].key];
     }
     console.log(this.UtenteModel);
+
     this.UtentiDataService.AddUtente(this.UtenteModel).subscribe(
       response => {
-        console.log(response);
+        console.log("Tutto va" + response);
       },
       error =>{
-        console.log(error);
+        console.log("Non va" + error.error.message);
       }
     )
 

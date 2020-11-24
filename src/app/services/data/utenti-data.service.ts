@@ -8,17 +8,15 @@ import { Observable } from 'rxjs';
 })
 export class UtentiDataService {
 
+  baseUrl = `http://localhost:8050/utenti`;
   constructor(private http : HttpClient) { }
 
   getUtenti(){
-    return this.http.get<any[]>(`http://localhost:8050/utenti/customer`);
+    return this.http.get<any[]>(`${this.baseUrl}/customer`);
   }
 
-  AddUtente(Utente : UtenteModel){
-    return this.http.put<string>(`http://localhost:8050/utenti/aggiungi`, Utente);
+  AddUtente(Utente : UtenteModel) : Observable<void>{
+    return this.http.put<void>(`${this.baseUrl}/aggiungi  `, Utente);
   }
 
-  AddNattimo(stringa : string) : Observable<string>{
-    return this.http.post<string>(`http://localhost:8050/utenti/prova`, stringa);
-  }
 }
