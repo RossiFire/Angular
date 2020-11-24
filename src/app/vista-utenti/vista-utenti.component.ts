@@ -36,7 +36,7 @@ export class VistaUtentiComponent implements OnInit{
 
   }
 
-
+  proova = "";
 
   temp : any[];
   datoModifica : any[] = new Array();
@@ -139,25 +139,10 @@ export class VistaUtentiComponent implements OnInit{
         console.log(error);
       }
     )
+
+
+
   } 
-
-
-/*   getUtenti(){
-    this.UtentiDataService.getUtenti().subscribe(
-      response => this.handlerResponse(response),
-      error => this.handlerError(error)
-    );
-  }
-
-  handlerResponse(response){
-    this.messaggio = response;
-  }
-
-  handlerError(error){
-    this.messaggio = error.error.message;
-  }
-
-  messaggio; */
 
 
 }

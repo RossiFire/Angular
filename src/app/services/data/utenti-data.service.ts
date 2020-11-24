@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TableHeader } from '../../table/table.component';
 import { UtenteModel } from 'src/app/UtenteModel';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,5 +16,9 @@ export class UtentiDataService {
 
   AddUtente(Utente : UtenteModel){
     return this.http.put<string>(`http://localhost:8050/utenti/aggiungi`, Utente);
+  }
+
+  AddNattimo(stringa : string) : Observable<string>{
+    return this.http.post<string>(`http://localhost:8050/utenti/prova`, stringa);
   }
 }
