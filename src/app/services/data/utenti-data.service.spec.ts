@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { UtentiDataService } from './utenti-data.service';
 
 describe('UtentiDataService', () => {

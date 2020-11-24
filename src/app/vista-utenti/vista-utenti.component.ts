@@ -6,6 +6,8 @@ import * as _ from "lodash";
 import { UtentiDataService } from '../services/data/utenti-data.service';
 import { NativeDateModule } from '@angular/material/core';
 import { async } from 'q';
+import { Observable } from 'rxjs';
+import { UtenteModel } from '../UtenteModel';
 @Component({
   selector: 'app-vista-utenti',
   templateUrl: './vista-utenti.component.html',
@@ -13,35 +15,38 @@ import { async } from 'q';
 })
 export class VistaUtentiComponent implements OnInit{
   constructor(private route : Router, private UtentiDataService : UtentiDataService) {
-    this.buttonAggiungi = true;
-    this.privilegi = sessionStorage.getItem("privilegi");
-    this.UserAttuale = sessionStorage.getItem("UsernameAttuale");
-    this.UtentiDataService.getUtenti().subscribe(
-      response =>{
-        this.tbData = response; 
-      });
   }
 
   ngOnInit(): void {
+    this.buttonAggiungi = true;
+    this.privilegi = sessionStorage.getItem("privilegi");
+    this.UserAttuale = sessionStorage.getItem("UsernameAttuale");
 
-    let mom;
-    for(let i = 0; i<this.tbData.length; i++){
-      for(let j=0; j<this.tbHeader.length;j++){
-        if(this.tbHeader[j].key === 'tipoutente'){
-          mom = _.get(this.tbData[i], this.tbHeader[j].key);
-          console.log(mom);
-          this.tbData[i][this.tbHeader[j].key] = mom;
+    this.obs = this.UtentiDataService.getUtenti();
+    this.obs.subscribe(x => {
+      for(let i = 0; i<x.length; i++){
+        for(let j=0; j<this.tbHeader.length;j++){
+          if(this.tbHeader[j].key === 'tipoutente'){
+            x[i][this.tbHeader[j].key] = x[i][this.tbHeader[j].key]['tipo'];
+          }
         }
       }
-    }
+      this.tbData = x;
+    });
+
   }
 
 
 
+  temp : any[];
+  datoModifica : any[] = new Array();
+  buttonAggiungi : boolean = true;
+  cercaValori : any[];
+  idInMemoria;
+  UtenteModel : UtenteModel = {id: 0, nome: "", cognome: "", tipoutente: {id : 1, tipo : ""}, nascita : new Date(), password: "" };
 
 
-
-
+  obs : Observable<any[]>;
   privilegi;
   UserAttuale;
   tbOrder : TableOrder = {column : "id" , orderType : "ASC"}
@@ -73,11 +78,6 @@ export class VistaUtentiComponent implements OnInit{
     customCss : {'background-color' : "red", 'color' : "yellow"}
   }
 
-  temp : any[];
-  datoModifica : any[] = new Array();
-  buttonAggiungi : boolean = true;
-  cercaValori : any[];
-  idInMemoria;
   CrudOperation(values){
     switch(values['op']){
       case 'ELIMINA':
@@ -118,22 +118,31 @@ export class VistaUtentiComponent implements OnInit{
   };
   
 
+
   Aggiungi(values){
     let newDato : any[] = [];
     for(let i = 0; i<this.tbHeader.length ; i++){
       newDato.push({[this.tbHeader[i].key] : values['id'][i]});
     }
-    var result = {};
     for (var i = 0; i < newDato.length; i++) {
-      result[this.tbHeader[i].key] = newDato[i][this.tbHeader[i].key];
+      if(this.tbHeader[i].key === 'tipoutente'){
+        this.UtenteModel[this.tbHeader[i].key] = {id : 1, tipo :newDato[i][this.tbHeader[i].key]};
+      }
+      this.UtenteModel[this.tbHeader[i].key] = newDato[i][this.tbHeader[i].key];
     }
-    this.tbData.push(result);
+    console.log(this.UtenteModel);
+    this.UtentiDataService.AddUtente(this.UtenteModel).subscribe(
+      response => {
+        console.log(response);
+      },
+      error =>{
+        console.log(error);
+      }
+    )
   } 
 
 
-
-
-  getSaluti(){
+/*   getUtenti(){
     this.UtentiDataService.getUtenti().subscribe(
       response => this.handlerResponse(response),
       error => this.handlerError(error)
@@ -148,7 +157,7 @@ export class VistaUtentiComponent implements OnInit{
     this.messaggio = error.error.message;
   }
 
-  messaggio;
+  messaggio; */
 
 
 }

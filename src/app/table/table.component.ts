@@ -53,7 +53,6 @@ export class TableComponent implements OnInit, OnChanges {
   FilterByColumn() : void{
     let colonna : TableHeader[] = _.filter(this.tableConfig.header, {'label' : this.col});
     this.sliceData = _.filter(this.DATA, [ colonna[0].key , this.tableConfig.search.value]);
-    console.log(this.sliceData);
   }
 
 
