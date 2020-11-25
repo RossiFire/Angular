@@ -50,7 +50,7 @@ export class VistaUtentiComponent implements OnInit{
     this.buttonAggiungi = true;
     this.privilegi = sessionStorage.getItem("privilegi");
     this.UserAttuale = sessionStorage.getItem("UsernameAttuale");
-
+    this.tbData = [];
     this.obs = this.UtentiDataService.getUtenti();
     this.obs.subscribe(x => {
       for(let i = 0; i<x.length; i++){
@@ -63,10 +63,6 @@ export class VistaUtentiComponent implements OnInit{
       this.tbData = x;
     });
   }
-
-
-
-
 
 
   SottoScrivi(){
@@ -84,12 +80,6 @@ export class VistaUtentiComponent implements OnInit{
   }
 
 
-
-
-
-
-
-
   CrudOperation(values){
     switch(values['op']){
       case 'ELIMINA':
@@ -97,15 +87,16 @@ export class VistaUtentiComponent implements OnInit{
           break;
       case 'AGGIUNGI':
           this.Aggiungi(values);
-          this.UtentiDataService.AddUtente(this.UtenteModel).subscribe(
-            response => {
-              alert("Utente aggiunto con successo!")
-            },
-            error =>{
-              alert("Oops! Qualcosa è andato storto");
-            }
-            )
-          this.SottoScrivi();
+          if(this.UtenteModel.nome != ""){
+            this.UtentiDataService.AddUtente(this.UtenteModel).subscribe(
+              response => {
+                alert("Utente inserito con successo!");
+                this.SottoScrivi();
+              },
+              error =>{
+                alert("Oops! Qualcosa è andato storto");
+              });
+          }
           this.UtenteModel = {id: 0, nome: "", cognome: "", tipoutente: {id: 1 , tipo : ""}, nascita : new Date(), password: ""};
           this.newDato = [];
           break;
@@ -125,15 +116,17 @@ export class VistaUtentiComponent implements OnInit{
           break;
       case 'MODIFICA':
           this.Aggiungi(values);
-          this.UtentiDataService.AggiornaUtente(this.UtenteModel).subscribe(
-            response =>{
-              alert("Utente modificato con successo!");
-            },
-            error =>{
-              alert("Oops! L'utente non è stato modificato");
-            }
-          );
-          this.SottoScrivi(); 
+          if(this.UtenteModel.nome != ""){
+            this.UtentiDataService.AggiornaUtente(this.UtenteModel).subscribe(
+              response =>{
+                alert("Utente modificato con successo!");
+                this.SottoScrivi();
+              },
+              error =>{
+                alert("Oops! L'utente non è stato modificato");
+              }
+            );
+          }
           this.UtenteModel = {id: 0, nome: "", cognome: "", tipoutente: {id: 1 , tipo : ""}, nascita : new Date(), password: ""};
           this.newDato = [];
           this.buttonAggiungi = true;
@@ -153,6 +146,16 @@ export class VistaUtentiComponent implements OnInit{
     }
     for (var i = 0; i < this.newDato.length; i++) {
       if(this.tbHeader[i].key === 'tipoutente'){
+          if(this.newDato[i][this.tbHeader[i].key] === 'ADMIN' || this.newDato[i][this.tbHeader[i].key] === 'CUSTOMER'){
+            if(this.newDato[i][this.tbHeader[i].key] === 'CUSTOMER'){
+              this.UtenteModel[this.tbHeader[i].key]['id'] = 2;
+            }
+            this.UtenteModel[this.tbHeader[i].key]['tipo'] = this.newDato[i][this.tbHeader[i].key];
+          }else{
+            alert("Per favore inserire 'ADMIN' o 'CUSTOMER'");
+            this.UtenteModel = {id: 0, nome: "", cognome: "", tipoutente: {id: 1 , tipo : ""}, nascita : new Date(), password: ""};
+            break;
+          }
         this.UtenteModel[this.tbHeader[i].key]['tipo'] = this.newDato[i][this.tbHeader[i].key];
       }else{
         if(this.tbHeader[i].key === 'nascita'){
@@ -169,6 +172,7 @@ export class VistaUtentiComponent implements OnInit{
       this.UtentiDataService.EliminaUtente(id).subscribe(
         response => {
           alert("Utente eliminato con successo!");
+          this.SottoScrivi();
         },
         error =>{
           alert("Oops! L'utente non è stato eliminato");

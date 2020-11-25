@@ -20,10 +20,7 @@ export class TableComponent implements OnInit, OnChanges{
   sliceData;
   @Output() notify : EventEmitter <Object> = new EventEmitter();
 
-  D2 : any[];
-  ngOnChanges(changes : SimpleChanges):void {
-    console.log(changes['DATA'].previousValue);
-    console.log(changes['DATA'].currentValue);
+  ngOnChanges():void {
     this.sliceData = this.DATA.slice(0,3);
   }
   

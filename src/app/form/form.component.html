@@ -11,6 +11,8 @@
                    <div><button (click)= "sendValue(this.valoriInseriti, key.key, 'MODIFICA')">Apporta Modifica</button></div>
                 </ng-template>
             </ng-container>
-            <input [(ngModel)]= "this.valoriInseriti[j]" required placeholder="{{key.label}}" value="this.valoriInseriti[i]"/> <br>
+            <ng-container *ngIf="key.key != 'id'">
+                <input [(ngModel)]= "this.valoriInseriti[j]" required placeholder="{{key.label}}" value="this.valoriInseriti[i]"/> <br>
+            </ng-container>
         </ng-container>
 </div>

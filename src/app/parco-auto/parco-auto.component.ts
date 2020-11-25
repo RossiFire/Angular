@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TableConfig, TableHeader, TableOrder , TablePagination, TableSearch } from '../table/table.component';
 import { Route, Router, ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
+import { MezziDataService } from '../services/data/mezzi-data.service';
+import { MezzoModel } from 'src/MezzoModel';
 @Component({
   selector: 'app-parco-auto',
   templateUrl: './parco-auto.component.html',
@@ -9,83 +11,62 @@ import * as _ from 'lodash';
 })
 export class ParcoAutoComponent implements OnInit {
 
-  constructor(private route : Router) { }
+  constructor(private route : Router, private MezziDataService : MezziDataService) { }
 
-  ngOnInit(): void {
-    this.ButtonAggiungi = true;
-    this.privilegi = sessionStorage.getItem("privilegi");
-  }
-
+  MezzoModel : MezzoModel = {id: 1, casaCostr: "", modello: "", tipomezzo: {id: 1 , tipo : ""}, targa : ""};
+  newDato : any[] = [];
+  UserAttuale;
   privilegi;
   tbOrder : TableOrder = {column : "id" , orderType : "ASC"}
   tbSearch : TableSearch = { column : "" , value : ""}
   tbPagination : TablePagination = {itemPerPage : 3, itemPerPageOption : [3,6,10]}
-  
-  
     tbHeader : TableHeader[] =  [
       { key : "id", label : "ID"},
-      { key : "casa", label : "Casa Costruttrice"},
+      { key : "casaCostr", label : "Casa Costruttrice"},
       { key : "modello", label : "Modello"},
-      { key : "targa", label : "Targa"},
-      { key : "immatricolazione", label : "Data Immatricolazione"}
+      { key : "tipomezzo", label : "Tipo Mezzo"},
+      { key : "targa", label : "Targa"}
       
     ]
-
-    tbData : any[] = [
-       {
-        "id" : "1",
-        "casa" : "Renault",
-        "modello" : "Smart",
-        "targa" : "XC YRSDX",
-        "immatricolazione" : "01/01/2000"
-      },
-      {
-        "id" : "2",
-        "casa" : "Hyundai",
-        "modello" : "Asosa",
-        "targa" : "CA 4HDSA",
-        "immatricolazione" : "01/01/2000"
-      },
-      {
-        "id" : "3",
-        "casa" : "Daniele",
-        "modello" : "Rossino",
-        "targa" : "10/09/2001",
-        "immatricolazione" : "01/01/2000"
-      },
-      {
-        "id" : "4",
-        "casa" : "Daniele",
-        "modello" : "Rossino",
-        "targa" : "10/09/2001",
-        "immatricolazione" : "01/01/2000"
-      },
-      {
-        "id" : "5",
-        "casa" : "Daniele",
-        "modello" : "Rossino",
-        "targa" : "10/09/2001",
-        "immatricolazione" : "01/01/2000"
-      },
-      {
-        "id" : "6",
-        "casa" : "Daniele",
-        "modello" : "Rossino",
-        "targa" : "10/09/2001",
-        "immatricolazione" : "01/01/2000"
-      },
-    ]
-
-  
-  
-  tbConfig : TableConfig = {
+    tbData : any[];
+    tbConfig : TableConfig = {
     header : this.tbHeader, order : this.tbOrder,
     search : this.tbSearch, pagination : this.tbPagination
   }
 
 
 
+  ngOnInit(): void {
+    this.ButtonAggiungi = true;
+    this.privilegi = sessionStorage.getItem("privilegi");
+    this.UserAttuale = sessionStorage.getItem("UsernameAttuale");
+    this.MezziDataService.GetMezzi().subscribe(
+      x=>{
+        for(let i = 0; i<x.length; i++){
+          for(let j=0; j<this.tbHeader.length;j++){
+            if(this.tbHeader[j].key === 'tipomezzo'){
+              x[i][this.tbHeader[j].key] = x[i][this.tbHeader[j].key]['tipo'];
+            }
+          }
+        }
+        this.tbData = x;
+      });
+  }
 
+
+  GetMezzi(){
+    this.MezziDataService.GetMezzi().subscribe(
+      x=>{
+        for(let i = 0; i<x.length; i++){
+          for(let j=0; j<this.tbHeader.length;j++){
+            if(this.tbHeader[j].key === 'tipomezzo'){
+              x[i][this.tbHeader[j].key] = x[i][this.tbHeader[j].key]['tipo'];
+            }
+          }
+        }
+        this.tbData = x;
+      });
+  }
 
 
   Temp : any[];
@@ -94,14 +75,34 @@ export class ParcoAutoComponent implements OnInit {
   CercaValori : any[];
   IdInMemoria;
   CrudOperation(values){
-    console.log("AOO");
-    console.log(values);
     switch(values['op']){
       case 'ELIMINA':
-          this.tbData = _.reject(this.tbData, [values['col'], values['id']]);
+        console.log(values['id']);
+          this.MezziDataService.EliminaMezzo(values['id']).subscribe(
+            response =>{
+              alert("Il mezzo è stato eliminato correttamente!");
+              this.GetMezzi();
+            },
+            error =>{
+              alert("Oops! C'è stato un problema");
+            }
+          );
           break;
       case 'AGGIUNGI':
           this.Aggiungi(values);
+          if(this.MezzoModel.casaCostr != ""){
+            this.MezziDataService.AggiungiMezzo(this.MezzoModel).subscribe(
+              Response =>{
+                alert("Mezzo aggiunto Correttamente!");
+                this.GetMezzi();
+              },
+              error =>{
+                alert("Oops! Qualcosa è andato storto");
+              }
+            );
+          }
+          this.newDato =[];
+          this.MezzoModel = {id: 1, casaCostr: "", modello: "", tipomezzo: {id: 1 , tipo : ""}, targa : ""};
           break;
       case 'PRECOMPILA':
           this.ButtonAggiungi = false;
@@ -115,20 +116,27 @@ export class ParcoAutoComponent implements OnInit {
               this.IdInMemoria =  this.Temp[this.tbHeader[0].key]
               }
           }
+          this.MezziDataService.InviaIdUtente(values['id']).subscribe();
           break;
       case 'MODIFICA':
-          this.Temp = _.find(this.tbData, [values['col'], values['id']]);
-          for(let i = 0; i<this.tbData.length; i++){
-            if(this.IdInMemoria === this.tbData[i][this.tbHeader[0].key]){
-                for(let h=0; h<this.tbHeader.length; h++){
-                  this.tbData[i][this.tbHeader[h].key] = this.DatoModifica[h];
-                }
+          this.Aggiungi(values);
+          if(this.MezzoModel.casaCostr != ""){
+            this.MezziDataService.AggiornaMezzo(this.MezzoModel).subscribe(
+              response =>{
+                alert("Mezzo Aggiornato con successo");
+                this.GetMezzi();
+              },
+              error =>{
+                alert("Oops! Mezzo non aggiornato");
               }
-          }
+            );
+          };
+          this.MezzoModel = {id: 1, casaCostr: "", modello: "", tipomezzo: {id: 1 , tipo : ""}, targa : ""};
+          this.newDato = [];
           this.ButtonAggiungi = true;
           this.DatoModifica = new Array();
           break;
-      default :
+      default:
       console.log("errore DEFAULT");
       break;
     }
@@ -136,16 +144,40 @@ export class ParcoAutoComponent implements OnInit {
   
 
   Aggiungi(values){
-    let NewDato : any[] = [];
+
     for(let i = 0; i<this.tbHeader.length ; i++){
-      NewDato.push({[this.tbHeader[i].key] : values['id'][i]});
+      this.newDato.push({[this.tbHeader[i].key] : values['id'][i]});
     }
-    var result = {};
-    for (var i = 0; i < NewDato.length; i++) {
-      result[this.tbHeader[i].key] = NewDato[i][this.tbHeader[i].key];
+    for (var i = 0; i < this.newDato.length; i++) {
+      if(this.tbHeader[i].key === 'tipomezzo'){
+        switch(this.newDato[i][this.tbHeader[i].key]){
+          case 'AUTOVEICOLO':
+              this.MezzoModel[this.tbHeader[i].key]['id'] = 2;
+              break;
+          case 'FURGONE':
+              this.MezzoModel[this.tbHeader[i].key]['id'] = 3;
+              break;
+          case 'SUV':
+              this.MezzoModel[this.tbHeader[i].key]['id'] = 4;
+              break;
+          case 'MINIVAN':
+              break;
+          default :
+              alert("Per favore inserire uno tra i seguenti: 'MINIVAN','AUTOVEICOLO','FURGONE','SUV'");
+              this.MezzoModel = {id: 1, casaCostr: "", modello: "", tipomezzo: {id: 1 , tipo : ""}, targa : ""};
+              break;
+        }
+          this.MezzoModel[this.tbHeader[i].key]['tipo'] = this.newDato[i][this.tbHeader[i].key];
+      }else{
+          this.MezzoModel[this.tbHeader[i].key] = this.newDato[i][this.tbHeader[i].key];
+      }
     }
-    this.tbData.push(result);
   } 
+
+
+
+
+  
   
 
 }
