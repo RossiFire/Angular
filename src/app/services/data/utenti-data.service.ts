@@ -10,15 +10,25 @@ export class UtentiDataService {
 
   baseUrl = `http://localhost:8050/utenti`;
   constructor(private http : HttpClient) { }
-  U : UtenteModel = {id :20, nome : "Dario", cognome : "gigo", tipoutente : {id : 1, tipo : 'ADMIN'}, nascita : "10/09/2001", password : "dieci"};
 
   getUtenti(){
     return this.http.get<any[]>(`${this.baseUrl}/customer`);
   }
-  /* const data = JSON.stringify(this.U); */
 
   AddUtente(Utente : UtenteModel) : Observable<void>{
-    return this.http.post<void>(`${this.baseUrl}/aggiungi`, this.U);
+    return this.http.post<void>(`${this.baseUrl}/aggiungi`, Utente);
+  }
+
+  EliminaUtente(id): Observable<void>{
+    return this.http.get<void>(`${this.baseUrl}/elimina/${id}`);
+  }
+
+  InviaIdUtente(id): Observable<void>{
+    return this.http.get<void>(`${this.baseUrl}/modifica/${id}`);
+  }
+
+  AggiornaUtente(Utente : UtenteModel) : Observable<void>{
+    return this.http.post<void>(`${this.baseUrl}/modifica`, Utente);
   }
 
 }

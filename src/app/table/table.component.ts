@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit, ViewChild, NgModule, OnChanges, Output } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, NgModule, OnChanges, Output, AfterViewChecked, SimpleChanges } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import * as _ from "lodash";
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
@@ -10,24 +10,27 @@ import { Router } from '@angular/router';
   styleUrls: ['./table.component.css']
 })
 
-export class TableComponent implements OnInit, OnChanges {
+export class TableComponent implements OnInit, OnChanges{
   
   constructor(private router : Router) {}
-  ngOnInit(): void {
-    this.sliceData = this.DATA.slice(0, 3);
-    this.privilegi = sessionStorage.getItem("privilegi");
-  }
-  ngOnChanges():void {
-    this.sliceData = this.DATA.slice(0,3);
-  }
-
   privilegi;
   orderIcon : string = '<i class="fas fa-sort-up"></i>';
   @Input() tableConfig: TableConfig;
   @Input() DATA : any[];
   sliceData;
-
   @Output() notify : EventEmitter <Object> = new EventEmitter();
+
+  D2 : any[];
+  ngOnChanges(changes : SimpleChanges):void {
+    console.log(changes['DATA'].previousValue);
+    console.log(changes['DATA'].currentValue);
+    this.sliceData = this.DATA.slice(0,3);
+  }
+  
+  ngOnInit(): void {
+    this.sliceData = this.DATA.slice(0, 3);
+    this.privilegi = sessionStorage.getItem("privilegi");
+  }
 
 
   //pagination
