@@ -57,6 +57,10 @@ export class VistaUtentiComponent implements OnInit{
         for(let j=0; j<this.tbHeader.length;j++){
           if(this.tbHeader[j].key === 'tipoutente'){
             x[i][this.tbHeader[j].key] = x[i][this.tbHeader[j].key]['tipo'];
+          }if(this.tbHeader[j].key === 'password'){
+            if(this.privilegi === 'false'){
+              x[i][this.tbHeader[j].key] = "*****";
+            }
           }
         }
       }
@@ -72,6 +76,10 @@ export class VistaUtentiComponent implements OnInit{
         for(let j=0; j<this.tbHeader.length;j++){
           if(this.tbHeader[j].key === 'tipoutente'){
             x[i][this.tbHeader[j].key] = x[i][this.tbHeader[j].key]['tipo'];
+          }if(this.tbHeader[j].key === 'password'){
+            if(this.privilegi === 'false'){
+              x[i][this.tbHeader[j].key] = "*****";
+            }
           }
         }
       }

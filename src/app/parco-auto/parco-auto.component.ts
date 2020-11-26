@@ -77,7 +77,6 @@ export class ParcoAutoComponent implements OnInit {
   CrudOperation(values){
     switch(values['op']){
       case 'ELIMINA':
-        console.log(values['id']);
           this.MezziDataService.EliminaMezzo(values['id']).subscribe(
             response =>{
               alert("Il mezzo è stato eliminato correttamente!");
@@ -91,6 +90,7 @@ export class ParcoAutoComponent implements OnInit {
       case 'AGGIUNGI':
           this.Aggiungi(values);
           if(this.MezzoModel.casaCostr != ""){
+            console.log(this.MezzoModel);
             this.MezziDataService.AggiungiMezzo(this.MezzoModel).subscribe(
               Response =>{
                 alert("Mezzo aggiunto Correttamente!");

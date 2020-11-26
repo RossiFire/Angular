@@ -13,3 +13,7 @@ table td{
     text-align: center;
     padding: 10px
 }
+.mat-paginator-container{
+    margin-left: auto !important;
+    margin-right: auto !important;
+}

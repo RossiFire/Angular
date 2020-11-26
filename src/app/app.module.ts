@@ -20,6 +20,7 @@ import { ParcoAutoComponent } from './parco-auto/parco-auto.component';
 import { PrenotazioniComponent } from './prenotazioni/prenotazioni.component';
 import { LoginComponent } from './login/login.component';
 import { FormComponent } from './form/form.component';
+import { FormPrenotazioniComponent } from './form-prenotazioni/form-prenotazioni.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +35,7 @@ import { FormComponent } from './form/form.component';
     PrenotazioniComponent,
     LoginComponent,
     FormComponent,
+    FormPrenotazioniComponent,
   ],
   imports: [
     BrowserModule,

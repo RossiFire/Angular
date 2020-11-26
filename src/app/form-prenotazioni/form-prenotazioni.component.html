@@ -1,0 +1,32 @@
+
+<div style="margin-top: 25px;">
+    <h3>Aggiungi</h3>
+    <ng-container *ngFor = "let key of Header ; let j = index">
+        <ng-container *ngIf="j<1">
+            <div *ngIf="formBottone; else modbtn">
+                <button (click)= "sendValue(this.valoriInseriti, key.key, 'AGGIUNGI')">Aggiungi</button>
+            </div>
+            <ng-template #modbtn>
+               <div><button (click)= "sendValue(this.valoriInseriti, key.key, 'MODIFICA')">Apporta Modifica</button></div>
+            </ng-template>
+        </ng-container>
+        <ng-container *ngIf="key.key != 'id'">
+            <ng-container *ngIf="key.key === 'utentePrenotato'; else mezzoCheck">
+                <select [(ngModel)]= "this.valoriInseriti[j]">
+                <option *ngFor="let utente of UtentiData; let u = index" value="{{utente.id}}" >{{utente.nome}}</option>
+                </select> <br>
+            </ng-container>
+            <ng-template #mezzoCheck>
+                <ng-container *ngIf="key.key === 'mezzoPrenotato'; else input">
+                    <select [(ngModel)]= "this.valoriInseriti[j]">
+                        <option *ngFor="let mezzo of MezziData ; let m = index" value="{{mezzo.id}}" >{{mezzo.casaCostr}} {{mezzo.modello}}</option>
+                    </select> <br>
+                </ng-container>
+            </ng-template>
+            <ng-template #input>
+                <input [(ngModel)]= "this.valoriInseriti[j]" required placeholder="{{key.label}}" value="this.valoriInseriti[i]"/> <br>
+            </ng-template>
+        </ng-container>
+    </ng-container>
+</div>
+

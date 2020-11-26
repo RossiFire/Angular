@@ -1,9 +1,10 @@
+
 <app-navbar></app-navbar>
 <div style="text-align: center;">
-  <app-table [tableConfig]= "tbConfig" [DATA] = "tbData" (notify) = "CrudOperation($event)"></app-table>
-  <div *ngIf="this.Privilegi === 'true'">
-      <app-form [header]= "tbHeader" [valoriInseriti] = "DatoModifica" [formBottone] ="ButtonAggiungi" (notify)= "CrudOperation($event)"></app-form>
-    </div>
+  <app-table [tableConfig] = "tbConfig" [DATA]= "tbData" (notify) = "CrudOperation($event)"></app-table>
+  <ng-container *ngIf="Privilegi === 'true'">
+    <app-form-prenotazioni [Header]= "tbHeader" [valoriInseriti]= "DatoModifica" [formBottone]= "ButtonAggiungi" 
+    (notify)= "CrudOperation($event)" [UtentiData]= "UtentiData" [MezziData]= "MezziData"></app-form-prenotazioni>
+  </ng-container>
 </div>
 <app-footer></app-footer>
-
