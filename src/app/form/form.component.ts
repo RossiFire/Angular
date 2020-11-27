@@ -9,16 +9,20 @@ import { MezzoModel } from 'src/MezzoModel';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css']
 })
-export class FormComponent implements OnInit {
+export class FormComponent{
+  constructor() {}
 
-  constructor() { }
-  ngOnInit(): void {}
+  /*--------------- Output Operazioni CRUD ----------------*/ 
+  /*------------------------------------------------------ */
   @Output() notify : EventEmitter <Object> = new EventEmitter();
+ 
+ 
+  /*---------------- Set/Precompila Form ------------------*/ 
+  /*------------------------------------------------------ */
   @Input() header : TableHeader;
   @Input() valoriInseriti : any[] = new Array();
   @Input() formBottone : boolean;
-
-  dataId;
+  
   
   sendValue(data : any[], col: string, op : string){
     this.notify.emit({'id' : this.valoriInseriti , 'col' : col , 'op' : op});

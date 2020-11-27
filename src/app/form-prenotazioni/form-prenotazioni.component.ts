@@ -12,29 +12,37 @@ import { PrenotazioniDataServiceService } from '../services/data/prenotazioni-da
 export class FormPrenotazioniComponent implements OnInit {
   constructor(private PrenotazioniService : PrenotazioniDataServiceService) { }
   
+  /*--------------- Output Operazioni CRUD ----------------*/ 
+  /*------------------------------------------------------ */
+  @Output() notify : EventEmitter <Object> = new EventEmitter();
+  
+  
+
+  /*-------------- Config/Precompila input ----------------*/ 
+  /*------------------------------------------------------ */
   @Input() Header : TableHeader;
   @Input() valoriInseriti : any[] = new Array();
   @Input() formBottone : boolean;
-  @Output() notify : EventEmitter <Object> = new EventEmitter();
   @Input() UtentiData : UtenteModel[];
   @Input() MezziData : MezzoModel[];
-
   UtentiSelect;
   MezziSelect;
   
+
+
+  /*--------------------- LifeCycles ----------------------*/ 
+  /*------------------------------------------------------ */
   ngOnInit(): void {
     this.MezziSelect = this.MezziData;
     this.UtentiSelect = this.UtentiData;
   }
 
-  dataId;
+
+  
+  /*----------- Invio Dati ai componenti padri ------------*/ 
+  /*------------------------------------------------------ */
   sendValue(data : any[], col: string, op : string){
     this.notify.emit({'id' : this.valoriInseriti , 'col' : col , 'op' : op});
-  }
-
-
-  prova(id){
-    alert(id);
   }
 
   

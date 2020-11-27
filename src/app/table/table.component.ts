@@ -9,28 +9,49 @@ import { Router } from '@angular/router';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-
 export class TableComponent implements OnInit, OnChanges{
-  
   constructor(private router : Router) {}
+
+  /*----------------- Variabili Sessione ------------------*/ 
+  /*------------------------------------------------------ */
   privilegi;
-  orderIcon : string = '<i class="fas fa-sort-up"></i>';
+
+
+
+  /*--------------- Configurazione Tabella ----------------*/ 
+  /*------------------------------------------------------ */
   @Input() tableConfig: TableConfig;
   @Input() DATA : any[];
   sliceData;
+  col;
+  ASC : boolean = true;
+
+
+  
+  /*-------------------- Output Emit ----------------------*/ 
+  /*------------------------------------------------------ */
   @Output() notify : EventEmitter <Object> = new EventEmitter();
 
+
+
+
+
+  /*-------------------- LifeCycles -----------------------*/ 
+  /*------------------------------------------------------ */
   ngOnChanges():void {
     this.sliceData = this.DATA.slice(0,3);
   }
-  
   ngOnInit(): void {
     this.sliceData = this.DATA.slice(0, 3);
     this.privilegi = sessionStorage.getItem("privilegi");
   }
 
 
-  //pagination
+
+
+
+  /*-------------------- Paginazione ----------------------*/ 
+  /*------------------------------------------------------ */
   OnPageChange(event: PageEvent) {
     const startIndex = event.pageIndex * event.pageSize;
     let endIndex = event.pageIndex + event.pageSize;
@@ -48,47 +69,41 @@ export class TableComponent implements OnInit, OnChanges{
     }
   }
 
-  // filtering
-  col;
+
+  /*---------------------- Filtro -------------------------*/ 
+  /*------------------------------------------------------ */
   FilterByColumn() : void{
     let colonna : TableHeader[] = _.filter(this.tableConfig.header, {'label' : this.col});
     this.sliceData = _.filter(this.DATA, [ colonna[0].key , this.tableConfig.search.value]);
   }
 
 
-  // sorting
-  ASC : boolean = true;
-  SortBy(column) : void{
+  /*-------------------- Ordinamento ----------------------*/ 
+  /*------------------------------------------------------ */
+  SortBy(column): void {
     let temp;
-    if(this.ASC){
-      this.sliceData = _.sortBy(this.DATA, [column]).reverse().slice(0,this.DATA.length);
+    if (this.ASC) {
+      this.sliceData = _.sortBy(this.DATA, [column]).reverse().slice(0, this.DATA.length);
       this.ASC = false;
-    }else{
-      this.sliceData = _.sortBy(this.DATA, [column]).slice(0,this.DATA.length);
+    } else {
+      this.sliceData = _.sortBy(this.DATA, [column]).slice(0, this.DATA.length);
       this.ASC = true
     }
   }
 
-    // OutPut function/ CRUD operation
+    /*--------- UPDATE/DELETE ai componenti padri -----------*/ 
+    /*------------------------------------------------------ */
     EmitAdd(id, col : string, op : string): void{
       this.notify.emit({'id' : id , 'col' : col, 'op' : op});
     }
-
-
-
-
-
-
-
   
 }
 
 
 
 
-
-
-
+    /*------------------ classi Table -----------------------*/ 
+    /*------------------------------------------------------ */
 export class TableConfig {
   header: TableHeader[];
   order: TableOrder;

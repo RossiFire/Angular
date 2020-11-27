@@ -1,6 +1,6 @@
 
 <app-navbar></app-navbar>
-<div style="text-align: center;">
+<div style="text-align: center;" class="screen">
   <app-table [tableConfig] = "tbConfig" [DATA]= "tbData" (notify) = "CrudOperation($event)"></app-table>
   <ng-container *ngIf="Privilegi === 'true'">
     <app-form-prenotazioni [Header]= "tbHeader" [valoriInseriti]= "DatoModifica" [formBottone]= "ButtonAggiungi" 
