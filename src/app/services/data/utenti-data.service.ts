@@ -31,4 +31,19 @@ export class UtentiDataService {
     return this.http.post<void>(`${this.baseUrl}/modifica`, Utente);
   }
 
+
+  ControllaDiritti(nome : string, password: string): Observable<Boolean>{
+    var Data = {'nome' : nome, 'password': password};
+    return this.http.post<Boolean>(`${this.baseUrl}/controlla`, Data);
+  }
+
+  GetIdUtente(nome : string, password: string) : Observable<number>{
+    var Data = {'nome' : nome, 'password': password};
+    return this.http.post<number>(`${this.baseUrl}/id`, Data);
+  }
+
+  GetSingoloUtente(id : number): Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}/singolo/${id}`);
+  }
+
 }

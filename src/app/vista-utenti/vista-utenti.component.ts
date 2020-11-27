@@ -6,6 +6,7 @@ import * as _ from "lodash";
 import { UtentiDataService } from '../services/data/utenti-data.service';
 import { Observable, observable } from 'rxjs';
 import { UtenteModel } from '../UtenteModel';
+import * as moment from 'node_modules/moment';
 @Component({
   selector: 'app-vista-utenti',
   templateUrl: './vista-utenti.component.html',
@@ -13,7 +14,7 @@ import { UtenteModel } from '../UtenteModel';
 })
 export class VistaUtentiComponent implements OnInit{
   constructor(private route : Router, private UtentiDataService : UtentiDataService) {}
-
+  Data;
   temp : any[];
   datoModifica : any[] = new Array();
   buttonAggiungi : boolean = true;
@@ -61,6 +62,10 @@ export class VistaUtentiComponent implements OnInit{
             if(this.privilegi === 'false'){
               x[i][this.tbHeader[j].key] = "*****";
             }
+          }if(this.tbHeader[j].key == 'nascita'){
+            this.Data = moment(x[i][this.tbHeader[j].key]);
+            this.Data = this.Data.format("L");
+            x[i][this.tbHeader[j].key] = this.Data;
           }
         }
       }
@@ -80,7 +85,11 @@ export class VistaUtentiComponent implements OnInit{
             if(this.privilegi === 'false'){
               x[i][this.tbHeader[j].key] = "*****";
             }
-          }
+            }if(this.tbHeader[j].key == 'nascita'){
+              this.Data = moment(x[i][this.tbHeader[j].key]);
+              this.Data = this.Data.format("L");
+              x[i][this.tbHeader[j].key] = this.Data;
+            }
         }
       }
       this.tbData = x;

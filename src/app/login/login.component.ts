@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { UtentiDataService } from '../services/data/utenti-data.service';
 
 @Component({
   selector: 'app-login',
@@ -7,33 +8,50 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  constructor(private router : Router) { }
+  constructor(private router : Router, private utentiDataService : UtentiDataService) { }
   ngOnInit(): void {
   }
 
-  username = ''
-  password = ''
-  privilegi = true;
+  Username = ''
+  Password = ''
+  privilegi = false;
+  idInMemoria
 
+  errore = "";
   Check() : void{
-    if(this.username.toLowerCase === 'Daniele'.toLowerCase && this.password === 'admin'){
-      sessionStorage.setItem("UsernameAttuale", this.username);
-      sessionStorage.setItem("privilegi", this.privilegi.toString());
-      this.router.navigate(['utenti']);
-    }else{
-      sessionStorage.setItem("UsernameAttuale", this.username);
-      this.privilegi = false;
-      sessionStorage.setItem("privilegi", this.privilegi.toString());
-      this.router.navigate(['utenti']);
-    }
+
+    this.utentiDataService.ControllaDiritti(this.Username, this.Password).subscribe(
+      response=>{
+        if(response){
+          sessionStorage.setItem("UsernameAttuale", this.Username);
+          this.privilegi = true;
+          sessionStorage.setItem("privilegi", this.privilegi.toString());
+          this.router.navigate(['utenti']);
+        }else{
+          sessionStorage.setItem("UsernameAttuale", this.Username);
+          sessionStorage.setItem("privilegi", this.privilegi.toString());
+          this.router.navigate(['utenti']);
+        }
+        this.utentiDataService.GetIdUtente(this.Username, this.Password).subscribe(
+          response=>{
+            this.idInMemoria = response;
+            sessionStorage.setItem("IdUtenteAttuale", this.idInMemoria);
+          },
+          error=>{
+            alert("Errore sconosciuto");
+          }
+        );
+      },
+      error=>{
+        this.errore = "User o password sbagliata";
+      }
+    );
   }
 
 
-
-
   ngOnDestroy(): void{
-    this.username = ''
-    this.password = ''
+    this.Username = ''
+    this.Password = ''
   }
 
 }

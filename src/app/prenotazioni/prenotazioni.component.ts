@@ -7,6 +7,7 @@ import { PrenotazioniDataServiceService } from '../services/data/prenotazioni-da
 import { UtenteModel } from '../UtenteModel';
 import { MezzoModel } from 'src/MezzoModel';
 import { PrenotazioneModel } from '../PrenotazioneModel';
+import * as moment from 'node_modules/moment';
 
 @Component({
   selector: 'app-prenotazioni',
@@ -21,6 +22,7 @@ export class PrenotazioniComponent implements OnInit {
   MezziData : MezzoModel[] = [];
   Privilegi;
 
+  Data;
 
   /* Table Configuration */
   tbOrder : TableOrder = {column : "id" , orderType : "ASC"}
@@ -181,6 +183,14 @@ export class PrenotazioniComponent implements OnInit {
               }else{
                 x[i][this.tbHeader[j].key] = "No";
               }
+            }if(this.tbHeader[j].key == 'dataInizio'){
+              this.Data = moment(x[i][this.tbHeader[j].key]);
+              this.Data = this.Data.format("L");
+              x[i][this.tbHeader[j].key] = this.Data;
+            }if(this.tbHeader[j].key == 'dataFine'){
+              this.Data = moment(x[i][this.tbHeader[j].key]);
+              this.Data = this.Data.format("L");
+              x[i][this.tbHeader[j].key] = this.Data;
             }
           }
         }
@@ -195,6 +205,15 @@ export class PrenotazioniComponent implements OnInit {
   GetUtenti(){
     this.PrenotazioniService.GetUtenti().subscribe(
       x=>{
+        for(let i = 0; i<x.length; i++){
+          for(let j=0; j<this.tbHeader.length;j++){
+            if(x[i][this.tbHeader[j].key] === 'nascita'){
+              this.Data = moment(x[i][this.tbHeader[j].key]);
+              this.Data = this.Data.format("L");
+              x[i][this.tbHeader[j].key] = this.Data;
+            }
+          }
+        }
         this.UtentiData = x;
             },
       error =>{

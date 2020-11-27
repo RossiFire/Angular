@@ -4,6 +4,8 @@ import { Route, Router, ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import { MezziDataService } from '../services/data/mezzi-data.service';
 import { MezzoModel } from 'src/MezzoModel';
+import * as moment from 'node_modules/moment';
+
 @Component({
   selector: 'app-parco-auto',
   templateUrl: './parco-auto.component.html',
@@ -13,10 +15,21 @@ export class ParcoAutoComponent implements OnInit {
 
   constructor(private route : Router, private MezziDataService : MezziDataService) { }
 
-  MezzoModel : MezzoModel = {id: 1, casaCostr: "", modello: "", tipomezzo: {id: 1 , tipo : ""}, targa : ""};
-  newDato : any[] = [];
+  /*------------------ Dati di sessione -------------------*/ 
+  /*------------------------------------------------------ */
   UserAttuale;
   privilegi;
+
+  /*------------------ Precompila form --------------------*/ 
+  /*------------------------------------------------------ */
+  MezzoModel : MezzoModel = {id: 1, casaCostr: "", modello: "", tipomezzo: {id: 1 , tipo : ""}, targa : ""};
+  newDato : any[] = [];
+  Temp : any[];
+  DatoModifica : any[] = new Array();
+  ButtonAggiungi : boolean = true;
+
+  /*------------------ Table config -----------------------*/ 
+  /*------------------------------------------------------ */
   tbOrder : TableOrder = {column : "id" , orderType : "ASC"}
   tbSearch : TableSearch = { column : "" , value : ""}
   tbPagination : TablePagination = {itemPerPage : 3, itemPerPageOption : [3,6,10]}
@@ -34,46 +47,20 @@ export class ParcoAutoComponent implements OnInit {
     search : this.tbSearch, pagination : this.tbPagination
   }
 
+  /*------------------ Altre variabili ---------------------*/ 
+  /*------------------------------------------------------ */
+  Data;
 
 
   ngOnInit(): void {
     this.ButtonAggiungi = true;
     this.privilegi = sessionStorage.getItem("privilegi");
     this.UserAttuale = sessionStorage.getItem("UsernameAttuale");
-    this.MezziDataService.GetMezzi().subscribe(
-      x=>{
-        for(let i = 0; i<x.length; i++){
-          for(let j=0; j<this.tbHeader.length;j++){
-            if(this.tbHeader[j].key === 'tipomezzo'){
-              x[i][this.tbHeader[j].key] = x[i][this.tbHeader[j].key]['tipo'];
-            }
-          }
-        }
-        this.tbData = x;
-      });
+    this.GetMezzi();
   }
 
 
-  GetMezzi(){
-    this.MezziDataService.GetMezzi().subscribe(
-      x=>{
-        for(let i = 0; i<x.length; i++){
-          for(let j=0; j<this.tbHeader.length;j++){
-            if(this.tbHeader[j].key === 'tipomezzo'){
-              x[i][this.tbHeader[j].key] = x[i][this.tbHeader[j].key]['tipo'];
-            }
-          }
-        }
-        this.tbData = x;
-      });
-  }
 
-
-  Temp : any[];
-  DatoModifica : any[] = new Array();
-  ButtonAggiungi : boolean = true;
-  CercaValori : any[];
-  IdInMemoria;
   CrudOperation(values){
     switch(values['op']){
       case 'ELIMINA':
@@ -101,8 +88,7 @@ export class ParcoAutoComponent implements OnInit {
               }
             );
           }
-          this.newDato =[];
-          this.MezzoModel = {id: 1, casaCostr: "", modello: "", tipomezzo: {id: 1 , tipo : ""}, targa : ""};
+          this.Ripulisci();
           break;
       case 'PRECOMPILA':
           this.ButtonAggiungi = false;
@@ -110,11 +96,6 @@ export class ParcoAutoComponent implements OnInit {
           this.Temp = _.find(this.tbData, [values['col'], values['id']]);
           for(let i = 0; i<this.tbHeader.length; i++){
             this.DatoModifica.push(this.Temp[this.tbHeader[i].key]);
-          }
-          for(let i = 0; i<this.tbData.length; i++){
-            if(this.Temp[this.tbHeader[0].key] === this.tbData[i][this.tbHeader[0].key]){
-              this.IdInMemoria =  this.Temp[this.tbHeader[0].key]
-              }
           }
           this.MezziDataService.InviaIdUtente(values['id']).subscribe();
           break;
@@ -131,8 +112,7 @@ export class ParcoAutoComponent implements OnInit {
               }
             );
           };
-          this.MezzoModel = {id: 1, casaCostr: "", modello: "", tipomezzo: {id: 1 , tipo : ""}, targa : ""};
-          this.newDato = [];
+          this.Ripulisci();
           this.ButtonAggiungi = true;
           this.DatoModifica = new Array();
           break;
@@ -143,8 +123,26 @@ export class ParcoAutoComponent implements OnInit {
   };
   
 
-  Aggiungi(values){
+  /*------------------ API Lista mezzi ---------------------*/ 
+  /*------------------------------------------------------ */
+  GetMezzi(){
+    this.MezziDataService.GetMezzi().subscribe(
+      x=>{
+        for(let i = 0; i<x.length; i++){
+          for(let j=0; j<this.tbHeader.length;j++){
+            if(this.tbHeader[j].key === 'tipomezzo'){
+              x[i][this.tbHeader[j].key] = x[i][this.tbHeader[j].key]['tipo'];
+            }
+          }
+        }
+        this.tbData = x;
+      });
+  }
 
+
+  /*------------- Set utente nella variabile ---------------*/ 
+  /*------------------------------------------------------ */
+  Aggiungi(values){
     for(let i = 0; i<this.tbHeader.length ; i++){
       this.newDato.push({[this.tbHeader[i].key] : values['id'][i]});
     }
@@ -164,7 +162,7 @@ export class ParcoAutoComponent implements OnInit {
               break;
           default :
               alert("Per favore inserire uno tra i seguenti: 'MINIVAN','AUTOVEICOLO','FURGONE','SUV'");
-              this.MezzoModel = {id: 1, casaCostr: "", modello: "", tipomezzo: {id: 1 , tipo : ""}, targa : ""};
+              this.Ripulisci();
               break;
         }
           this.MezzoModel[this.tbHeader[i].key]['tipo'] = this.newDato[i][this.tbHeader[i].key];
@@ -176,6 +174,10 @@ export class ParcoAutoComponent implements OnInit {
 
 
 
+  Ripulisci(){
+    this.MezzoModel = {id: 1, casaCostr: "", modello: "", tipomezzo: {id: 1 , tipo : ""}, targa : ""};
+    this.newDato = [];
+  }
 
   
   
