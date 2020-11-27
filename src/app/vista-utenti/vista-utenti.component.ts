@@ -14,46 +14,56 @@ import * as moment from 'node_modules/moment';
 })
 export class VistaUtentiComponent implements OnInit{
   constructor(private route : Router, private UtentiDataService : UtentiDataService) {}
-  Data;
-  temp : any[];
-  datoModifica : any[] = new Array();
-  buttonAggiungi : boolean = true;
-  cercaValori : any[];
-  idInMemoria;
-  UtenteModel : UtenteModel = {id: 0, nome: "", cognome: "", tipoutente: {id: 1 , tipo : ""}, nascita : new Date(), password: ""};
-  obs : Observable<any[]>;
+
+  /*------------------ Dati sessione ----------------------*/ 
+  /*------------------------------------------------------ */
   privilegi;
   UserAttuale;
+  
+
+  /*------------------ Precompila form --------------------*/ 
+  /*------------------------------------------------------ */
+  temp : any[];
+  datoModifica : any[] = new Array();
+  UtenteModel : UtenteModel = {id: 0, nome: "", cognome: "", tipoutente: {id: 1 , tipo : ""}, nascita : new Date(), password: ""};
+  buttonAggiungi : boolean = true;
+  Data;
+
+  
+  /*------------------ Table config -----------------------*/ 
+  /*------------------------------------------------------ */
   tbOrder : TableOrder = {column : "id" , orderType : "ASC"}
   tbSearch : TableSearch = { column : "" , value : ""}
   newDato : any[] = [];
-    tbHeader : any[] =  [
-      { key : "id", label : "ID"},
-      { key : "nome", label : "Nome"},
-      { key : "cognome", label : "Cognome"},
-      { key : "nascita", label : "Anno di Nascita"},
-      { key : "tipoutente", label : "Tipo Utente"},
-      { key : "password", label : "Password"}
-    ]
-    tbData : any[] = [];
-    tbPagination : TablePagination = {itemPerPage : 3, itemPerPageOption : [3,6,10]};
-    tbConfig : TableConfig = {
-      header : this.tbHeader, order : this.tbOrder,
-      search : this.tbSearch, pagination : this.tbPagination
-    }
+  tbHeader : any[] =  [
+    { key : "id", label : "ID"},
+    { key : "nome", label : "Nome"},
+    { key : "cognome", label : "Cognome"},
+    { key : "nascita", label : "Anno di Nascita"},
+    { key : "tipoutente", label : "Tipo Utente"},
+    { key : "password", label : "Password"}
+  ]
+  tbData : any[] = [];
+  tbPagination : TablePagination = {itemPerPage : 3, itemPerPageOption : [3,6,10]};
+  tbConfig : TableConfig = {
+    header : this.tbHeader, order : this.tbOrder,
+    search : this.tbSearch, pagination : this.tbPagination
+  }
   btnConfig : ButtonConfig = {
     text : 'Bottone', icon : '<i class="fas fa-rocket"></i>', 
     customCss : {'background-color' : "red", 'color' : "yellow"}
   }
 
   
+
+  /*--------------------- Lifecycle -----------------------*/ 
+  /*------------------------------------------------------ */
   ngOnInit(): void {
     this.buttonAggiungi = true;
     this.privilegi = sessionStorage.getItem("privilegi");
     this.UserAttuale = sessionStorage.getItem("UsernameAttuale");
     this.tbData = [];
-    this.obs = this.UtentiDataService.getUtenti();
-    this.obs.subscribe(x => {
+    this.UtentiDataService.getUtenti().subscribe(x => {
       for(let i = 0; i<x.length; i++){
         for(let j=0; j<this.tbHeader.length;j++){
           if(this.tbHeader[j].key === 'tipoutente'){
@@ -74,9 +84,10 @@ export class VistaUtentiComponent implements OnInit{
   }
 
 
+  /*------------------ API Get Utenti----------------------*/ 
+  /*------------------------------------------------------ */
   SottoScrivi(){
-    this.obs = this.UtentiDataService.getUtenti();
-    this.obs.subscribe(x => {
+    this.UtentiDataService.getUtenti().subscribe(x => {
       for(let i = 0; i<x.length; i++){
         for(let j=0; j<this.tbHeader.length;j++){
           if(this.tbHeader[j].key === 'tipoutente'){
@@ -97,6 +108,60 @@ export class VistaUtentiComponent implements OnInit{
   }
 
 
+
+
+  /*---------------- API elimina Utente -------------------*/ 
+  /*------------------------------------------------------ */
+  Elimina(id){
+    this.UtentiDataService.EliminaUtente(id).subscribe(
+      response => {
+        alert("Utente eliminato con successo!");
+        this.SottoScrivi();
+      },
+      error =>{
+        alert("Oops! L'utente non è stato eliminato");
+      }
+    )
+  }
+
+
+
+
+
+  /*---------------- Set Modello Utente -------------------*/ 
+  /*------------------------------------------------------ */
+  Aggiungi(values){
+    for(let i = 0; i<this.tbHeader.length ; i++){
+      this.newDato.push({[this.tbHeader[i].key] : values['id'][i]});
+    }
+    for (var i = 0; i < this.newDato.length; i++) {
+      if(this.tbHeader[i].key === 'tipoutente'){
+          if(this.newDato[i][this.tbHeader[i].key] === 'ADMIN' || this.newDato[i][this.tbHeader[i].key] === 'CUSTOMER'){
+            if(this.newDato[i][this.tbHeader[i].key] === 'CUSTOMER'){
+              this.UtenteModel[this.tbHeader[i].key]['id'] = 2;
+            }
+            this.UtenteModel[this.tbHeader[i].key]['tipo'] = this.newDato[i][this.tbHeader[i].key];
+          }else{
+            alert("Per favore inserire 'ADMIN' o 'CUSTOMER'");
+            this.UtenteModel = {id: 0, nome: "", cognome: "", tipoutente: {id: 1 , tipo : ""}, nascita : new Date(), password: ""};
+            break;
+          }
+        this.UtenteModel[this.tbHeader[i].key]['tipo'] = this.newDato[i][this.tbHeader[i].key];
+      }else{
+        if(this.tbHeader[i].key === 'nascita'){
+          this.UtenteModel[this.tbHeader[i].key] = Date.parse(this.newDato[i][this.tbHeader[i].key]);
+        }else{
+          this.UtenteModel[this.tbHeader[i].key] = this.newDato[i][this.tbHeader[i].key];
+        }
+      }
+    }
+  } 
+
+
+
+
+  /*------------------ Operazioni CRUD --------------------*/ 
+  /*------------------------------------------------------ */
   CrudOperation(values){
     switch(values['op']){
       case 'ELIMINA':
@@ -123,11 +188,6 @@ export class VistaUtentiComponent implements OnInit{
           this.temp = _.find(this.tbData, [values['col'], values['id']]);
           for(let i = 0; i<this.tbHeader.length; i++){
             this.datoModifica.push(this.temp[this.tbHeader[i].key]);
-          }
-          for(let i = 0; i<this.tbData.length; i++){
-            if(this.temp[this.tbHeader[0].key] === this.tbData[i][this.tbHeader[0].key]){
-              this.idInMemoria =  this.temp[this.tbHeader[0].key]
-              }
           }
           this.UtentiDataService.InviaIdUtente(values['id']).subscribe();
           break;
@@ -157,45 +217,8 @@ export class VistaUtentiComponent implements OnInit{
   
 
 
-  Aggiungi(values){
-    for(let i = 0; i<this.tbHeader.length ; i++){
-      this.newDato.push({[this.tbHeader[i].key] : values['id'][i]});
-    }
-    for (var i = 0; i < this.newDato.length; i++) {
-      if(this.tbHeader[i].key === 'tipoutente'){
-          if(this.newDato[i][this.tbHeader[i].key] === 'ADMIN' || this.newDato[i][this.tbHeader[i].key] === 'CUSTOMER'){
-            if(this.newDato[i][this.tbHeader[i].key] === 'CUSTOMER'){
-              this.UtenteModel[this.tbHeader[i].key]['id'] = 2;
-            }
-            this.UtenteModel[this.tbHeader[i].key]['tipo'] = this.newDato[i][this.tbHeader[i].key];
-          }else{
-            alert("Per favore inserire 'ADMIN' o 'CUSTOMER'");
-            this.UtenteModel = {id: 0, nome: "", cognome: "", tipoutente: {id: 1 , tipo : ""}, nascita : new Date(), password: ""};
-            break;
-          }
-        this.UtenteModel[this.tbHeader[i].key]['tipo'] = this.newDato[i][this.tbHeader[i].key];
-      }else{
-        if(this.tbHeader[i].key === 'nascita'){
-          this.UtenteModel[this.tbHeader[i].key] = Date.parse(this.newDato[i][this.tbHeader[i].key]);
-        }else{
-          this.UtenteModel[this.tbHeader[i].key] = this.newDato[i][this.tbHeader[i].key];
-        }
-      }
-    }
-  } 
 
 
-    Elimina(id){
-      this.UtentiDataService.EliminaUtente(id).subscribe(
-        response => {
-          alert("Utente eliminato con successo!");
-          this.SottoScrivi();
-        },
-        error =>{
-          alert("Oops! L'utente non è stato eliminato");
-        }
-      )
-    }
 
 
 }

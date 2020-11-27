@@ -20,6 +20,7 @@ export class ParcoAutoComponent implements OnInit {
   UserAttuale;
   privilegi;
 
+
   /*------------------ Precompila form --------------------*/ 
   /*------------------------------------------------------ */
   MezzoModel : MezzoModel = {id: 1, casaCostr: "", modello: "", tipomezzo: {id: 1 , tipo : ""}, targa : ""};
@@ -27,6 +28,7 @@ export class ParcoAutoComponent implements OnInit {
   Temp : any[];
   DatoModifica : any[] = new Array();
   ButtonAggiungi : boolean = true;
+
 
   /*------------------ Table config -----------------------*/ 
   /*------------------------------------------------------ */
@@ -39,7 +41,6 @@ export class ParcoAutoComponent implements OnInit {
       { key : "modello", label : "Modello"},
       { key : "tipomezzo", label : "Tipo Mezzo"},
       { key : "targa", label : "Targa"}
-      
     ]
     tbData : any[];
     tbConfig : TableConfig = {
@@ -47,11 +48,16 @@ export class ParcoAutoComponent implements OnInit {
     search : this.tbSearch, pagination : this.tbPagination
   }
 
-  /*------------------ Altre variabili ---------------------*/ 
+
+  /*------------------ Altre variabili --------------------*/ 
   /*------------------------------------------------------ */
   Data;
 
 
+
+
+  /*--------------------- LifeCycles ----------------------*/ 
+  /*------------------------------------------------------ */
   ngOnInit(): void {
     this.ButtonAggiungi = true;
     this.privilegi = sessionStorage.getItem("privilegi");
@@ -61,76 +67,14 @@ export class ParcoAutoComponent implements OnInit {
 
 
 
-  CrudOperation(values){
-    switch(values['op']){
-      case 'ELIMINA':
-          this.MezziDataService.EliminaMezzo(values['id']).subscribe(
-            response =>{
-              alert("Il mezzo è stato eliminato correttamente!");
-              this.GetMezzi();
-            },
-            error =>{
-              alert("Oops! C'è stato un problema");
-            }
-          );
-          break;
-      case 'AGGIUNGI':
-          this.Aggiungi(values);
-          if(this.MezzoModel.casaCostr != ""){
-            console.log(this.MezzoModel);
-            this.MezziDataService.AggiungiMezzo(this.MezzoModel).subscribe(
-              Response =>{
-                alert("Mezzo aggiunto Correttamente!");
-                this.GetMezzi();
-              },
-              error =>{
-                alert("Oops! Qualcosa è andato storto");
-              }
-            );
-          }
-          this.Ripulisci();
-          break;
-      case 'PRECOMPILA':
-          this.ButtonAggiungi = false;
-          this.DatoModifica = new Array();
-          this.Temp = _.find(this.tbData, [values['col'], values['id']]);
-          for(let i = 0; i<this.tbHeader.length; i++){
-            this.DatoModifica.push(this.Temp[this.tbHeader[i].key]);
-          }
-          this.MezziDataService.InviaIdUtente(values['id']).subscribe();
-          break;
-      case 'MODIFICA':
-          this.Aggiungi(values);
-          if(this.MezzoModel.casaCostr != ""){
-            this.MezziDataService.AggiornaMezzo(this.MezzoModel).subscribe(
-              response =>{
-                alert("Mezzo Aggiornato con successo");
-                this.GetMezzi();
-              },
-              error =>{
-                alert("Oops! Mezzo non aggiornato");
-              }
-            );
-          };
-          this.Ripulisci();
-          this.ButtonAggiungi = true;
-          this.DatoModifica = new Array();
-          break;
-      default:
-      console.log("errore DEFAULT");
-      break;
-    }
-  };
-  
-
-  /*------------------ API Lista mezzi ---------------------*/ 
+  /*------------------- API Get mezzi ---------------------*/ 
   /*------------------------------------------------------ */
-  GetMezzi(){
+  GetMezzi() {
     this.MezziDataService.GetMezzi().subscribe(
-      x=>{
-        for(let i = 0; i<x.length; i++){
-          for(let j=0; j<this.tbHeader.length;j++){
-            if(this.tbHeader[j].key === 'tipomezzo'){
+      x => {
+        for (let i = 0; i < x.length; i++) {
+          for (let j = 0; j < this.tbHeader.length; j++) {
+            if (this.tbHeader[j].key === 'tipomezzo') {
               x[i][this.tbHeader[j].key] = x[i][this.tbHeader[j].key]['tipo'];
             }
           }
@@ -140,46 +84,112 @@ export class ParcoAutoComponent implements OnInit {
   }
 
 
-  /*------------- Set utente nella variabile ---------------*/ 
+
+
+  /*------------- Set utente nella variabile --------------*/ 
   /*------------------------------------------------------ */
-  Aggiungi(values){
-    for(let i = 0; i<this.tbHeader.length ; i++){
-      this.newDato.push({[this.tbHeader[i].key] : values['id'][i]});
+  Aggiungi(values) {
+    for (let i = 0; i < this.tbHeader.length; i++) {
+      this.newDato.push({ [this.tbHeader[i].key]: values['id'][i] });
     }
     for (var i = 0; i < this.newDato.length; i++) {
-      if(this.tbHeader[i].key === 'tipomezzo'){
-        switch(this.newDato[i][this.tbHeader[i].key]){
+      if (this.tbHeader[i].key === 'tipomezzo') {
+        switch (this.newDato[i][this.tbHeader[i].key]) {
           case 'AUTOVEICOLO':
-              this.MezzoModel[this.tbHeader[i].key]['id'] = 2;
-              break;
+            this.MezzoModel[this.tbHeader[i].key]['id'] = 2;
+            break;
           case 'FURGONE':
-              this.MezzoModel[this.tbHeader[i].key]['id'] = 3;
-              break;
+            this.MezzoModel[this.tbHeader[i].key]['id'] = 3;
+            break;
           case 'SUV':
-              this.MezzoModel[this.tbHeader[i].key]['id'] = 4;
-              break;
+            this.MezzoModel[this.tbHeader[i].key]['id'] = 4;
+            break;
           case 'MINIVAN':
-              break;
-          default :
-              alert("Per favore inserire uno tra i seguenti: 'MINIVAN','AUTOVEICOLO','FURGONE','SUV'");
-              this.Ripulisci();
-              break;
+            break;
+          default:
+            alert("Per favore inserire uno tra i seguenti: 'MINIVAN','AUTOVEICOLO','FURGONE','SUV'");
+            this.Ripulisci();
+            break;
         }
-          this.MezzoModel[this.tbHeader[i].key]['tipo'] = this.newDato[i][this.tbHeader[i].key];
-      }else{
-          this.MezzoModel[this.tbHeader[i].key] = this.newDato[i][this.tbHeader[i].key];
+        this.MezzoModel[this.tbHeader[i].key]['tipo'] = this.newDato[i][this.tbHeader[i].key];
+      } else {
+        this.MezzoModel[this.tbHeader[i].key] = this.newDato[i][this.tbHeader[i].key];
       }
     }
   } 
 
 
-
+  /*--------------- Svuotare le variabili -----------------*/ 
+  /*------------------------------------------------------ */
   Ripulisci(){
     this.MezzoModel = {id: 1, casaCostr: "", modello: "", tipomezzo: {id: 1 , tipo : ""}, targa : ""};
     this.newDato = [];
   }
 
-  
+
+
+  /*------------------ Operazioni CRUD --------------------*/ 
+  /*------------------------------------------------------ */
+  CrudOperation(values) {
+    switch (values['op']) {
+      case 'ELIMINA':
+        this.MezziDataService.EliminaMezzo(values['id']).subscribe(
+          response => {
+            alert("Il mezzo è stato eliminato correttamente!");
+            this.GetMezzi();
+          },
+          error => {
+            alert("Oops! C'è stato un problema");
+          }
+        );
+        break;
+      case 'AGGIUNGI':
+        this.Aggiungi(values);
+        if (this.MezzoModel.casaCostr != "") {
+          console.log(this.MezzoModel);
+          this.MezziDataService.AggiungiMezzo(this.MezzoModel).subscribe(
+            Response => {
+              alert("Mezzo aggiunto Correttamente!");
+              this.GetMezzi();
+            },
+            error => {
+              alert("Oops! Qualcosa è andato storto");
+            }
+          );
+        }
+        this.Ripulisci();
+        break;
+      case 'PRECOMPILA':
+        this.ButtonAggiungi = false;
+        this.DatoModifica = new Array();
+        this.Temp = _.find(this.tbData, [values['col'], values['id']]);
+        for (let i = 0; i < this.tbHeader.length; i++) {
+          this.DatoModifica.push(this.Temp[this.tbHeader[i].key]);
+        }
+        this.MezziDataService.InviaIdUtente(values['id']).subscribe();
+        break;
+      case 'MODIFICA':
+        this.Aggiungi(values);
+        if (this.MezzoModel.casaCostr != "") {
+          this.MezziDataService.AggiornaMezzo(this.MezzoModel).subscribe(
+            response => {
+              alert("Mezzo Aggiornato con successo");
+              this.GetMezzi();
+            },
+            error => {
+              alert("Oops! Mezzo non aggiornato");
+            }
+          );
+        };
+        this.Ripulisci();
+        this.ButtonAggiungi = true;
+        this.DatoModifica = new Array();
+        break;
+      default:
+        console.log("errore DEFAULT");
+        break;
+    }
+  }
   
 
 }
