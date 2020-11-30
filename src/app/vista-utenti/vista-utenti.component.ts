@@ -115,11 +115,12 @@ export class VistaUtentiComponent implements OnInit{
   Elimina(id){
     this.UtentiDataService.EliminaUtente(id).subscribe(
       response => {
-        alert("Utente eliminato con successo!");
+        alert(response.statusText);
         this.SottoScrivi();
       },
       error =>{
-        alert("Oops! L'utente non è stato eliminato");
+        alert(error.error.text);
+        console.log(error.error.text);
       }
     )
   }
@@ -172,11 +173,11 @@ export class VistaUtentiComponent implements OnInit{
           if(this.UtenteModel.nome != ""){
             this.UtentiDataService.AddUtente(this.UtenteModel).subscribe(
               response => {
-                alert("Utente inserito con successo!");
+                alert(response.statusText);
                 this.SottoScrivi();
               },
               error =>{
-                alert("Oops! Qualcosa è andato storto");
+                alert(error.error.text);
               });
           }
           this.UtenteModel = {id: 0, nome: "", cognome: "", tipoutente: {id: 1 , tipo : ""}, nascita : new Date(), password: ""};

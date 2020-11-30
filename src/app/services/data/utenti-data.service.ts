@@ -15,12 +15,12 @@ export class UtentiDataService {
     return this.http.get<any[]>(`${this.baseUrl}/customer`);
   }
 
-  AddUtente(Utente : UtenteModel) : Observable<void>{
-    return this.http.post<void>(`${this.baseUrl}/aggiungi`, Utente);
+  AddUtente(Utente : UtenteModel) : Observable<Response>{
+    return this.http.post<Response>(`${this.baseUrl}/aggiungi`, Utente);
   }
 
-  EliminaUtente(id): Observable<void>{
-    return this.http.get<void>(`${this.baseUrl}/elimina/${id}`);
+  EliminaUtente(id): Observable<Response>{
+    return this.http.get<Response>(`${this.baseUrl}/elimina/${id}`);
   }
 
   InviaIdUtente(id): Observable<void>{
