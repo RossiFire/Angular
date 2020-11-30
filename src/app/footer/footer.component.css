@@ -1,8 +1,6 @@
 .card{
     margin-top: 20px;
     background-color: rgb(118, 148, 148);
-    position: -webkit-sticky;
-    position: sticky;
     bottom: 0;
     width: 100%;
 }

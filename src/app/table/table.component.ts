@@ -25,15 +25,16 @@ export class TableComponent implements OnInit, OnChanges{
   sliceData;
   col;
   ASC : boolean = true;
+  orderIcon = "♠";
 
-
+  
   
   /*-------------------- Output Emit ----------------------*/ 
   /*------------------------------------------------------ */
   @Output() notify : EventEmitter <Object> = new EventEmitter();
 
 
-
+  event : PageEvent;
 
 
   /*-------------------- LifeCycles -----------------------*/ 
