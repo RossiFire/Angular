@@ -15,18 +15,18 @@ export class MezziDataService {
   }
 
   EliminaMezzo(id : number){
-    return this.http.get<void>(`${this.baseUrl}/elimina/${id}`);
+    return this.http.get<Response>(`${this.baseUrl}/elimina/${id}`);
   }
 
-  AggiungiMezzo(Mezzo: MezzoModel) : Observable<void>{
-    return this.http.post<void>(`${this.baseUrl}/aggiungi`, Mezzo);
+  AggiungiMezzo(Mezzo: MezzoModel){
+    return this.http.post<Response>(`${this.baseUrl}/aggiungi`, Mezzo);
   }
 
   InviaIdUtente(id): Observable<void>{
     return this.http.get<void>(`${this.baseUrl}/modifica/${id}`);
   }
 
-  AggiornaMezzo(Mezzo : MezzoModel) : Observable<void>{
-    return this.http.post<void>(`${this.baseUrl}/modifica`, Mezzo);
+  AggiornaMezzo(Mezzo : MezzoModel) : Observable<Response>{
+    return this.http.post<Response>(`${this.baseUrl}/modifica`, Mezzo);
   }
 }

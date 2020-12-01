@@ -19,30 +19,31 @@ export class UtentiDataService {
     return this.http.post<Response>(`${this.baseUrl}/aggiungi`, Utente);
   }
 
-  EliminaUtente(id): Observable<Response>{
-    return this.http.get<Response>(`${this.baseUrl}/elimina/${id}`);
+  
+  EliminaUtente(id){
+    return this.http.post(`${this.baseUrl}/elimina/${id}`, {responseType : 'text'});
   }
 
-  InviaIdUtente(id): Observable<void>{
+  InviaIdUtente(id){
     return this.http.get<void>(`${this.baseUrl}/modifica/${id}`);
   }
 
-  AggiornaUtente(Utente : UtenteModel) : Observable<void>{
+  AggiornaUtente(Utente : UtenteModel){
     return this.http.post<void>(`${this.baseUrl}/modifica`, Utente);
   }
 
 
-  ControllaDiritti(nome : string, password: string): Observable<Boolean>{
+  ControllaDiritti(nome : string, password: string){
     var Data = {'nome' : nome, 'password': password};
     return this.http.post<Boolean>(`${this.baseUrl}/controlla`, Data);
   }
 
-  GetIdUtente(nome : string, password: string) : Observable<number>{
+  GetIdUtente(nome : string, password: string){
     var Data = {'nome' : nome, 'password': password};
     return this.http.post<number>(`${this.baseUrl}/id`, Data);
   }
 
-  GetSingoloUtente(id : number): Observable<any>{
+  GetSingoloUtente(id : number){
     return this.http.get<any>(`${this.baseUrl}/singolo/${id}`);
   }
 

@@ -135,25 +135,25 @@ export class ParcoAutoComponent implements OnInit {
       case 'ELIMINA':
         this.MezziDataService.EliminaMezzo(values['id']).subscribe(
           response => {
-            alert("Il mezzo è stato eliminato correttamente!");
+            console.log("Successo");
+            console.log(response);
             this.GetMezzi();
           },
           error => {
-            alert("Oops! C'è stato un problema");
+            console.log(error.error.text);
           }
         );
         break;
       case 'AGGIUNGI':
         this.Aggiungi(values);
         if (this.MezzoModel.casaCostr != "") {
-          console.log(this.MezzoModel);
           this.MezziDataService.AggiungiMezzo(this.MezzoModel).subscribe(
-            Response => {
-              alert("Mezzo aggiunto Correttamente!");
+            response => {
+              console.log(response);
               this.GetMezzi();
             },
             error => {
-              alert("Oops! Qualcosa è andato storto");
+              console.log(error.error.text);
             }
           );
         }
@@ -173,11 +173,11 @@ export class ParcoAutoComponent implements OnInit {
         if (this.MezzoModel.casaCostr != "") {
           this.MezziDataService.AggiornaMezzo(this.MezzoModel).subscribe(
             response => {
-              alert("Mezzo Aggiornato con successo");
+              console.log(response);
               this.GetMezzi();
             },
             error => {
-              alert("Oops! Mezzo non aggiornato");
+              console.log(error);
             }
           );
         };

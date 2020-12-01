@@ -114,12 +114,10 @@ export class VistaUtentiComponent implements OnInit{
   /*------------------------------------------------------ */
   Elimina(id){
     this.UtentiDataService.EliminaUtente(id).subscribe(
-      response => {
-        alert(response.statusText);
+      (response : any) => {
         this.SottoScrivi();
       },
-      error =>{
-        alert(error.error.text);
+      (error : any) =>{
         console.log(error.error.text);
       }
     )
@@ -161,6 +159,16 @@ export class VistaUtentiComponent implements OnInit{
 
 
 
+  /*----------------- Ripulisci variabili -----------------*/ 
+  /*------------------------------------------------------ */
+  ripulisci(){
+    this.UtenteModel = {id: 0, nome: "", cognome: "", tipoutente: {id: 1 , tipo : ""}, nascita : new Date(), password: ""};
+    this.newDato = [];
+  }
+
+
+
+
   /*------------------ Operazioni CRUD --------------------*/ 
   /*------------------------------------------------------ */
   CrudOperation(values){
@@ -173,15 +181,14 @@ export class VistaUtentiComponent implements OnInit{
           if(this.UtenteModel.nome != ""){
             this.UtentiDataService.AddUtente(this.UtenteModel).subscribe(
               response => {
-                alert(response.statusText);
                 this.SottoScrivi();
+                this.ripulisci();
               },
               error =>{
                 alert(error.error.text);
               });
           }
-          this.UtenteModel = {id: 0, nome: "", cognome: "", tipoutente: {id: 1 , tipo : ""}, nascita : new Date(), password: ""};
-          this.newDato = [];
+          this.ripulisci();
           break;
       case 'PRECOMPILA':
           this.buttonAggiungi = false;
@@ -197,16 +204,14 @@ export class VistaUtentiComponent implements OnInit{
           if(this.UtenteModel.nome != ""){
             this.UtentiDataService.AggiornaUtente(this.UtenteModel).subscribe(
               response =>{
-                alert("Utente modificato con successo!");
                 this.SottoScrivi();
+                this.ripulisci();
               },
               error =>{
-                alert("Oops! L'utente non è stato modificato");
               }
             );
           }
-          this.UtenteModel = {id: 0, nome: "", cognome: "", tipoutente: {id: 1 , tipo : ""}, nascita : new Date(), password: ""};
-          this.newDato = [];
+          this.ripulisci();
           this.buttonAggiungi = true;
           this.datoModifica = new Array();
           break;

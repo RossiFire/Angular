@@ -25,19 +25,19 @@ export class PrenotazioniDataServiceService {
     return this.http.get<any[]>(`${this.mezziUrl}/catalogo`);
   }
 
-  AggiungiPrenotazione(Prenotazione : PrenotazioneModel): Observable<void>{
-    return this.http.post<void>(`${this.baseUrl}/aggiungi`, Prenotazione);
+  AggiungiPrenotazione(Prenotazione : PrenotazioneModel){
+    return this.http.post<Response>(`${this.baseUrl}/aggiungi`, Prenotazione);
   }
 
-  InviaIdPrenotazione(id: number): Observable<void>{
+  InviaIdPrenotazione(id: number){
     return this.http.get<void>(`${this.baseUrl}/modifica/${id}`);
   }
 
-  EliminaPrenotazione(id : number): Observable<void>{
-    return this.http.get<void>(`${this.baseUrl}/elimina/${id}`);
+  EliminaPrenotazione(id){
+    return this.http.get<Response>(`${this.baseUrl}/elimina/${id}`);
   }
 
-  ModificaPrenotazione(Prenotazione : PrenotazioneModel): Observable<void>{
-    return this.http.post<void>(`${this.baseUrl}/modifica`, Prenotazione);
+  ModificaPrenotazione(Prenotazione : PrenotazioneModel){
+    return this.http.post<Response>(`${this.baseUrl}/modifica`, Prenotazione);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import { TableConfig, TableHeader, TableOrder, TableSearch, TablePagination} from '../table/table.component';
 import { ButtonConfig } from '../button/button.component';
 import { Router } from '@angular/router';
@@ -131,7 +131,7 @@ export class PrenotazioniComponent implements OnInit {
         this.UtentiData = x;
             },
       error =>{
-        alert("Errore nel GetUtenti");
+        alert(error.error.text);
       }
     )
   }
@@ -145,7 +145,7 @@ export class PrenotazioniComponent implements OnInit {
         this.MezziData = x;
             },
       error =>{
-        alert("Errore nel GetMezzi");
+        alert(error.error.text);
       }
     )
   }
@@ -209,11 +209,13 @@ export class PrenotazioniComponent implements OnInit {
       case 'ELIMINA':
           this.PrenotazioniService.EliminaPrenotazione(values['id']).subscribe(
             response=>{
-              alert("Prenotazione eliminata con successo!");
+              console.log("Successo");
+              console.log(response);
               this.GetPrenotazioni();
             },
             error=>{
-              alert("Oops! Prenotazione non eliminata");
+              console.log("Successo");
+              alert(error.error.text);
             }
           );
           break;
@@ -222,11 +224,12 @@ export class PrenotazioniComponent implements OnInit {
           if(this.PrenotazioneModel.id != 0){
             this.PrenotazioniService.AggiungiPrenotazione(this.PrenotazioneModel).subscribe(
               response=>{
-                alert("Prenotazione Inserita con successo");
+                console.log(response);
                 this.GetPrenotazioni();
               },
               error=>{
-                alert("Errore aggiunta Prenotazione");
+                console.log("errore");
+                console.log(error.error.text);
               }
             );
           }
@@ -246,11 +249,11 @@ export class PrenotazioniComponent implements OnInit {
           if(this.UtenteP.id != 0){
             this.PrenotazioniService.ModificaPrenotazione(this.PrenotazioneModel).subscribe(
               response=>{
-                alert("Prenotazione Modificata con successo!");
+                console.log(response);
                 this.GetPrenotazioni();
               },
               error=>{
-                alert("Oops! la prenotazione non è stata modificata");
+                console.log(error.error.text);
               }
             );
           }else{
@@ -261,7 +264,7 @@ export class PrenotazioniComponent implements OnInit {
           this.Ripulisci();
           break;
       default :
-      console.log("errore DEFAULT");
+      console.log("errore DEFAULT case");
       break;
     }
   };
