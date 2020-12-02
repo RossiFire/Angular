@@ -1,14 +1,14 @@
 
 
-<div style="margin-top: 25px;">
-        <h3>Aggiungi</h3>
+<div style="margin-top: 25px;" class="form">
+        <h3>Aggiungi Utente</h3>
         <ng-container *ngFor = "let key of header ; let j = index">
             <ng-container *ngIf="j<1">
                 <div *ngIf="formBottone; else modbtn">
-                    <button (click)= "sendValue(this.valoriInseriti, key.key, 'AGGIUNGI')">Aggiungi</button>
+                    <button class="btn btn-info" (click)= "sendValue(this.valoriInseriti, key.key, 'AGGIUNGI')">Aggiungi</button>
                 </div>
                 <ng-template #modbtn>
-                   <div><button (click)= "sendValue(this.valoriInseriti, key.key, 'MODIFICA')">Apporta Modifica</button></div>
+                   <div><button class="btn btn-info" (click)= "sendValue(this.valoriInseriti, key.key, 'MODIFICA')">Apporta Modifica</button></div>
                 </ng-template>
             </ng-container>
             <ng-container *ngIf="key.key != 'id'">

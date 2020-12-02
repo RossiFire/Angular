@@ -1,25 +1,40 @@
 
-<div style="margin-top: 25px;">
-    <h3>Aggiungi</h3>
+<div style="margin-top: 25px;" class="form">
+    <h3>Aggiungi prenotazione</h3>
     <ng-container *ngFor = "let key of Header ; let j = index">
         <ng-container *ngIf="j<1">
             <div *ngIf="formBottone; else modbtn">
-                <button (click)= "sendValue(this.valoriInseriti, key.key, 'AGGIUNGI')">Aggiungi</button>
+                <button class="btn btn-info" (click)= "sendValue(this.valoriInseriti, key.key, 'AGGIUNGI', IdUtentePrenotato, IdMezzoPrenotato)">Aggiungi</button>
             </div>
             <ng-template #modbtn>
-               <div><button (click)= "sendValue(this.valoriInseriti, key.key, 'MODIFICA')">Apporta Modifica</button></div>
+               <div><button class="btn btn-info" (click)= "sendValue(this.valoriInseriti, key.key, 'MODIFICA', IdUtentePrenotato, IdMezzoPrenotato)">Apporta Modifica</button></div>
+               <button (click)= "SendButtonReset()" class="btn btn-danger">Resetta</button> <br>
             </ng-template>
         </ng-container>
         <ng-container *ngIf="key.key != 'id'">
             <ng-container *ngIf="key.key === 'utentePrenotato'; else mezzoCheck">
-                <select [(ngModel)]= "this.valoriInseriti[j]">
-                <option *ngFor="let utente of UtentiData; let u = index" value="{{utente.id}}" >{{utente.nome}}</option>
+                <select [(ngModel)] = "IdUtentePrenotato">
+                    <ng-container *ngFor="let utente of UtentiData; let u = index">
+                        <ng-container *ngIf="utente.id === this.IdUtentePrenotato , else nonUtMod">
+                            <option value="{{utente.id}}" selected>{{utente.nome}}</option>
+                        </ng-container>
+                        <ng-template #nonUtMod>
+                                <option value="{{utente.id}}">{{utente.nome}}</option>
+                        </ng-template>
+                    </ng-container>
                 </select> <br>
             </ng-container>
             <ng-template #mezzoCheck>
                 <ng-container *ngIf="key.key === 'mezzoPrenotato'; else input">
-                    <select [(ngModel)]= "this.valoriInseriti[j]">
-                        <option *ngFor="let mezzo of MezziData ; let m = index" value="{{mezzo.id}}" >{{mezzo.casaCostr}} {{mezzo.modello}}</option>
+                    <select [(ngModel)] = "IdMezzoPrenotato" >
+                        <ng-container *ngFor="let mezzo of MezziData ; let m = index">
+                            <ng-container *ngIf="mezzo.id === this.IdMezzoPrenotato , else nonMezMod">
+                                <option value="{{mezzo.id}}" selected>{{mezzo.casaCostr}} {{mezzo.modello}}</option>
+                            </ng-container>
+                            <ng-template #nonMezMod>
+                                <option value="{{mezzo.id}}">{{mezzo.casaCostr}} {{mezzo.modello}}</option>
+                            </ng-template>
+                        </ng-container>        
                     </select> <br>
                 </ng-container>
             </ng-template>
@@ -29,4 +44,5 @@
         </ng-container>
     </ng-container>
 </div>
+
 

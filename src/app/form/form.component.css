@@ -1,0 +1,27 @@
+.form{
+    margin-top: 20px;
+    border: 2px solid #718093;
+    border-radius: 5px;
+    width: 50%;
+    margin: auto;
+    padding: 20px 0px;
+}
+.form button{
+    border-radius: 0;
+}
+.form h3{
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 10px;
+}
+input{
+    border: none;
+    border-bottom: 1px solid black;
+    margin: 10px 0px;
+    width: 70%;
+}
+input:active, input:focus{
+    outline: none;
+    text-decoration-line: none;
+    border-bottom: 1px solid #718093;
+}

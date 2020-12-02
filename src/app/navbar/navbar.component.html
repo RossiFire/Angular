@@ -1,23 +1,44 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-dark">
-        <a class="navbar-brand" href="">Logout</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto" routerLinkActive="active">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/utenti">Customer</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/parcoauto">Parco Auto</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/prenotazioni">Prenotazioni</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/profilo" >Utente</a>
+            <ul class="navbar-nav mr-auto" routerLinkActive="active" *ngIf="Logi.isAuth() === true ; else nonLoggato">
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/utenti">Customer</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/parcoauto">Parco Auto</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/prenotazioni">Prenotazioni</a>
+              </li>
+            </ul>
+          <ng-template #nonLoggato>
+              <ul class="navbar-nav mr-auto" routerLinkActive="active">
+                  <li class="nav-item" style="pointer-events: none;">
+                    <a class="nav-link" routerLink="/utenti">Customer</a>
+                  </li>
+                  <li class="nav-item" style="pointer-events: none;">
+                    <a class="nav-link" routerLink="/parcoauto">Parco Auto</a>
+                  </li>
+                  <li class="nav-item" style="pointer-events: none;">
+                    <a class="nav-link" routerLink="/prenotazioni">Prenotazioni</a>
+                  </li>
+                </ul>
+          </ng-template>
+
+          
+          <ul class="navbar-nav my-2 my-lg-0">
+            <div class="dropdown">
+              <span><mat-icon>account_circle</mat-icon></span>
+              <div class="dropdown-content">
+                <a href="/profilo" *ngIf="this.Logi.isAuth()">Info</a>
+                <a class="nav-link disabled" *ngIf="!this.Logi.isAuth()">Logout</a>
+                <a class="nav-link able" (click)= "Logi.LogOut()" *ngIf="this.Logi.isAuth()">Logout {{this.Logi.getAuthNome()}}</a>
+              </div>
+            </div>
           </ul>
         </div>
       </nav>

@@ -25,35 +25,36 @@ export class TableComponent implements OnInit, OnChanges{
   sliceData;
   col;
   ASC : boolean = true;
-  orderIcon = "♠";
+  orderIcon = "keyboard_arrow_up";
+
 
   
   
   /*-------------------- Output Emit ----------------------*/ 
   /*------------------------------------------------------ */
   @Output() notify : EventEmitter <Object> = new EventEmitter();
-
-
   event : PageEvent;
 
 
   /*-------------------- LifeCycles -----------------------*/ 
   /*------------------------------------------------------ */
   ngOnChanges():void {
-    this.sliceData = this.DATA.slice(0,3);
+    this.sliceData = this.DATA.slice(0,this.pageSize);
   }
   ngOnInit(): void {
     this.sliceData = this.DATA.slice(0, 3);
     this.privilegi = sessionStorage.getItem("privilegi");
+    this.pageSize = this.tableConfig.pagination.itemPerPage;
   }
 
 
 
-
+  pageSize;
 
   /*-------------------- Paginazione ----------------------*/ 
   /*------------------------------------------------------ */
   OnPageChange(event: PageEvent) {
+    this.pageSize = event.pageSize;
     const startIndex = event.pageIndex * event.pageSize;
     let endIndex = event.pageIndex + event.pageSize;
     if (endIndex > this.DATA.length) {
@@ -84,11 +85,13 @@ export class TableComponent implements OnInit, OnChanges{
   SortBy(column): void {
     let temp;
     if (this.ASC) {
-      this.sliceData = _.sortBy(this.DATA, [column]).reverse().slice(0, this.DATA.length);
+      this.sliceData = _.sortBy(this.DATA, [column]).reverse().slice(0, this.pageSize);
       this.ASC = false;
+      this.orderIcon = "keyboard_arrow_down";
     } else {
-      this.sliceData = _.sortBy(this.DATA, [column]).slice(0, this.DATA.length);
+      this.sliceData = _.sortBy(this.DATA, [column]).slice(0, this.pageSize);
       this.ASC = true
+      this.orderIcon = "keyboard_arrow_up";
     }
   }
 

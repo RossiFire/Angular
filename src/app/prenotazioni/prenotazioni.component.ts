@@ -4,7 +4,7 @@ import { ButtonConfig } from '../button/button.component';
 import { Router } from '@angular/router';
 import * as _ from 'lodash'; 
 import { PrenotazioniDataServiceService } from '../services/data/prenotazioni-data-service.service';
-import { UtenteModel } from '../UtenteModel';
+import { UtenteModel, TipoUtente } from '../UtenteModel';
 import { MezzoModel } from 'src/MezzoModel';
 import { PrenotazioneModel } from '../PrenotazioneModel';
 import * as moment from 'node_modules/moment';
@@ -59,6 +59,8 @@ export class PrenotazioniComponent implements OnInit {
   /*----------------- Altre Variabili ---------------------*/ 
   /*------------------------------------------------------ */
   Data;
+  IdUtenteModifica;
+  IdMezzoModifica;
 
 
 
@@ -131,7 +133,7 @@ export class PrenotazioniComponent implements OnInit {
         this.UtentiData = x;
             },
       error =>{
-        alert(error.error.text);
+        console.log(error.error.text);
       }
     )
   }
@@ -145,7 +147,7 @@ export class PrenotazioniComponent implements OnInit {
         this.MezziData = x;
             },
       error =>{
-        alert(error.error.text);
+        console.log(error.error.text);
       }
     )
   }
@@ -173,10 +175,15 @@ export class PrenotazioniComponent implements OnInit {
       if (this.tbHeader[i].key === 'id') {
         this.PrenotazioneModel[this.tbHeader[i].key] = this.newDato[i][this.tbHeader[i].key];
       } else {
-        if (this.tbHeader[i].key === 'utentePrenotato') {
+       /*  if (this.tbHeader[i].key === 'utentePrenotato') {
           this.PrenotazioneModel[this.tbHeader[i].key]['id'] = parseInt(this.newDato[i][this.tbHeader[i].key]);
         } if (this.tbHeader[i].key === 'mezzoPrenotato') {
           this.PrenotazioneModel[this.tbHeader[i].key]['id'] = parseInt(this.newDato[i][this.tbHeader[i].key]);
+        } */
+        if (this.tbHeader[i].key === 'utentePrenotato') {
+          this.PrenotazioneModel[this.tbHeader[i].key]['id'] = parseInt(values['IdUtenteModifica']);
+        } if (this.tbHeader[i].key === 'mezzoPrenotato') {
+          this.PrenotazioneModel[this.tbHeader[i].key]['id'] = parseInt(values['IdMezzoModifica']);
         }
         if (this.tbHeader[i].key === 'approvata') {
           switch (this.newDato[i][this.tbHeader[i].key].toUpperCase()) {
@@ -214,8 +221,8 @@ export class PrenotazioniComponent implements OnInit {
               this.GetPrenotazioni();
             },
             error=>{
-              console.log("Successo");
-              alert(error.error.text);
+              console.log("errore");
+              console.log(error.error.text);
             }
           );
           break;
@@ -240,7 +247,12 @@ export class PrenotazioniComponent implements OnInit {
           this.DatoModifica = new Array();
           this.Temp = _.find(this.tbData, [values['col'], values['id']]);
           for(let i = 0; i<this.tbHeader.length; i++){
-            this.DatoModifica.push(this.Temp[this.tbHeader[i].key]);
+            if(this.tbHeader[i].key === 'utentePrenotato'){
+             this.IdUtenteModifica = this.Temp[this.tbHeader[i].key];
+            }if(this.tbHeader[i].key === 'mezzoPrenotato'){
+              this.IdMezzoModifica = this.Temp[this.tbHeader[i].key];
+            }
+              this.DatoModifica.push(this.Temp[this.tbHeader[i].key]);
           }
           this.PrenotazioniService.InviaIdPrenotazione(values['id']).subscribe();
           break;
@@ -268,6 +280,12 @@ export class PrenotazioniComponent implements OnInit {
       break;
     }
   };
+
+
+  ResetButtonFromForm(){
+    this.ButtonAggiungi = true;
+    this.Ripulisci();
+  }
   
 
 

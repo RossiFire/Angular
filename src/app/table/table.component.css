@@ -8,12 +8,71 @@ table{
 table tr{
     border: 3px solid black;
     padding: 10px;
+    
+}
+th{
+    padding: 15px;
+    background-color: #718093;
 }
 table td{
     text-align: center;
-    padding: 10px
+    padding: 15px;
 }
 .mat-paginator-container{
     margin-left: auto !important;
     margin-right: auto !important;
+}
+tr:hover{
+    background-color: #dcdde1;
+}
+
+.btn-warning, .btn-dark{
+    border-radius: 0;
+    margin: 2px;
+    text-align: center;
+    align-items: center;
+}
+.icons{
+    font-size: 20px;
+    margin: auto;
+    align-self: center;
+    cursor: pointer;
+}
+
+
+.filterForm{
+    border: 2px solid #718093;
+    border-radius: 5px;
+    padding: 20px 0px;
+    width: 30%;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.filterForm h3{
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.filterForm button{
+    border-radius: 0;
+    margin: 2px;
+}
+
+input{
+    border: none;
+    border-bottom: 1px solid black;
+    margin: 10px 0px;
+    width: 90%;
+}
+input:active, input:focus{
+    outline: none;
+    text-decoration-line: none;
+    border-bottom: 1px solid #718093;
+}
+
+.pag{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

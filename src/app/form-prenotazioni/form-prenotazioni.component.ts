@@ -16,7 +16,7 @@ export class FormPrenotazioniComponent implements OnInit {
   /*------------------------------------------------------ */
   @Output() notify : EventEmitter <Object> = new EventEmitter();
   
-  
+  @Output() resetModificaButton : EventEmitter <Object> = new EventEmitter();
 
   /*-------------- Config/Precompila input ----------------*/ 
   /*------------------------------------------------------ */
@@ -25,6 +25,9 @@ export class FormPrenotazioniComponent implements OnInit {
   @Input() formBottone : boolean;
   @Input() UtentiData : UtenteModel[];
   @Input() MezziData : MezzoModel[];
+
+  @Input() IdUtentePrenotato;
+  @Input() IdMezzoPrenotato;
   UtentiSelect;
   MezziSelect;
   
@@ -42,8 +45,15 @@ export class FormPrenotazioniComponent implements OnInit {
   /*----------- Invio Dati ai componenti padri ------------*/ 
   /*------------------------------------------------------ */
   sendValue(data : any[], col: string, op : string){
-    this.notify.emit({'id' : this.valoriInseriti , 'col' : col , 'op' : op});
+    this.notify.emit({'id' : this.valoriInseriti , 'col' : col , 'op' : op, 'IdUtenteModifica' : this.IdUtentePrenotato, 'IdMezzoModifica' : this.IdMezzoPrenotato});
   }
+
+
+  SendButtonReset(){
+    this.valoriInseriti = [];
+    this.resetModificaButton.emit({'value' : false});
+  }
+
 
   
 

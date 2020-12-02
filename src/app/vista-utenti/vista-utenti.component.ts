@@ -7,13 +7,15 @@ import { UtentiDataService } from '../services/data/utenti-data.service';
 import { Observable, observable } from 'rxjs';
 import { UtenteModel } from '../UtenteModel';
 import * as moment from 'node_modules/moment';
+import {MatSnackBar} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-vista-utenti',
   templateUrl: './vista-utenti.component.html',
-  styleUrls: ['./vista-utenti.component.css']
+  styleUrls: ['./vista-utenti.component.css'],
+  providers : [MatSnackBar]
 })
 export class VistaUtentiComponent implements OnInit{
-  constructor(private route : Router, private UtentiDataService : UtentiDataService) {}
+  constructor(private route : Router, private UtentiDataService : UtentiDataService, private SnackB : MatSnackBar) {}
 
   /*------------------ Dati sessione ----------------------*/ 
   /*------------------------------------------------------ */
@@ -54,7 +56,8 @@ export class VistaUtentiComponent implements OnInit{
     customCss : {'background-color' : "red", 'color' : "yellow"}
   }
 
-  
+  /*------------------- Altre Variabili -------------------*/
+
 
   /*--------------------- Lifecycle -----------------------*/ 
   /*------------------------------------------------------ */

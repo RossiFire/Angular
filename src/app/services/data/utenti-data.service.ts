@@ -29,7 +29,7 @@ export class UtentiDataService {
   }
 
   AggiornaUtente(Utente : UtenteModel){
-    return this.http.post<void>(`${this.baseUrl}/modifica`, Utente);
+    return this.http.post<Response>(`${this.baseUrl}/modifica`, Utente);
   }
 
 

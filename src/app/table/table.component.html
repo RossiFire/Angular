@@ -1,12 +1,14 @@
-<mat-paginator [length] = "this.DATA.length" [pageSize] = "this.tableConfig.pagination.itemPerPage"
-[pageSizeOptions] = "this.tableConfig.pagination.itemPerPageOption" 
-(page)="OnPageChange($event)"></mat-paginator>
+<div class="pag">
+        <mat-paginator [length] = "this.DATA.length" [pageSize] = "this.tableConfig.pagination.itemPerPage"
+        [pageSizeOptions] = "this.tableConfig.pagination.itemPerPageOption" 
+        (page)="OnPageChange($event)"></mat-paginator>
+</div>
 
 <table>
         <tr>
                 <th *ngFor = "let head of this.tableConfig.header">
                         {{head.label}}
-                       <span (click) = "SortBy(head.key)"><span [innerHTML]="this.orderIcon"></span></span>
+                       <span (click) = "SortBy(head.key)"><mat-icon class="icons" [innerHTML]= "this.orderIcon"></mat-icon></span>
                 </th>
                 <th>
                         Azioni
@@ -20,8 +22,8 @@
                         <ng-container *ngIf="h < 1">
                                 <td>
                                         <ng-container *ngIf="this.privilegi === 'true'">
-                                                <button class="btn-warning" (click)="EmitAdd(elemento[headKey.key], headKey.key, 'PRECOMPILA')">Modifica</button>|
-                                                <button class="btn-dark" (click)="EmitAdd(elemento[headKey.key], headKey.key, 'ELIMINA')">Elimina</button>
+                                                <button class="btn btn-warning" (click)="EmitAdd(elemento[headKey.key], headKey.key, 'PRECOMPILA')">Modifica<mat-icon class="icons">build</mat-icon></button>
+                                                <button class="btn btn-dark" (click)="EmitAdd(elemento[headKey.key], headKey.key, 'ELIMINA')">Elimina<mat-icon class="icons">delete</mat-icon></button>
                                         </ng-container>
                                 </td>
                         </ng-container>
@@ -32,12 +34,12 @@
 
 
 
-    <div>      
-            <h3 [style.marginTop.px]= "24">Filtra</h3>
+    <div class="filterForm">      
+        <h3>Filtra</h3>
         <input [(ngModel)] = "this.col" placeholder="colonna"> <br>
         <input [(ngModel)] = "this.tableConfig.search.value" placeholder="valore"><br>
-        <button (click) = "FilterByColumn()">Filtra</button> 
-        <button (click) = "this.sliceData = this.DATA.slice(0,3)">Resetta</button>
+        <button (click) = "FilterByColumn()" class="btn btn-info">Filtra</button> 
+        <button (click) = "this.sliceData = this.DATA.slice(0,this.pageSize)" class="btn btn-danger">Resetta</button>
     </div>
 
 

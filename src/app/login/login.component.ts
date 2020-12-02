@@ -65,5 +65,22 @@ export class LoginComponent implements OnDestroy {
   }
 
 
+  isAuth(){
+    if(sessionStorage.getItem("UsernameAttuale") === null || sessionStorage.getItem("UsernameAttuale") === ""){
+      return false
+    }else{
+      return true
+    }
+  }
+
+  getAuthNome(){
+    return sessionStorage.getItem("UsernameAttuale");
+  }
+
+  LogOut(){
+    sessionStorage.clear();
+    this.router.navigate([""]);
+  }
+
 
 }
