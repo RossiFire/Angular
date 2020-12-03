@@ -15,7 +15,7 @@ export class FormComponent{
   /*--------------- Output Operazioni CRUD ----------------*/ 
   /*------------------------------------------------------ */
   @Output() notify : EventEmitter <Object> = new EventEmitter();
- 
+  @Output() ModificaFormReset : EventEmitter <Object> = new EventEmitter()
  
   /*---------------- Set/Precompila Form ------------------*/ 
   /*------------------------------------------------------ */
@@ -28,5 +28,10 @@ export class FormComponent{
     this.notify.emit({'id' : this.valoriInseriti , 'col' : col , 'op' : op});
   }
 
+
+  ButtonReset(){
+    this.ModificaFormReset.emit({'value' : false});
+    this.valoriInseriti = [];
+  }
 
 }

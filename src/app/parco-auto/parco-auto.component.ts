@@ -59,10 +59,11 @@ export class ParcoAutoComponent implements OnInit {
   /*--------------------- LifeCycles ----------------------*/ 
   /*------------------------------------------------------ */
   ngOnInit(): void {
+    this.tbData = [];
+    this.GetMezzi();
     this.ButtonAggiungi = true;
     this.privilegi = sessionStorage.getItem("privilegi");
     this.UserAttuale = sessionStorage.getItem("UsernameAttuale");
-    this.GetMezzi();
   }
 
 

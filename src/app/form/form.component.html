@@ -9,6 +9,7 @@
                 </div>
                 <ng-template #modbtn>
                    <div><button class="btn btn-info" (click)= "sendValue(this.valoriInseriti, key.key, 'MODIFICA')">Apporta Modifica</button></div>
+                   <button (click)= "ButtonReset()" class="btn btn-danger">Resetta</button> <br>
                 </ng-template>
             </ng-container>
             <ng-container *ngIf="key.key != 'id'">

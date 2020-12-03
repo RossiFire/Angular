@@ -66,24 +66,7 @@ export class VistaUtentiComponent implements OnInit{
     this.privilegi = sessionStorage.getItem("privilegi");
     this.UserAttuale = sessionStorage.getItem("UsernameAttuale");
     this.tbData = [];
-    this.UtentiDataService.getUtenti().subscribe(x => {
-      for(let i = 0; i<x.length; i++){
-        for(let j=0; j<this.tbHeader.length;j++){
-          if(this.tbHeader[j].key === 'tipoutente'){
-            x[i][this.tbHeader[j].key] = x[i][this.tbHeader[j].key]['tipo'];
-          }if(this.tbHeader[j].key === 'password'){
-            if(this.privilegi === 'false'){
-              x[i][this.tbHeader[j].key] = "*****";
-            }
-          }if(this.tbHeader[j].key == 'nascita'){
-            this.Data = moment(x[i][this.tbHeader[j].key]);
-            this.Data = this.Data.format("L");
-            x[i][this.tbHeader[j].key] = this.Data;
-          }
-        }
-      }
-      this.tbData = x;
-    });
+    this.SottoScrivi();
   }
 
 
@@ -99,11 +82,11 @@ export class VistaUtentiComponent implements OnInit{
             if(this.privilegi === 'false'){
               x[i][this.tbHeader[j].key] = "*****";
             }
-            }if(this.tbHeader[j].key == 'nascita'){
-              this.Data = moment(x[i][this.tbHeader[j].key]);
-              this.Data = this.Data.format("L");
-              x[i][this.tbHeader[j].key] = this.Data;
-            }
+          }if(this.tbHeader[j].key == 'nascita'){
+            this.Data = moment(x[i][this.tbHeader[j].key]);
+            this.Data = this.Data.format("L");
+            x[i][this.tbHeader[j].key] = this.Data;
+          }
         }
       }
       this.tbData = x;
@@ -227,6 +210,10 @@ export class VistaUtentiComponent implements OnInit{
 
 
 
+  ResetButtonFromForm(){
+    this.buttonAggiungi = true
+    this.ripulisci();
+  }
 
 
 

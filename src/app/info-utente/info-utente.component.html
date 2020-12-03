@@ -4,13 +4,7 @@
 
 <p>INFO UTENTE</p>
 <div class="info">
- <p><mat-icon class="icon" (click)= "InputAppear('id')" >create</mat-icon> <span>ID: </span>{{Utente.id}}</p>
- <div *ngIf="ComparsaForm === 'id'">
-        <input [(ngModel)]= "Utente['id']" /> 
-            <mat-icon class="icon close" (click)= "ComparsaForm = ''">clear</mat-icon>
-            <br>
-            <button class="btn btn-info" (click)= "AggiornaUtente()">Salva<mat-icon class="icon">save</mat-icon></button>
- </div>
+ <p><span>ID: </span>{{Utente.id}}</p>
  <p><mat-icon class="icon" (click)= "InputAppear('nome')">create</mat-icon> <span>Nome: </span>{{Utente.nome}}</p>
  <div *ngIf="ComparsaForm === 'nome'">
         <input [(ngModel)]= "Utente['nome']" /> 

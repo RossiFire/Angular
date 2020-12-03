@@ -4,6 +4,7 @@ import { UtentiDataService } from '../services/data/utenti-data.service';
 import { UtenteModel } from '../UtenteModel';
 import * as moment from 'node_modules/moment';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { DateAdapter } from '@angular/material/core';
 @Component({
   selector: 'app-info-utente',
   templateUrl: './info-utente.component.html',
@@ -20,43 +21,38 @@ export class InfoUtenteComponent implements OnInit {
 
   /*------------------- Altre Variabili -------------------*/ 
   /*------------------------------------------------------ */  
-  Utente : UtenteModel;
+  Utente : UtenteModel = {id : 0, nome : "", cognome : "", tipoutente : {id : 0 , tipo : ""}, nascita : new Date(), password : ""};
   Data;
   ComparsaForm = "";
-
+  TempData : any;
   /*--------------------- LifeCycles ----------------------*/ 
   /*------------------------------------------------------ */
   ngOnInit(): void {
     this.IdInMemoria = sessionStorage.getItem("IdUtenteAttuale");
-    this.utentiDataService.GetSingoloUtente(this.IdInMemoria).subscribe(
-      response => {
-        this.Utente = response;
-        this.Data = moment(this.Utente.nascita);
-        this.Utente.nascita = this.Data.format("L");
-        console.log(this.Utente);
-      },
-      error => {
-        alert("Non va");
-      }
-    );
+    this.Visualizza();
   } 
 
+
   InputAppear(colonna){
-    console.log(this.Utente[colonna]);
     this.ComparsaForm = colonna;
   }
 
 
   AggiornaUtente(){
-    console.log(this.Utente);
     if(this.Utente.tipoutente.tipo.toUpperCase() === "ADMIN" || this.Utente.tipoutente.tipo.toUpperCase() === "CUSTOMER"){
       this.Data = moment(this.Utente.nascita);
-      this.Utente.nascita = this.Data;
-      this.utentiDataService.AggiornaUtente(this.Utente).subscribe(
+      this.Data = this.Data.format("L");
+      this.Utente['nascita'] = this.Data;
+      this.utentiDataService.AggiornaProfilo(this.Utente).subscribe(
         response =>{
-          this.Snack.open(response.statusText, "x", {
+          this.Snack.open((String)(response), "x", {
             duration: 2000,
           });
+          this.Visualizza();
+          this.ComparsaForm = ""
+        },
+        error=>{
+          console.log(error.error.message);
         }
       );
     }else{
@@ -65,6 +61,21 @@ export class InfoUtenteComponent implements OnInit {
     }
   }
   
+
+
+
+  Visualizza(){
+      this.utentiDataService.GetSingoloUtente(this.IdInMemoria).subscribe(
+      response => {
+        this.Utente = response;
+        this.Data = moment(this.Utente.nascita);
+        this.Utente.nascita = this.Data.format("L");
+      },
+      error => {
+        console.log("Non va");
+      }
+    );
+  }
 
 }
 

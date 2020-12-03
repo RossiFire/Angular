@@ -47,4 +47,8 @@ export class UtentiDataService {
     return this.http.get<any>(`${this.baseUrl}/singolo/${id}`);
   }
 
+  AggiornaProfilo(Utente : UtenteModel){
+    return this.http.post<Response>(`${this.baseUrl}/modificaProfilo`, Utente);
+  }
 }
+

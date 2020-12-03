@@ -2,14 +2,18 @@
 <div class="loginForm">
     <div class="form-group">
        <label for="Nome">Username</label>
-       <input type="text" class="form-control" id="Nome"  [(ngModel)] = "Username"  required/>
+       <input type="text" class="form-control" id="Nome"  [(ngModel)] = "Username"/>
      </div>
      <div class="form-group">
        <label for="psw">Password</label>
-       <input type="password" class="form-control" id="psw" [(ngModel)] = "Password" required/>
+       <input type="password" class="form-control" id="psw" [(ngModel)] = "Password"/>
      </div>
      <button class="btn btn-primary" (click) = "Check()">LogIn</button>
 </div>
-<p>{{errore}}</p>
+
+
+<div class="bg-danger" *ngIf="errore != ''">
+  <p>{{errore}}</p>
+</div>
 
 <app-footer></app-footer>

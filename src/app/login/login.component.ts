@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { UtentiDataService } from '../services/data/utenti-data.service';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -36,32 +35,36 @@ export class LoginComponent implements OnDestroy {
   /*------------------ Controllo Login --------------------*/ 
   /*------------------------------------------------------ */
   Check(): void {
-    this.utentiDataService.ControllaDiritti(this.Username, this.Password).subscribe(
-      response => {
-        if (response) {
-          sessionStorage.setItem("UsernameAttuale", this.Username);
-          this.privilegi = true;
-          sessionStorage.setItem("privilegi", this.privilegi.toString());
-          this.router.navigate(['utenti']);
-        } else {
-          sessionStorage.setItem("UsernameAttuale", this.Username);
-          sessionStorage.setItem("privilegi", this.privilegi.toString());
-          this.router.navigate(['utenti']);
-        }
-        this.utentiDataService.GetIdUtente(this.Username, this.Password).subscribe(
-          response => {
-            this.idInMemoria = response;
-            sessionStorage.setItem("IdUtenteAttuale", this.idInMemoria);
-          },
-          error => {
-            alert("Errore sconosciuto");
+    if(this.Username === '' || this.Password === ''){
+      this.errore = "Username o Password non inseriti";
+    }else{
+      this.utentiDataService.ControllaDiritti(this.Username, this.Password).subscribe(
+        response => {
+          if (response) {
+            sessionStorage.setItem("UsernameAttuale", this.Username);
+            this.privilegi = true;
+            sessionStorage.setItem("privilegi", this.privilegi.toString());
+            this.router.navigate(['utenti']);
+          } else {
+            sessionStorage.setItem("UsernameAttuale", this.Username);
+            sessionStorage.setItem("privilegi", this.privilegi.toString());
+            this.router.navigate(['utenti']);
           }
-        );
-      },
-      error => {
-        this.errore = "User o password sbagliata";
-      }
-    );
+          this.utentiDataService.GetIdUtente(this.Username, this.Password).subscribe(
+            response => {
+              this.idInMemoria = response;
+              sessionStorage.setItem("IdUtenteAttuale", this.idInMemoria);
+            },
+            error => {
+              alert("Errore sconosciuto");
+            }
+          );
+        },
+        error => {
+          this.errore = "User o password sbagliata";
+        }
+      );
+    }
   }
 
 
