@@ -68,10 +68,12 @@ export class LoginComponent implements OnDestroy {
   } */
 
   DoLogin(){
-    let resp = this.utentiDataService.Login(this.Username, this.Password);
-    resp.subscribe(
+    this.utentiDataService.Login(this.Username, this.Password).subscribe(
       data=>{
         console.log(data);
+      },
+      error=>{
+        console.log(error);
       }
     );
   }

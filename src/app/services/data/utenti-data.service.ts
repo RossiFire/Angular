@@ -53,7 +53,7 @@ export class UtentiDataService {
 
 
   Login(username : String, password : String){
-    const headers = new HttpHeaders({Authorization : 'Basic' + btoa(username+":"+password)})
+   const headers = new HttpHeaders({Authorization : 'Basic' + btoa(username+":"+password)})
     return this.http.get<any>(`http://localhost:8050/`, {headers});
   }
   
