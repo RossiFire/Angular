@@ -191,6 +191,14 @@ export class ParcoAutoComponent implements OnInit {
         break;
     }
   }
+
+
+
+
+  ResetButtonFromForm(){
+    this.ButtonAggiungi = true
+    this.Ripulisci();
+  }
   
 
 }

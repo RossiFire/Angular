@@ -2,7 +2,7 @@
 <div class="screen">
   <app-table [tableConfig] = "tbConfig" [DATA] = "tbData" (notify) = "CrudOperation($event)"></app-table>
   <div *ngIf="this.privilegi === 'true'">
-      <app-form [header]= "tbHeader" [valoriInseriti] = "DatoModifica" [formBottone] ="ButtonAggiungi" (notify)= "CrudOperation($event)"></app-form>
+      <app-form [header]= "tbHeader" [valoriInseriti] = "DatoModifica" [formBottone] ="ButtonAggiungi" (notify)= "CrudOperation($event)" (ModificaFormReset) = "ResetButtonFromForm($event)"></app-form>
     </div>
 </div>
 <app-footer></app-footer>

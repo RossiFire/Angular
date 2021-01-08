@@ -10,7 +10,7 @@ import { TableComponent } from './table/table.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NavbarComponent } from './navbar/navbar.component';
 import { VistaUtentiComponent } from './vista-utenti/vista-utenti.component';
 import { FooterComponent } from './footer/footer.component';
@@ -21,6 +21,7 @@ import { PrenotazioniComponent } from './prenotazioni/prenotazioni.component';
 import { LoginComponent } from './login/login.component';
 import { FormComponent } from './form/form.component';
 import { FormPrenotazioniComponent } from './form-prenotazioni/form-prenotazioni.component';
+import { AuthInterceptService } from './services/http/auth-intercept.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +48,9 @@ import { FormPrenotazioniComponent } from './form-prenotazioni/form-prenotazioni
     BrowserAnimationsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {provide : HTTP_INTERCEPTORS, useClass : AuthInterceptService, multi : true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

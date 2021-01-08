@@ -1,19 +1,44 @@
 
 
 <div style="margin-top: 25px;" class="form">
-        <h3>Aggiungi Utente</h3>
         <ng-container *ngFor = "let key of header ; let j = index">
             <ng-container *ngIf="j<1">
                 <div *ngIf="formBottone; else modbtn">
+                        <h3>Aggiungi</h3>
                     <button class="btn btn-info" (click)= "sendValue(this.valoriInseriti, key.key, 'AGGIUNGI')">Aggiungi</button>
                 </div>
                 <ng-template #modbtn>
+                        <h3>Modifica</h3>
                    <div><button class="btn btn-info" (click)= "sendValue(this.valoriInseriti, key.key, 'MODIFICA')">Apporta Modifica</button></div>
                    <button (click)= "ButtonReset()" class="btn btn-danger">Resetta</button> <br>
                 </ng-template>
             </ng-container>
             <ng-container *ngIf="key.key != 'id'">
-                <input [(ngModel)]= "this.valoriInseriti[j]" required placeholder="{{key.label}}" value="this.valoriInseriti[i]"/> <br>
+                <ng-container *ngIf="key.key === 'tipoutente' ; else mezzoCheck">
+                    <div class="tipoCheck">
+                        <input type="radio" name="tipou" value="CUSTOMER" [(ngModel)] = "this.valoriInseriti[j]">
+                        <label>Customer</label>
+                        <input type="radio" name="tipou" value="ADMIN" [(ngModel)] = "this.valoriInseriti[j]">
+                        <label>Admin</label><br>
+                    </div>
+                </ng-container>
+                <ng-template #mezzoCheck>
+                    <ng-container *ngIf="key.key === 'tipomezzo' ; else input">
+                        <div class="tipoCheck">
+                            <input type="radio" name="tipou" value="AUTOVEICOLO" [(ngModel)] = "this.valoriInseriti[j]">
+                            <label>Autoveicolo</label>
+                            <input type="radio" name="tipou" value="SUV" [(ngModel)] = "this.valoriInseriti[j]">
+                            <label>Suv</label>
+                            <input type="radio" name="tipou" value="MINIVAN" [(ngModel)] = "this.valoriInseriti[j]">
+                            <label>Minivan</label>
+                            <input type="radio" name="tipou" value="FURGONE" [(ngModel)] = "this.valoriInseriti[j]">
+                            <label>Furgone</label>
+                        </div>
+                    </ng-container>
+                </ng-template>
+                <ng-template #input>
+                    <input [(ngModel)]= "this.valoriInseriti[j]" required placeholder="{{key.label}}" value="this.valoriInseriti[i]"/> <br>
+                </ng-template>
             </ng-container>
         </ng-container>
 </div>

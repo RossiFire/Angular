@@ -175,11 +175,6 @@ export class PrenotazioniComponent implements OnInit {
       if (this.tbHeader[i].key === 'id') {
         this.PrenotazioneModel[this.tbHeader[i].key] = this.newDato[i][this.tbHeader[i].key];
       } else {
-       /*  if (this.tbHeader[i].key === 'utentePrenotato') {
-          this.PrenotazioneModel[this.tbHeader[i].key]['id'] = parseInt(this.newDato[i][this.tbHeader[i].key]);
-        } if (this.tbHeader[i].key === 'mezzoPrenotato') {
-          this.PrenotazioneModel[this.tbHeader[i].key]['id'] = parseInt(this.newDato[i][this.tbHeader[i].key]);
-        } */
         if (this.tbHeader[i].key === 'utentePrenotato') {
           this.PrenotazioneModel[this.tbHeader[i].key]['id'] = parseInt(values['IdUtenteModifica']);
         } if (this.tbHeader[i].key === 'mezzoPrenotato') {

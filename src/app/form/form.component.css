@@ -25,3 +25,11 @@ input:active, input:focus{
     text-decoration-line: none;
     border-bottom: 1px solid #718093;
 }
+
+.tipoCheck{
+    text-align: center !important;
+}
+.tipoCheck input{
+    width: 5%;
+    margin-left: 50px;
+}

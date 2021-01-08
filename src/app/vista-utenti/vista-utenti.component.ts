@@ -127,7 +127,7 @@ export class VistaUtentiComponent implements OnInit{
             }
             this.UtenteModel[this.tbHeader[i].key]['tipo'] = this.newDato[i][this.tbHeader[i].key];
           }else{
-            alert("Per favore inserire 'ADMIN' o 'CUSTOMER'");
+            alert("Unknown Error");
             this.UtenteModel = {id: 0, nome: "", cognome: "", tipoutente: {id: 1 , tipo : ""}, nascita : new Date(), password: ""};
             break;
           }
@@ -207,14 +207,11 @@ export class VistaUtentiComponent implements OnInit{
     }
   };
   
-
-
-
+  
   ResetButtonFromForm(){
     this.buttonAggiungi = true
     this.ripulisci();
   }
-
 
 
 }

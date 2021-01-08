@@ -23,12 +23,7 @@
             <mat-icon class="icon close" (click)= "ComparsaForm = ''">clear</mat-icon>
         <button class="btn btn-info" (click)= "AggiornaUtente()">Salva<mat-icon class="icon">save</mat-icon></button>
  </div>
- <p><mat-icon class="icon" (click)= "InputAppear('tipoutente')">create</mat-icon> <span>Tipo Utente: </span>{{Utente.tipoutente.tipo}}</p>
- <div *ngIf="ComparsaForm === 'tipoutente'">
-        <input [(ngModel)]= "Utente['tipoutente']['tipo']" /> 
-            <mat-icon class="icon close" (click)= "ComparsaForm = ''">clear</mat-icon>
-        <button class="btn btn-info" (click)= "AggiornaUtente()">Salva<mat-icon class="icon">save</mat-icon></button>
- </div>
+ <p><span>Tipo Utente: </span>{{Utente.tipoutente.tipo}}</p>
  <p><mat-icon class="icon" (click)= "InputAppear('password')">create</mat-icon> <span>Password: </span>{{Utente.password}}</p>
  <div *ngIf="ComparsaForm === 'password'">
         <input [(ngModel)]= "Utente['password']" /> 

@@ -24,7 +24,7 @@ export class InfoUtenteComponent implements OnInit {
   Utente : UtenteModel = {id : 0, nome : "", cognome : "", tipoutente : {id : 0 , tipo : ""}, nascita : new Date(), password : ""};
   Data;
   ComparsaForm = "";
-  TempData : any;
+  Privilegi;
   /*--------------------- LifeCycles ----------------------*/ 
   /*------------------------------------------------------ */
   ngOnInit(): void {

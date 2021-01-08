@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output} from '@angular/core';
+import { Component, OnInit, Input, Output, DoCheck} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TableHeader } from '../table/table.component';
 import { EventEmitter } from '@angular/core';
