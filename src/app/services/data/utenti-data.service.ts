@@ -50,5 +50,14 @@ export class UtentiDataService {
   AggiornaProfilo(Utente : UtenteModel){
     return this.http.post<Response>(`${this.baseUrl}/modificaProfilo`, Utente);
   }
+
+
+  Login(username : String, password : String){
+    const headers = new HttpHeaders({Authorization : 'Basic' + btoa(username+":"+password)})
+    return this.http.get<any>(`http://localhost:8050/`, {headers});
+  }
+  
+
+
 }
 

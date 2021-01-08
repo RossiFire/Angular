@@ -22,6 +22,7 @@ import { LoginComponent } from './login/login.component';
 import { FormComponent } from './form/form.component';
 import { FormPrenotazioniComponent } from './form-prenotazioni/form-prenotazioni.component';
 import { AuthInterceptService } from './services/http/auth-intercept.service';
+import { UtentiDataService } from './services/data/utenti-data.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +50,8 @@ import { AuthInterceptService } from './services/http/auth-intercept.service';
     HttpClientModule
   ],
   providers: [
-    {provide : HTTP_INTERCEPTORS, useClass : AuthInterceptService, multi : true}
+    {provide : HTTP_INTERCEPTORS, useClass : AuthInterceptService, multi : true},
+    UtentiDataService
   ],
   bootstrap: [AppComponent]
 })

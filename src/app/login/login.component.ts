@@ -34,7 +34,7 @@ export class LoginComponent implements OnDestroy {
 
   /*------------------ Controllo Login --------------------*/ 
   /*------------------------------------------------------ */
-  Check(): void {
+/*   Check(): void {
     if(this.Username === '' || this.Password === ''){
       this.errore = "Username o Password non inseriti";
     }else{
@@ -65,6 +65,15 @@ export class LoginComponent implements OnDestroy {
         }
       );
     }
+  } */
+
+  DoLogin(){
+    let resp = this.utentiDataService.Login(this.Username, this.Password);
+    resp.subscribe(
+      data=>{
+        console.log(data);
+      }
+    );
   }
 
 
